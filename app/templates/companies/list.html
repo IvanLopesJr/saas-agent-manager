@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Empresas" %}</h1>
+    <a href="{% url 'company_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> {% trans "Nova Empresa" %}
+    </a>
+</div>
+
+<!-- Filtros -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-12 col-md-6 col-lg">
+                <input type="text" name="search" class="form-control" 
+                       placeholder="{% trans 'Buscar por nome, documento ou email' %}" 
+                       value="{{ search }}">
+            </div>
+            <div class="col-6 col-md-3 col-lg-2">
+                <select name="status" class="form-select">
+                    <option value="">{% trans "Todos os Status" %}</option>
+                    <option value="active" {% if status == 'active' %}selected{% endif %}>
+                        {% trans "Ativo" %}
+                    </option>
+                    <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>
+                        {% trans "Inativo" %}
+                    </option>
+                </select>
+            </div>
+            <div class="col-6 col-md-3 col-lg-3">
+                <select name="billing_mode" class="form-select">
+                    <option value="">{% trans "Todos os Modos" %}</option>
+                    <option value="per_user" {% if billing_mode == 'per_user' %}selected{% endif %}>
+                        {% trans "Por Usuário" %}
+                    </option>
+                    <option value="per_user_chatbot" {% if billing_mode == 'per_user_chatbot' %}selected{% endif %}>
+                        {% trans "Por Usuário/Chatbot" %}
+                    </option>
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-auto">
+                <div class="d-flex gap-2 flex-column flex-sm-row">
+                    <a href="{% url 'company_list' %}" class="btn btn-clear-filter">
+                        <i class="bi bi-x-circle"></i> {% trans "Limpar" %}
+                    </a>
+                    <button type="submit" class="btn btn-filter">
+                        <i class="bi bi-search"></i> {% trans "Filtrar" %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Lista de Empresas em Cards -->
+<div class="row g-3">
+    {% for company in companies %}
+        <div class="col-md-4">
+            <div class="card h-100 company-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-start mb-3">
+                        {% if company.logo_url %}
+                            <img src="{{ company.logo_url.url }}" alt="{{ company.name }}" 
+                                 class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-primary text-white rounded d-flex align-items-center justify-content-center me-3"
+                                 style="width: 60px; height: 60px;">
+                                <i class="bi bi-building fs-4"></i>
+                            </div>
+                        {% endif %}
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">{{ company.name }}</h5>
+                            <span class="badge {% if company.status == 'active' %}bg-success{% else %}bg-danger{% endif %}">
+                                {{ company.get_status_display }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="small text-muted mb-3">
+                        <div><i class="bi bi-envelope"></i> {{ company.email }}</div>
+                        <div><i class="bi bi-file-text"></i> {{ company.identification_document }}</div>
+                        <div><i class="bi bi-telephone"></i> {{ company.phone|default:"-" }}</div>
+                        <div><i class="bi bi-currency-dollar"></i> {{ company.currency }} ({{ company.currency_symbol }})</div>
+                        <div><i class="bi bi-person-badge"></i> {{ company.member_count }} {% trans "membros" %}</div>
+                        <div><i class="bi bi-robot"></i> {{ company.chatbot_count }} {% trans "chatbots" %}</div>
+                        <div>
+                            <span class="badge bg-info">{{ company.get_billing_mode_display }}</span>
+                            {% if company.bill_admin_users %}
+                                <span class="badge bg-warning">{% trans "Cobra Admin" %}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group btn-group-sm company-card-actions" role="group" aria-label="{% trans 'Ações' %}">
+                        <a href="{% url 'company_detail' company.pk %}" class="btn btn-outline-primary btn-sm"
+                           title="{% trans 'Ver' %}">
+                            <i class="bi bi-eye"></i> <span class="visually-hidden">{% trans "Ver" %}</span>
+                        </a>
+                        <a href="{% url 'company_edit' company.pk %}" class="btn btn-outline-secondary btn-sm"
+                           title="{% trans 'Editar' %}">
+                            <i class="bi bi-pencil"></i> <span class="visually-hidden">{% trans "Editar" %}</span>
+                        </a>
+                        <a href="{% url 'company_delete' company.pk %}" class="btn btn-outline-danger btn-sm"
+                           title="{% trans 'Excluir' %}"
+                           onclick="return confirm('{% trans "Tem certeza que deseja excluir esta empresa?" %}')">
+                            <i class="bi bi-trash"></i> <span class="visually-hidden">{% trans "Excluir" %}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle"></i> {% trans "Nenhuma empresa encontrada." %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Paginação -->
+{% if companies.has_other_pages %}
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if companies.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ companies.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status %}&status={{ status }}{% endif %}{% if billing_mode %}&billing_mode={{ billing_mode }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
+                    </a>
+                </li>
+            {% endif %}
+            
+            <li class="page-item disabled">
+                <span class="page-link">
+                    {% trans "Página" %} {{ companies.number }} {% trans "de" %} {{ companies.paginator.num_pages }}
+                </span>
+            </li>
+            
+            {% if companies.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ companies.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status %}&status={{ status }}{% endif %}{% if billing_mode %}&billing_mode={{ billing_mode }}{% endif %}">
+                        {% trans "Próximo" %} <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}

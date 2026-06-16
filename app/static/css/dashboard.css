@@ -1,0 +1,328 @@
+/* Dashboard Styles */
+.dashboard {
+    padding: 0;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto !important;
+}
+
+.card-title {
+    font-size: var(--chart-title-font-size, var(--heading-font-size, 1.25rem));
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+/* Stat Cards */
+.stat-card {
+    background: var(--bg-card, #fff);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    color: #fff;
+}
+
+.stat-icon.bg-primary { background: var(--primary-color); }
+.stat-icon.bg-success { background: var(--btn-success-bg); }
+.stat-icon.bg-info { background: var(--btn-info-bg); }
+.stat-icon.bg-warning { background: var(--btn-warning-bg); }
+.stat-icon.bg-danger { background: var(--btn-danger-bg); }
+
+.stat-content h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.stat-content p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Stat Card Small */
+.stat-card-small {
+    background: var(--bg-card, #fff);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.stat-card-small .stat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+}
+
+.stat-card-small h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.stat-card-small p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.company-title {
+    font-size: var(--heading-font-size, 1.75rem);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Company Info Card */
+.company-info-card {
+    background: var(--primary-color);
+    color: var(--btn-primary-text, #fff);
+    border: none;
+}
+
+.company-info-card .card-body {
+    padding: 2rem;
+}
+
+.company-info-card h2 {
+    color: var(--btn-primary-text, #fff);
+    margin-bottom: 0.5rem;
+}
+
+.company-info-card p,
+.company-info-card .text-muted {
+    color: color-mix(in srgb, var(--btn-primary-text, #fff) 80%, transparent) !important;
+}
+
+.company-logo-large {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background: var(--bg-card, #fff);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+}
+
+.company-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-card, #fff);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+/* Activity List */
+.activity-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.activity-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--light-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-description {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.activity-time {
+    font-size: 0.8rem;
+}
+
+/* Stat Item Detail */
+.stat-item-detail {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.stat-item-detail:last-child {
+    border-bottom: none;
+}
+
+.stat-item-detail i {
+    font-size: 2rem;
+    width: 50px;
+    text-align: center;
+}
+
+.stat-item-detail h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.stat-item-detail p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.company-stats-card .card-body {
+    padding: calc(var(--spacing-sm) * 1.55) var(--spacing-md);
+}
+
+.company-stats-card .stat-item-detail {
+    padding: calc(var(--spacing-xs) * 1.55) 0;
+    gap: calc(var(--spacing-sm) * 1.55);
+    border-bottom: none;
+}
+
+.company-stats-card .stat-item-detail + .stat-item-detail {
+    border-top: 1px solid var(--border-color);
+    margin-top: calc(var(--spacing-xs) * 1.55);
+    padding-top: calc(var(--spacing-xs) * 1.55);
+}
+
+.company-stats-card .stat-item-detail i {
+    font-size: 2.3625rem; /* 1.75 * 1.35 */
+    width: 54px;
+}
+
+.company-stats-card .stat-item-detail h3 {
+    font-size: 1.4rem;
+}
+
+/* Company Card (for list) */
+.company-card {
+    margin-bottom: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.company-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.company-card .company-card-actions {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: var(--border-radius);
+}
+
+.company-logo-placeholder {
+    width: 60px;
+    height: 60px;
+    background: var(--light-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.status-badge {
+    font-size: 0.75rem;
+}
+
+.company-info p {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.company-info i {
+    margin-right: 0.5rem;
+    color: var(--text-muted);
+}
+
+.company-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.75rem 0;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.company-billing {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .company-stats {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

@@ -1,0 +1,381 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="row g-3 mb-3">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body py-3 px-4 d-flex flex-wrap align-items-center gap-3">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        {% if company.logo_url %}
+                            <img src="{{ company.logo_url.url }}" alt="{{ company.name }}" class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-primary text-white rounded d-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px;">
+                                <i class="bi bi-building fs-1"></i>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <p class="company-title mb-1">{{ company.name }}</p>
+                            <p class="text-muted mb-1">
+                                <i class="bi bi-currency-dollar"></i>
+                                {% trans "Modo de Cobrança" %}: <strong>{{ company.get_billing_mode_display }}</strong>
+                                {% if company.billing_mode == 'per_user' %}
+                                    - {{ company.currency_symbol }} {{ company.member_price }}/{% trans "mês por membro" %}
+                                {% endif %}
+                            </p>
+                            <small class="text-muted d-block">
+                                {% trans "Status" %}: {{ company.get_status_display }}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="ms-auto text-md-end">
+                        {% if company.email %}
+                            <p class="text-muted mb-1">
+                                <i class="bi bi-envelope"></i> {{ company.email }}
+                            </p>
+                        {% endif %}
+                        {% if company.phone %}
+                            <p class="text-muted mb-0">
+                                <i class="bi bi-telephone"></i> {{ company.phone }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #137ed0;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Membros Ativos" %}</h6>
+                        <i class="bi bi-person-check" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ total_members }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Ativos atualmente" %}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #ffc107;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Membros Pendentes" %}</h6>
+                        <i class="bi bi-hourglass-split" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ pending_members }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Aguardando aprovação" %}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #0dcaf0;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Chatbots Disponíveis" %}</h6>
+                        <i class="bi bi-robot" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ total_chatbots }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Para uso" %}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #0d6efd;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Custo Mensal" %}</h6>
+                        <i class="bi bi-currency-dollar" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ company.currency_symbol }} {{ monthly_cost|floatformat:2 }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Estimado" %}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-stretch">
+        <div class="col-12 col-lg-8">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-graph-up text-primary"></i>
+                        {% trans "Faturamento Mensal" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="companyBillingTrendChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-pie-chart text-primary"></i>
+                        {% trans "Distribuição de Status" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="statusDistributionChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-stretch">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-diagram-3 text-primary"></i>
+                        {% trans "Composição da Equipe" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="teamOverviewChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-hdd-network text-primary"></i>
+                        {% trans "Status dos Chatbots" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="chatbotStatusChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-robot text-primary"></i>
+                        {% trans "Uso de Chatbots" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="chatbotUsageChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-people text-primary"></i>
+                        {% trans "Membros Recentes" %}
+                    </h5>
+                    <a href="{% url 'member_list' %}" class="btn btn-sm btn-outline-primary">
+                        {% trans "Ver Todos" %}
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    {% if recent_members %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans "Nome" %}</th>
+                                        <th>{% trans "Departamento" %}</th>
+                                        <th>{% trans "Status" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for member in recent_members %}
+                                        <tr>
+                                            <td>{{ member.name }}</td>
+                                            <td>{{ member.department|default:"-" }}</td>
+                                            <td>
+                                                <span class="badge {% if member.status == 'active' %}bg-success{% elif member.status == 'pending' %}bg-warning{% else %}bg-secondary{% endif %}">
+                                                    {{ member.get_status_display }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-people fs-1 d-block mb-3"></i>
+                            <p>{% trans "Nenhum membro cadastrado" %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-receipt text-primary"></i>
+                        {% trans "Últimas Cobranças" %}
+                    </h5>
+                    <a href="{% url 'billing_list' %}" class="btn btn-sm btn-outline-primary">
+                        {% trans "Ver Todas" %}
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    {% if recent_billings %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans "Período" %}</th>
+                                        <th class="text-end">{% trans "Valor" %}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for billing in recent_billings %}
+                                        <tr>
+                                            <td>
+                                                <i class="bi bi-calendar3"></i>
+                                                {{ billing.period_start|date:"m/Y" }}
+                                            </td>
+                                            <td class="text-end">
+                                                <strong>{{ company.currency_symbol }} {{ billing.total_value|floatformat:2 }}</strong>
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{% url 'billing_detail' billing.pk %}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-eye"></i> {% trans "Ver" %}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-receipt fs-1 d-block mb-3"></i>
+                            <p>{% trans "Nenhuma cobrança gerada" %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{ company_billing_trend_chart|json_script:"company-billing-data" }}
+    {{ status_distribution_chart|json_script:"status-distribution-data" }}
+    {{ team_overview_chart|json_script:"team-overview-data" }}
+    {{ chatbot_status_chart|json_script:"chatbot-status-data" }}
+    {{ chatbot_usage_chart|json_script:"chatbot-usage-data" }}
+    <script>
+        (function () {
+            if (typeof Chart === 'undefined') {
+                return;
+            }
+
+            const palette = ['#137ed0', '#20c997', '#0dcaf0', '#ffc107', '#6c757d', '#6610f2', '#d63384'];
+            const getColors = (count) => Array.from({ length: count }, (_, idx) => palette[idx % palette.length]);
+
+            const charts = [
+                { elementId: 'companyBillingTrendChart', sourceId: 'company-billing-data', type: 'line', borderColor: '#137ed0', backgroundColor: 'rgba(19, 126, 208, 0.15)', fill: true },
+                { elementId: 'statusDistributionChart', sourceId: 'status-distribution-data', type: 'doughnut' },
+                { elementId: 'teamOverviewChart', sourceId: 'team-overview-data', type: 'doughnut' },
+                { elementId: 'chatbotStatusChart', sourceId: 'chatbot-status-data', type: 'bar', borderColor: '#20c997', backgroundColor: 'rgba(32, 201, 151, 0.25)' },
+                { elementId: 'chatbotUsageChart', sourceId: 'chatbot-usage-data', type: 'bar', borderColor: '#0dcaf0', backgroundColor: 'rgba(13, 202, 240, 0.25)' }
+            ];
+
+            charts.forEach(({ elementId, sourceId, type, borderColor, backgroundColor, fill }) => {
+                const canvas = document.getElementById(elementId);
+                const payloadEl = document.getElementById(sourceId);
+
+                if (!canvas || !payloadEl) {
+                    return;
+                }
+
+                const container = canvas.closest('.chart-container') || canvas.parentElement;
+                const payload = JSON.parse(payloadEl.textContent || '{}');
+                if (!payload.labels || !payload.labels.length) {
+                    if (container) {
+                        container.innerHTML = '<p class="text-muted text-center mb-0">{% trans "Sem dados suficientes para este gráfico." %}</p>';
+                    }
+                    return;
+                }
+
+                if (container) {
+                    canvas.height = container.clientHeight || canvas.height;
+                }
+
+                const datasetConfig = type === 'doughnut'
+                    ? {
+                        backgroundColor: getColors(payload.labels.length),
+                        borderWidth: 0
+                    }
+                    : {
+                        borderColor: borderColor,
+                        backgroundColor: backgroundColor || borderColor,
+                        fill: !!fill,
+                        tension: 0.4,
+                        borderWidth: 2
+                    };
+
+                new Chart(canvas.getContext('2d'), {
+                    type,
+                    data: {
+                        labels: payload.labels,
+                        datasets: [{
+                            data: payload.values,
+                            ...datasetConfig
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: type !== 'bar'
+                            }
+                        },
+                        scales: type === 'doughnut' ? {} : {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                },
+                                ticks: {
+                                    precision: 0
+                                }
+                            },
+                            x: type === 'bar' ? {
+                                grid: {
+                                    display: false
+                                }
+                            } : undefined
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+{% endblock %}

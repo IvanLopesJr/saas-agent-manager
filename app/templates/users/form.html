@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ page_title }}</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="form-section-title">{% trans "Informações Pessoais" %}</h5>
+                    
+                    <div class="mb-3">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small">{{ form.username.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.first_name.label_tag }}
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small">{{ form.first_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form.last_name.label_tag }}
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small">{{ form.last_name.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.phone.label_tag }}
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <div class="text-danger small">{{ form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5 class="form-section-title">{% trans "Empresa e Papel" %}</h5>
+                    
+                    <div class="mb-3">
+                        {{ form.company.label_tag }}
+                        {{ form.company }}
+                        {% if form.company.errors %}
+                            <div class="text-danger small">{{ form.company.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.role.label_tag }}
+                        {{ form.role }}
+                        {% if form.role.errors %}
+                            <div class="text-danger small">{{ form.role.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.status.label_tag }}
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                            <div class="text-danger small">{{ form.status.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div id="member-sync-card" class="border rounded p-3 bg-light mb-3" {% if not form.show_member_options %}style="display: none;"{% endif %}>
+                        <h6 class="mb-2">{% trans "Sincronização com Membros" %}</h6>
+                        <p class="text-muted small mb-3">
+                            {% trans "Defina se este administrador deve possuir um membro vinculado e se ele permanecerá ativo." %}
+                        </p>
+                        <div class="row g-2 align-items-start mb-3">
+                            <div class="col-md-5 d-flex align-items-center">
+                                {{ form.sync_member_profile }}
+                                <label class="form-check-label ms-2 mb-0" for="{{ form.sync_member_profile.id_for_label }}">
+                                    {{ form.sync_member_profile.label }}
+                                </label>
+                            </div>
+                            <div class="col-md-7">
+                                {% if form.sync_member_profile.help_text %}
+                                    <div class="text-muted small">{{ form.sync_member_profile.help_text }}</div>
+                                {% endif %}
+                                {% if form.sync_member_profile.errors %}
+                                    <div class="text-danger small">{{ form.sync_member_profile.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-check d-flex align-items-center">
+                            {{ form.member_active }}
+                            <label class="form-check-label ms-2 mb-0" for="{{ form.member_active.id_for_label }}">
+                                {{ form.member_active.label }}
+                            </label>
+                            {% if form.member_active.errors %}
+                                <div class="text-danger small">{{ form.member_active.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% if not user_obj %}
+                        <h5 class="form-section-title mt-4">{% trans "Senha" %}</h5>
+                        
+                        <div class="mb-3">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1 }}
+                            {% if form.password1.errors %}
+                                <div class="text-danger small">{{ form.password1.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                                <div class="text-danger small">{{ form.password2.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-check mb-3">
+                            {{ form.send_credentials }}
+                            <label class="form-check-label ms-2" for="{{ form.send_credentials.id_for_label }}">
+                                {{ form.send_credentials.label }}
+                            </label>
+                            {% if form.send_credentials.help_text %}
+                                <div class="text-muted small">{{ form.send_credentials.help_text }}</div>
+                            {% endif %}
+                            {% if form.send_credentials.errors %}
+                                <div class="text-danger small">{{ form.send_credentials.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'user_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> {% trans "Cancelar" %}
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> {% trans "Salvar" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const roleField = document.getElementById('{{ form.role.auto_id }}');
+    const card = document.getElementById('member-sync-card');
+    if (!roleField || !card) {
+        return;
+    }
+    function toggleCard() {
+        const show = roleField.value === 'admin_company';
+        card.style.display = show ? '' : 'none';
+    }
+    roleField.addEventListener('change', toggleCard);
+    toggleCard();
+});
+</script>
+{% endblock %}

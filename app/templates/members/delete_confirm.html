@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        <h5 class="mb-0">{% trans "Confirmar Exclusão" %}</h5>
+    </div>
+    <div class="card-body">
+        <p class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            {% trans "Tem certeza que deseja deletar o membro" %} <strong>{{ member.name }}</strong>?
+        </p>
+        <p>{% trans "Esta ação não pode ser desfeita." %}</p>
+        
+        <div class="mb-3">
+            <p><strong>{% trans "Email:" %}</strong> {{ member.email }}</p>
+            <p><strong>{% trans "Documento de identificação:" %}</strong> {{ member.identification_document }}</p>
+            <p><strong>{% trans "Empresa:" %}</strong> {{ member.company.name }}</p>
+            <p><strong>{% trans "Departamento:" %}</strong> {{ member.department|default:"-" }}</p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'member_list' %}" class="btn btn-secondary">
+                    {% trans "Cancelar" %}
+                </a>
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> {% trans "Sim, Deletar" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

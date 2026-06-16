@@ -1,0 +1,35 @@
+# Django Core
+Django==4.2.7
+psycopg2-binary==2.9.9
+
+# Environment
+python-decouple==3.8
+
+# Forms and Validation
+django-crispy-forms==2.1
+crispy-bootstrap5
+
+# Utils
+Pillow==10.1.0
+python-dateutil==2.8.2
+cryptography==41.0.7
+
+# CSV Processing
+chardet==5.2.0
+
+# Testing
+pytest==7.4.3
+pytest-django==4.7.0
+factory-boy==3.3.0
+
+# WSGI Server
+gunicorn==21.2.0
+whitenoise==6.6.0
+
+# Translation
+babel==2.13.1
+polib==1.2.0
+openpyxl==3.1.2
+
+# PDF Export
+WeasyPrint==61.2

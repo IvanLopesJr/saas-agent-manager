@@ -1,0 +1,349 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #137ed0;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Empresas Ativas" %}</h6>
+                        <i class="bi bi-building" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ total_companies }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Atualmente ativas" %}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #20c997;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Membros Ativos" %}</h6>
+                        <i class="bi bi-person-badge" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ total_members }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Total de usuários" %}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #0dcaf0;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Chatbots Ativos" %}</h6>
+                        <i class="bi bi-robot" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">{{ total_chatbots }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Em operação" %}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0" style="height: 120px; background-color: #ffc107;">
+                <div class="card-body" style="padding: 0.85rem;">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Custo Mensal Estimado" %}</h6>
+                        <i class="bi bi-currency-dollar" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
+                    </div>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">R$ {{ total_monthly_cost|floatformat:2 }}</h2>
+                    <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Estimado" %}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-stretch">
+        <div class="col-12 col-lg-8">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-currency-exchange text-primary"></i>
+                        {% trans "Faturamento Mensal" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="billingEvolutionChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-clipboard-data text-primary"></i>
+                        {% trans "Modalidade de Cobrança" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="billingModeChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-stretch">
+        <div class="col-12 col-lg-8">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-graph-up text-primary"></i>
+                        {% trans "Evolução Mensal" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="memberEvolutionChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-person-check text-primary"></i>
+                        {% trans "Crescimento por Empresa" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="companyGrowthChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 align-items-stretch mb-4">
+        <div class="col-12 col-lg-8">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-clock-history text-primary"></i>
+                        {% trans "Últimas Atividades" %}
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if recent_activities %}
+                        <div class="activity-list p-3" style="max-height: 280px;">
+                            {% for activity in recent_activities %}
+                                <div class="activity-item py-2">
+                                    <div class="activity-icon">
+                                        <i class="bi bi-dot"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p class="activity-description">
+                                            {% if activity.user %}
+                                                <strong>{{ activity.user.get_full_name|default:activity.user.username }}</strong>
+                                            {% else %}
+                                                <strong>{% trans "Sistema" %}</strong>
+                                            {% endif %}
+                                            {{ activity.description }}
+                                        </p>
+                                        <small class="activity-time text-muted">
+                                            {{ activity.created_at|date:"d/m/Y H:i" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">{% trans "Nenhuma atividade recente" %}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-bar-chart text-primary"></i>
+                        {% trans "Top Empresas - Gráfico" %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height: 220px;">
+                        <canvas id="topCompaniesChart" style="width: 100%; height: 100%;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-people text-primary"></i>
+                        {% trans "Empresas com mais membros" %}
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    {% if top_companies_table %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans "Empresa" %}</th>
+                                        <th class="text-end">{% trans "Membros ativos" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for company in top_companies_table %}
+                                        <tr>
+                                            <td>{{ company.name }}</td>
+                                            <td class="text-end">{{ company.member_count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center text-muted py-4">
+                            <p class="mb-0">{% trans "Sem dados suficientes para este gráfico." %}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-clipboard-data text-primary"></i>
+                        {% trans "Resumo Geral" %}
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {% trans "Empresas Ativas" %}
+                            <span class="fw-bold">{{ total_companies }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {% trans "Membros Ativos" %}
+                            <span class="fw-bold">{{ total_members }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {% trans "Chatbots Ativos" %}
+                            <span class="fw-bold">{{ total_chatbots }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {% trans "Custo Mensal Estimado" %}
+                            <span class="fw-bold">R$ {{ total_monthly_cost|floatformat:2 }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{ billing_evolution_chart|json_script:"billing-evolution-data" }}
+    {{ billing_mode_chart|json_script:"billing-mode-data" }}
+    {{ member_evolution_chart|json_script:"member-evolution-data" }}
+    {{ company_growth_chart|json_script:"company-growth-data" }}
+    {{ top_companies_chart|json_script:"top-companies-data" }}
+    <script>
+        (function () {
+            if (typeof Chart === 'undefined') {
+                return;
+            }
+
+            const palette = ['#137ed0', '#20c997', '#0dcaf0', '#ffc107', '#6c757d', '#6610f2', '#d63384'];
+            const getColors = (count) => Array.from({ length: count }, (_, idx) => palette[idx % palette.length]);
+
+            const charts = [
+                { elementId: 'billingEvolutionChart', sourceId: 'billing-evolution-data', type: 'line', borderColor: '#137ed0', backgroundColor: 'rgba(19, 126, 208, 0.15)', fill: true },
+                { elementId: 'billingModeChart', sourceId: 'billing-mode-data', type: 'doughnut' },
+                { elementId: 'memberEvolutionChart', sourceId: 'member-evolution-data', type: 'line', borderColor: '#ffc107', backgroundColor: 'rgba(255, 193, 7, 0.15)', fill: true },
+                { elementId: 'companyGrowthChart', sourceId: 'company-growth-data', type: 'bar', borderColor: '#20c997', backgroundColor: 'rgba(32, 201, 151, 0.25)' },
+                { elementId: 'topCompaniesChart', sourceId: 'top-companies-data', type: 'doughnut' }
+            ];
+
+            charts.forEach(({ elementId, sourceId, type, borderColor, backgroundColor, fill }) => {
+                const canvas = document.getElementById(elementId);
+                const payloadEl = document.getElementById(sourceId);
+
+                if (!canvas || !payloadEl) {
+                    return;
+                }
+
+                const container = canvas.closest('.chart-container') || canvas.parentElement;
+                const payload = JSON.parse(payloadEl.textContent || '{}');
+                if (!payload.labels || !payload.labels.length) {
+                    if (container) {
+                        container.innerHTML = '<p class="text-muted text-center mb-0">{% trans "Sem dados suficientes para este gráfico." %}</p>';
+                    }
+                    return;
+                }
+
+                if (container) {
+                    canvas.height = container.clientHeight || canvas.height;
+                }
+
+                const datasetConfig = type === 'doughnut'
+                    ? {
+                        backgroundColor: getColors(payload.labels.length),
+                        borderWidth: 0
+                    }
+                    : {
+                        borderColor: borderColor,
+                        backgroundColor: backgroundColor || borderColor,
+                        fill: !!fill,
+                        tension: type === 'line' ? 0.4 : 0,
+                        borderWidth: 2
+                    };
+
+                new Chart(canvas.getContext('2d'), {
+                    type,
+                    data: {
+                        labels: payload.labels,
+                        datasets: [{
+                            data: payload.values,
+                            ...datasetConfig
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: type !== 'bar'
+                            }
+                        },
+                        scales: type === 'doughnut' ? {} : {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                },
+                                ticks: {
+                                    precision: 0
+                                }
+                            },
+                            x: type === 'bar' ? {
+                                grid: {
+                                    display: false
+                                }
+                            } : undefined
+                        }
+                    }
+                });
+            });
+        })();
+    </script>
+{% endblock %}
+

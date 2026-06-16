@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Preview de Importação" %}</h1>
+</div>
+
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i>
+    {% trans "Empresa:" %} <strong>{{ company.name }}</strong><br>
+    {% trans "Total de registros:" %} <strong>{{ members_data|length }}</strong>
+</div>
+
+{% if error_rows %}
+<div class="alert alert-danger">
+    <strong>{% trans "Erros encontrados durante a importação" %}</strong>
+    <p class="mb-2">{% trans "Corrija os campos destacados antes de confirmar a importação." %}</p>
+    <ul class="mb-0">
+        {% for row in error_rows %}
+            <li>
+                {% blocktrans with line=row.line_number %}
+                    Linha {{ line }}
+                {% endblocktrans %}: {{ row.error_messages|join:'; ' }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="form-section-title mb-0">{% trans "Dados a Serem Importados" %}</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{% trans "Nome" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Documento" %}</th>
+                        <th>{% trans "Telefone" %}</th>
+                        <th>{% trans "Departamento" %}</th>
+                        <th>{% trans "Regional" %}</th>
+                        <th>{% trans "Tipo de cargo" %}</th>
+                        <th>{% trans "Cargo" %}</th>
+                        <th>{% trans "Sexo" %}</th>
+                        <th>{% trans "Data Nascimento" %}</th>
+                        <th>{% trans "Data Admissão" %}</th>
+                        <th>{% trans "Cidade" %}</th>
+                        <th>{% trans "Estado" %}</th>
+                        <th>{% trans "País" %}</th>
+                        <th>{% trans "Concessionária" %}</th>
+                        <th>{% trans "Nº Concessionária" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th>{% trans "Chatbots" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in members_data %}
+                        {% with row_errors=data.errors %}
+                        <tr>
+                            <td>{{ data.line_number|default:forloop.counter }}</td>
+                            {% with field_errors=row_errors.name %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.name|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            {% with field_errors=row_errors.email %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.email|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            {% with field_errors=row_errors.identification_document %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.identification_document|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            {% with field_errors=row_errors.phone %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.phone|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            <td>{{ data.department|default:"-" }}</td>
+                            <td>{{ data.regional|default:"-" }}</td>
+                            {% with field_errors=row_errors.role_type %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.role_type_display|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            <td>{{ data.position|default:"-" }}</td>
+                            {% with field_errors=row_errors.sex %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.sex_display|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            {% with field_errors=row_errors.birth_date %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.birth_date|date:"d/m/Y"|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            {% with field_errors=row_errors.hire_date %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                {{ data.hire_date|date:"d/m/Y"|default:"-" }}
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            <td>{{ data.city|default:"-" }}</td>
+                            <td>{{ data.state|default:"-" }}</td>
+                            <td>{{ data.country|default:"-" }}</td>
+                            <td>{{ data.dealership|default:"-" }}</td>
+                            <td>{{ data.dealership_number|default:"-" }}</td>
+                            {% with field_errors=row_errors.status %}
+                            <td class="{% if field_errors %}table-danger{% endif %}">
+                                <span class="badge 
+                                    {% if data.status == 'active' %}bg-success
+                                    {% elif data.status == 'inactive' %}bg-danger
+                                    {% else %}bg-warning text-dark
+                                    {% endif %}">
+                                    {{ data.status|default:"-" }}
+                                </span>
+                                {% if field_errors %}
+                                    <div class="text-danger small">
+                                        {% for error in field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            {% endwith %}
+                            <td>{{ data.chatbots|default:"-" }}</td>
+                        </tr>
+                        {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i>
+                {% trans "Atenção: Esta ação irá criar" %} <strong>{{ members_data|length }}</strong>
+                {% trans "novos membros. Verifique os dados acima antes de confirmar." %}
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'member_import' %}{% if user.is_admin_company %}{% else %}?company={{ company.id }}{% endif %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> {% trans "Voltar" %}
+                </a>
+                <button type="submit" class="btn btn-success" {% if has_blocking_errors %}disabled{% endif %}>
+                    <i class="bi bi-check-circle"></i> {% trans "Confirmar Importação" %}
+                </button>
+            </div>
+
+            {% if has_blocking_errors %}
+                <div class="text-danger small mt-2">
+                    {% trans "Existem erros que impedem a importação. Corrija o arquivo e tente novamente." %}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+

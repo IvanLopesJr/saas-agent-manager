@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Usuários do Sistema" %}</h1>
+    <div class="page-actions">
+        <a href="{% url 'user_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> {% trans "Novo Usuário" %}
+        </a>
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 g-md-2 align-items-end">
+            <div class="col-12 col-md-6 col-lg">
+                <input type="text" name="search" class="form-control" placeholder="{% trans 'Buscar por nome, email ou usuário' %}" value="{{ search }}">
+            </div>
+            <div class="col-12 col-md-6 col-lg">
+                <select name="company" class="form-select">
+                    <option value="">{% trans "Todas as Empresas" %}</option>
+                    {% for company in companies %}
+                        <option value="{{ company.id }}" {% if selected_company == company.id|stringformat:'s' %}selected{% endif %}>
+                            {{ company.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <select name="role" class="form-select">
+                    <option value="">{% trans "Todos os Papéis" %}</option>
+                    <option value="super_admin" {% if selected_role == 'super_admin' %}selected{% endif %}>{% trans "Super Admin" %}</option>
+                    <option value="admin_company" {% if selected_role == 'admin_company' %}selected{% endif %}>{% trans "Admin Empresa" %}</option>
+                </select>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <select name="status" class="form-select">
+                    <option value="">{% trans "Todos os Status" %}</option>
+                    <option value="active" {% if selected_status == 'active' %}selected{% endif %}>{% trans "Ativo" %}</option>
+                    <option value="inactive" {% if selected_status == 'inactive' %}selected{% endif %}>{% trans "Inativo" %}</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-4 col-lg-auto">
+                <div class="d-flex gap-2 flex-column flex-sm-row">
+                    <a href="{% url 'user_list' %}" class="btn btn-clear-filter">
+                        <i class="bi bi-x-circle"></i> {% trans "Limpar" %}
+                    </a>
+                    <button type="submit" class="btn btn-filter">
+                        <i class="bi bi-search"></i> {% trans "Filtrar" %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Lista de Usuários -->
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-stack">
+                <thead>
+                    <tr>
+                        <th>{% trans "Nome" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Empresa" %}</th>
+                        <th>{% trans "Papel" %}</th>
+                        <th>{% trans "Último Login" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th class="text-end">{% trans "Ações" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td data-label="{% trans 'Nome' %}">
+                                <strong>{{ user.get_full_name|default:user.username }}</strong>
+                            </td>
+                            <td data-label="{% trans 'Email' %}">{{ user.email }}</td>
+                            <td data-label="{% trans 'Empresa' %}">
+                                {% if user.company %}
+                                    {{ user.company.name }}
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td data-label="{% trans 'Papel' %}">
+                                <span class="badge bg-{{ user.role|yesno:'primary,info' }}">
+                                    {{ user.get_role_display }}
+                                </span>
+                            </td>
+                            <td data-label="{% trans 'Último Login' %}">
+                                {% if user.last_login %}
+                                    {{ user.last_login|date:"d/m/Y H:i" }}
+                                {% else %}
+                                    <span class="text-muted">{% trans "Nunca" %}</span>
+                                {% endif %}
+                            </td>
+                            <td data-label="{% trans 'Status' %}">
+                                {% if user.status == 'active' %}
+                                    <span class="badge bg-success">{{ user.get_status_display }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{{ user.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end" data-label="{% trans 'Ações' %}">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'user_edit' user.pk %}" class="btn btn-outline-primary btn-sm" title="{% trans 'Editar' %}">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="post" action="{% url 'user_toggle_status' user.pk %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm" title="{% trans 'Ativar/Inativar' %}">
+                                            <i class="bi bi-toggle-on"></i>
+                                        </button>
+                                    </form>
+                                    <a href="{% url 'user_delete' user.pk %}" class="btn btn-outline-danger btn-sm" title="{% trans 'Deletar' %}">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">
+                                {% trans "Nenhum usuário encontrado." %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Paginação -->
+{% if users.has_other_pages %}
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if users.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ users.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if selected_company %}&company={{ selected_company }}{% endif %}{% if selected_role %}&role={{ selected_role }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
+                    </a>
+                </li>
+            {% endif %}
+            
+            <li class="page-item disabled">
+                <span class="page-link">
+                    {% trans "Página" %} {{ users.number }} {% trans "de" %} {{ users.paginator.num_pages }}
+                </span>
+            </li>
+            
+            {% if users.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ users.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if selected_company %}&company={{ selected_company }}{% endif %}{% if selected_role %}&role={{ selected_role }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}">
+                        {% trans "Próximo" %} <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}

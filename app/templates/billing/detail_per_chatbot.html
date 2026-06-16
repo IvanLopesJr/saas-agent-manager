@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Detalhes da Cobrança" %}</h1>
+    <div>
+        <a href="{% url 'billing_export_csv' billing.pk %}" class="btn btn-export">
+            <i class="bi bi-download"></i> {% trans "Exportar CSV" %}
+        </a>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>{{ billing.company.name }}</h4>
+                <p><strong>{% trans "Período:" %}</strong> {{ billing.period_start|date:"d/m/Y" }} - {{ billing.period_end|date:"d/m/Y" }}</p>
+                <p><strong>{% trans "Moeda:" %}</strong> {{ billing.company.get_currency_display }} ({{ billing.company.currency_symbol }})</p>
+                <p><strong>{% trans "Modo de Cobrança:" %}</strong> {{ billing.company.get_billing_mode_display }}</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <p><strong>{% trans "Admin Cobrado:" %}</strong>
+                    {% if billing.company.bill_admin_users %}
+                        <span class="badge bg-success">{% trans "Sim" %}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{% trans "Não" %}</span>
+                    {% endif %}
+                </p>
+                <h3 class="text-primary">{% trans "Total:" %} {{ billing.company.currency_symbol }} {{ billing.total_value|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="form-section-title mb-0">{% trans "Detalhamento" %}</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% trans "Usuário/Membro" %}</th>
+                        <th>{% trans "Chatbot" %}</th>
+                        <th class="text-end">{% trans "Preço Base" %}</th>
+                        <th>{% trans "Data de Ativação" %}</th>
+                        <th>{% trans "Cobrança" %}</th>
+                        <th class="text-end">{% trans "Valor" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in details %}
+                        <tr>
+                            <td>
+                                {% if detail.user %}
+                                    {{ detail.user.get_full_name|default:detail.user.username }}
+                                {% else %}
+                                    {{ detail.member.name }}
+                                {% endif %}
+                            </td>
+                            <td>{% if detail.chatbot %}{{ detail.chatbot.name }}{% else %}-{% endif %}</td>
+                            <td class="text-end">{{ billing.company.currency_symbol }} {{ detail.unit_price|floatformat:2 }}</td>
+                            <td>{{ detail.activation_date|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if detail.billing_type == 'full' %}
+                                    <span class="badge bg-success">{% trans "Integral" %}</span>
+                                {% else %}
+                                    <span class="badge bg-warning">{% trans "Proporcional" %}</span>
+                                    <small>({{ detail.days_active }} {% trans "dias" %})</small>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                {{ billing.company.currency_symbol }} {{ detail.value|floatformat:2 }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-end"><strong>{% trans "Total:" %}</strong></td>
+                        <td class="text-end">
+                            <strong>{{ billing.company.currency_symbol }} {{ billing.total_value|floatformat:2 }}</strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

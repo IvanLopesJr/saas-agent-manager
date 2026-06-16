@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Meus Chatbots" %}</h1>
+</div>
+
+<!-- Informações da Empresa -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5>{{ company.name }}</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>{% trans "Modo de Cobrança:" %}</strong> {{ company.get_billing_mode_display }}</p>
+                <p><strong>{% trans "Moeda:" %}</strong> {{ company.get_currency_display }} ({{ company.currency_symbol }})</p>
+            </div>
+            <div class="col-md-6">
+                <div class="alert alert-info mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    {% if company.billing_mode == 'per_user' %}
+                        {% trans "Você é cobrado por usuário, independente dos chatbots utilizados." %}
+                    {% else %}
+                        {% trans "Você é cobrado por cada chatbot que cada usuário utiliza." %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lista de Chatbots -->
+<div class="card">
+    <div class="card-body">
+        {% if chatbots_data %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Chatbot" %}</th>
+                            {% if company.billing_mode == 'per_user' %}
+                                <th>{% trans "Preço por Usuário" %}</th>
+                            {% endif %}
+                            <th>{% trans "Preço por Acesso" %}</th>
+                            <th>{% trans "Membros com Acesso" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in chatbots_data %}
+                            <tr>
+                                <td>
+                                    <strong>{{ data.chatbot.name }}</strong><br>
+                                    <small class="text-muted">{{ data.chatbot.description|truncatewords:15 }}</small>
+                                </td>
+                                {% if company.billing_mode == 'per_user' %}
+                                    <td>{{ company.currency_symbol }} {{ company.member_price|floatformat:2 }}</td>
+                                {% endif %}
+                                <td>{{ company.currency_symbol }} {{ data.price|floatformat:2 }}</td>
+                                <td>
+                                    <span class="badge bg-primary">
+                                        {{ data.member_count }} {% trans "membro" %}{{ data.member_count|pluralize }}
+                                    </span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-robot" style="font-size: 3rem; color: #ccc;"></i>
+                <p class="text-muted mt-3">{% trans "Nenhum chatbot vinculado à sua empresa." %}</p>
+                <p class="text-muted">{% trans "Contate o administrador do sistema para vincular chatbots." %}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

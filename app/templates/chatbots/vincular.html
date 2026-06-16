@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Vincular Chatbot a Empresas" %}</h1>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>{{ chatbot.name }}</h5>
+        <p class="text-muted">{{ chatbot.description }}</p>
+        <p><strong>{% trans "Preço Base:" %}</strong> R$ {{ chatbot.base_price|floatformat:2 }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">{% trans "Selecione as Empresas e Defina Preços" %}</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                {% trans "O preço aplicado depende do modo de cobrança da empresa. Deixe em branco para usar o preço base." %}
+            </div>
+            
+            {% if pending_unlink_entries %}
+            <div class="alert alert-warning alert-permanent">
+                <h6 class="mb-2">{% trans "Impacto da Desvinculação" %}</h6>
+                <p class="mb-2">
+                    {% trans "Ao salvar, os membros abaixo perderão acesso ao chatbot:" %}
+                </p>
+                <ul class="mb-0">
+                    {% for entry in pending_unlink_entries %}
+                        <li><strong>{{ entry.company.name }}</strong>: {{ entry.member_count }} {% trans "membro(s)" %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div class="companies-list">
+                {% for entry in company_entries %}
+                    {% with company=entry.company %}
+                    <div class="company-item mb-3 p-3 border rounded {% if entry.is_linked %}bg-light{% endif %}">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="companies" value="{{ company.id }}" 
+                                   id="company_{{ company.id }}" {% if entry.is_linked %}checked{% endif %}>
+                            <label class="form-check-label fw-bold" for="company_{{ company.id }}">
+                                {{ company.name }}
+                            </label>
+                            <span class="badge bg-info ms-2">{{ company.get_billing_mode_display }}</span>
+                            {% if entry.was_linked %}
+                                <span class="badge bg-success ms-1">{% trans "Já vinculado" %}</span>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="custom_price_{{ company.id }}" class="form-label small">
+                                    {% trans "Preço Personalizado" %} ({{ company.currency_symbol }})
+                                </label>
+                                <input type="number" step="0.01" name="custom_price_{{ company.id }}" 
+                                       id="custom_price_{{ company.id }}" class="form-control form-control-sm" 
+                                       value="{{ entry.custom_price_value }}"
+                                       placeholder="{% trans 'Deixe em branco para usar preço base' %}">
+                                <small class="form-text text-muted">
+                                    {% if company.billing_mode == 'per_user' %}
+                                        {% trans "Será cobrado por usuário" %}
+                                    {% else %}
+                                        {% trans "Será cobrado por usuário/chatbot" %}
+                                    {% endif %}
+                                </small>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">{% trans "Moeda" %}</label>
+                                <div class="form-control-plaintext small">
+                                    {{ company.get_currency_display }} ({{ company.currency_symbol }})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                {% empty %}
+                    <p class="text-muted">{% trans "Nenhuma empresa ativa disponível." %}</p>
+                {% endfor %}
+            </div>
+            
+            {% if require_confirmation %}
+            <div class="alert alert-danger alert-permanent mt-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="confirm_unlink" id="confirm_unlink"
+                           {% if confirm_ack %}checked{% endif %}>
+                    <label class="form-check-label" for="confirm_unlink">
+                        {% trans "Estou ciente de que os membros listados perderão o acesso ao chatbot." %}
+                    </label>
+                </div>
+                {% if confirm_error %}
+                <p class="text-danger small mb-0 mt-2">
+                    {% trans "Confirme o aviso acima antes de salvar as alterações." %}
+                </p>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'chatbot_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> {% trans "Cancelar" %}
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle"></i> {% trans "Salvar Vínculos" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

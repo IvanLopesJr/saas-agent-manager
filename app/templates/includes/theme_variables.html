@@ -1,0 +1,65 @@
+{% load theme_extras %}
+{% if system_settings %}
+<style>
+    :root {
+        --primary-color: {{ system_settings.primary_color|default:'#007bff' }};
+        --secondary-color: {{ system_settings.secondary_color|default:'#6c757d' }};
+        --link-color: {{ system_settings.link_color|default:'#0d6efd' }};
+        --btn-primary-bg: {{ system_settings.btn_primary_bg|default:'#0d6efd' }};
+        --btn-primary-text: {{ system_settings.btn_primary_text|default:'#ffffff' }};
+        --btn-secondary-bg: {{ system_settings.btn_secondary_bg|default:'#6c757d' }};
+        --btn-secondary-text: {{ system_settings.btn_secondary_text|default:'#ffffff' }};
+        --btn-success-bg: {{ system_settings.btn_success_bg|default:'#198754' }};
+        --btn-success-text: {{ system_settings.btn_success_text|default:'#ffffff' }};
+        --btn-info-bg: {{ system_settings.btn_info_bg|default:'#17a2b8' }};
+        --btn-info-text: {{ system_settings.btn_info_text|default:'#ffffff' }};
+        --btn-warning-bg: {{ system_settings.btn_warning_bg|default:'#ffc107' }};
+        --btn-warning-text: {{ system_settings.btn_warning_text|default:'#212529' }};
+        --btn-danger-bg: {{ system_settings.btn_danger_bg|default:'#dc3545' }};
+        --btn-danger-text: {{ system_settings.btn_danger_text|default:'#ffffff' }};
+        --btn-filter-bg: {{ system_settings.btn_filter_bg|default:'#0d6efd' }};
+        --btn-filter-text: {{ system_settings.btn_filter_text|default:'#ffffff' }};
+        --btn-clear-filter-bg: {{ system_settings.btn_clear_filter_bg|default:'#6c757d' }};
+        --btn-clear-filter-text: {{ system_settings.btn_clear_filter_text|default:'#ffffff' }};
+        --btn-export-bg: {{ system_settings.btn_export_bg|default:'#0dcaf0' }};
+        --btn-export-text: {{ system_settings.btn_export_text|default:'#212529' }};
+        --btn-import-bg: {{ system_settings.btn_import_bg|default:'#198754' }};
+        --btn-import-text: {{ system_settings.btn_import_text|default:'#ffffff' }};
+        --success-color: {{ system_settings.btn_success_bg|default:'#198754' }};
+        --danger-color: {{ system_settings.btn_danger_bg|default:'#dc3545' }};
+        --warning-color: {{ system_settings.btn_warning_bg|default:'#ffc107' }};
+        --info-color: {{ system_settings.btn_info_bg|default:'#17a2b8' }};
+        --bg-sidebar: {{ system_settings.sidebar_bg|default:'#2c3e50' }};
+        --sidebar-text-color: {{ system_settings.sidebar_text|default:'#f8f9fa' }};
+        --sidebar-active-bg-color: {{ system_settings.sidebar_active_bg|default:'#1f2d3d' }};
+        --sidebar-active-text-color: {{ system_settings.sidebar_active_text|default:'#ffffff' }};
+        --font-size-base: {{ system_settings.base_font_size|default:'16px' }};
+        --heading-font-size: {{ system_settings.heading_font_size|default:'1.75rem' }};
+        --sidebar-font-size: {{ system_settings.sidebar_font_size|default:'0.95rem' }};
+        --chart-title-font-size: {{ system_settings.chart_title_font_size|default:'1.25rem' }};
+        --light-color: {{ system_settings.light_color|default:'#f8f9fa' }};
+        --bg-body: {{ system_settings.page_background_color|default:'#f5f7fa' }};
+        --table-row-bg: {{ system_settings.list_item_background_color|default:'#ffffff' }};
+        --table-row-bg-rgb: {{ system_settings.list_item_background_color|default:'#ffffff'|hex_to_rgb }};
+
+        /* Bootstrap harmony */
+        --bs-body-font-size: {{ system_settings.base_font_size|default:'16px' }};
+        --bs-body-bg: var(--bg-body);
+        --bs-body-bg-rgb: {{ system_settings.page_background_color|default:'#f5f7fa'|hex_to_rgb }};
+        --bs-link-color: var(--link-color);
+        --bs-link-hover-color: var(--link-color);
+        --bs-primary: var(--primary-color);
+        --bs-primary-rgb: {{ system_settings.primary_color|default:'#007bff'|hex_to_rgb }};
+        --bs-secondary: var(--secondary-color);
+        --bs-secondary-rgb: {{ system_settings.secondary_color|default:'#6c757d'|hex_to_rgb }};
+        --bs-success: var(--btn-success-bg);
+        --bs-success-rgb: {{ system_settings.btn_success_bg|default:'#198754'|hex_to_rgb }};
+        --bs-info: var(--btn-info-bg);
+        --bs-info-rgb: {{ system_settings.btn_info_bg|default:'#17a2b8'|hex_to_rgb }};
+        --bs-warning: var(--btn-warning-bg);
+        --bs-warning-rgb: {{ system_settings.btn_warning_bg|default:'#ffc107'|hex_to_rgb }};
+        --bs-danger: var(--btn-danger-bg);
+        --bs-danger-rgb: {{ system_settings.btn_danger_bg|default:'#dc3545'|hex_to_rgb }};
+    }
+</style>
+{% endif %}

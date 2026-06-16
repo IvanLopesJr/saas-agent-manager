@@ -1,0 +1,109 @@
+{% load static %}
+{% load i18n %}
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            {% if user.is_admin_company and user.company.logo_url %}
+                <img src="{{ user.company.logo_url.url }}" alt="Logo">
+            {% elif system_settings.logo_url %}
+                <img src="{{ system_settings.logo_url.url }}" alt="Logo">
+            {% else %}
+                <img src="{% static 'images/logo-default.svg' %}" alt="Logo">
+            {% endif %}
+        </div>
+        <button class="btn-close-sidebar d-lg-none" onclick="toggleSidebar()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+    
+    <div class="sidebar-menu">
+        <a href="{% url 'dashboard' %}" class="sidebar-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+            <i class="bi bi-speedometer2"></i>
+            <span>{% trans "Dashboard" %}</span>
+        </a>
+        
+        {% if user.is_super_admin %}
+            <!-- Seção Administração -->
+            <div class="sidebar-section-title">
+                <small>{% trans "ADMINISTRAÇÃO" %}</small>
+            </div>
+            
+            <a href="{% url 'user_list' %}" class="sidebar-item {% if 'user' in request.path %}active{% endif %}">
+                <i class="bi bi-people"></i>
+                <span>{% trans "Usuários" %}</span>
+            </a>
+            
+            <a href="{% url 'company_list' %}" class="sidebar-item {% if 'compan' in request.path %}active{% endif %}">
+                <i class="bi bi-building"></i>
+                <span>{% trans "Empresas" %}</span>
+            </a>
+            
+            <a href="{% url 'chatbot_list' %}" class="sidebar-item {% if 'chatbot' in request.path and 'meus' not in request.path %}active{% endif %}">
+                <i class="bi bi-robot"></i>
+                <span>{% trans "Chatbots" %}</span>
+            </a>
+        {% endif %}
+        
+        <!-- Seção Gestão -->
+        <div class="sidebar-section-title">
+            <small>{% trans "GESTÃO" %}</small>
+        </div>
+        
+        <a href="{% url 'member_list' %}" class="sidebar-item {% if 'member' in request.path %}active{% endif %}">
+            <i class="bi bi-person-badge"></i>
+            <span>{% trans "Membros" %}</span>
+        </a>
+        
+        <a href="{% url 'billing_list' %}" class="sidebar-item {% if 'billing' in request.path %}active{% endif %}">
+            <i class="bi bi-currency-dollar"></i>
+            <span>{% trans "Cobranças" %}</span>
+        </a>
+        
+        {% if user.is_admin_company %}
+            <a href="{% url 'chatbot_meus_chatbots' %}" class="sidebar-item {% if 'meus-chatbots' in request.path %}active{% endif %}">
+                <i class="bi bi-robot"></i>
+                <span>{% trans "Meus Chatbots" %}</span>
+            </a>
+        {% endif %}
+        
+        <!-- Seção Sistema -->
+        <div class="sidebar-section-title">
+            <small>{% trans "SISTEMA" %}</small>
+        </div>
+        
+        {% if user.is_super_admin %}
+            <a href="{% url 'system_settings' %}" class="sidebar-item {% if 'system' in request.path %}active{% endif %}">
+                <i class="bi bi-gear"></i>
+                <span>{% trans "Configurações" %}</span>
+            </a>
+        {% else %}
+            <a href="{% url 'company_settings' %}" class="sidebar-item {% if 'company_settings' in request.path %}active{% endif %}">
+                <i class="bi bi-gear"></i>
+                <span>{% trans "Configurações" %}</span>
+            </a>
+        {% endif %}
+    </div>
+    
+    <!-- User Profile Footer -->
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-user-avatar">
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="{{ user.get_full_name }}">
+                {% else %}
+                    <div class="avatar-placeholder">
+                        {{ user.first_name|first|default:user.username|first|upper }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="sidebar-user-info">
+                <div class="sidebar-user-name">{{ user.get_full_name|default:user.username }}</div>
+                <small class="sidebar-user-email">{{ user.email }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay para mobile -->
+<div class="sidebar-overlay d-lg-none" id="sidebarOverlay"></div>

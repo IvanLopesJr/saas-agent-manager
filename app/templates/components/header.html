@@ -1,0 +1,143 @@
+{% load static %}
+{% load i18n %}
+
+<header class="main-header">
+    <div class="header-left">
+        <button class="btn-toggle-sidebar d-lg-none" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+        </button>
+        <h1 class="header-title d-none d-md-block">{{ page_title|default:_("Dashboard") }}</h1>
+    </div>
+    
+    <div class="header-right">
+        <!-- Language Selector -->
+        <div class="dropdown">
+            <button class="btn btn-link language-selector" type="button" data-bs-toggle="dropdown" aria-label="{% trans 'Selecionar idioma' %}">
+                {% with current_language=LANGUAGE_CODE|default:'pt-br' %}
+                    {% if current_language|lower == 'pt-br' %}
+                        {% with flag_class='fi fi-br' %}
+                            <span class="{{ flag_class }} language-flag ms-2 me-2"></span>
+                        {% endwith %}
+                    {% elif current_language|lower == 'en' %}
+                        {% with flag_class='fi fi-us' %}
+                            <span class="{{ flag_class }} language-flag ms-2 me-2"></span>
+                        {% endwith %}
+                    {% elif current_language|lower == 'es' %}
+                        {% with flag_class='fi fi-es' %}
+                            <span class="{{ flag_class }} language-flag ms-2 me-2"></span>
+                        {% endwith %}
+                    {% else %}
+                        <span class="language-flag ms-2 me-2" style="display:flex; align-items:center;">
+                            <i class="bi bi-flag"></i>
+                        </span>
+                    {% endif %}
+                {% endwith %}
+                <span class="language-code-text d-none d-md-inline">{{ LANGUAGE_CODE|default:"PT"|upper }}</span>
+                <i class="bi bi-chevron-down ms-1 d-none d-md-inline" style="font-size: 0.75rem;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <form method="post" action="{% url 'set_language' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="language" value="pt-br">
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <button class="dropdown-item" type="submit">
+                            <span class="fi fi-br language-flag"></span>
+                            <span class="language-name">{% trans "Português (PT)" %}</span>
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form method="post" action="{% url 'set_language' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="language" value="en">
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <button class="dropdown-item" type="submit">
+                            <span class="fi fi-us language-flag"></span>
+                            <span class="language-name">{% trans "English (EN)" %}</span>
+                        </button>
+                    </form>
+                </li>
+                <li>
+                    <form method="post" action="{% url 'set_language' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="language" value="es">
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <button class="dropdown-item" type="submit">
+                            <span class="fi fi-es language-flag"></span>
+                            <span class="language-name">{% trans "Español (ES)" %}</span>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        
+
+        
+        <!-- User Menu -->
+        <div class="dropdown">
+            <button class="btn btn-link user-menu-btn" type="button" data-bs-toggle="dropdown" aria-label="{% trans 'Menu do usuário' %}">
+                <div class="user-avatar-small">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="{{ user.get_full_name }}">
+                    {% else %}
+                        <div class="avatar-placeholder-small">
+                            {{ user.first_name|first|default:user.username|first|upper }}
+                        </div>
+                    {% endif %}
+                </div>
+                <span class="d-none d-lg-inline ms-2">{{ user.get_full_name|default:user.username }}</span>
+                <i class="bi bi-chevron-down ms-1 d-none d-lg-inline" style="font-size: 0.75rem;"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end user-dropdown">
+                <li class="dropdown-header">
+                    <div class="user-info-header">
+                        <div class="user-avatar-medium">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}" alt="{{ user.get_full_name }}">
+                            {% else %}
+                                <div class="avatar-placeholder-medium">
+                                    {{ user.first_name|first|default:user.username|first|upper }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="user-details">
+                            <strong>{{ user.get_full_name|default:user.username }}</strong>
+                            <small class="d-block text-muted">{{ user.email }}</small>
+                            {% if user.company %}
+                                <span class="badge bg-primary mt-1">{{ user.company.name }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'user_profile' %}">
+                        <i class="bi bi-person me-2"></i> {% trans "Meu Perfil" %}
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="{% url 'change_password' %}">
+                        <i class="bi bi-key me-2"></i> {% trans "Alterar Senha" %}
+                    </a>
+                </li>
+                {% if user.is_admin_company %}
+                    <li>
+                        <a class="dropdown-item" href="{% url 'company_settings' %}">
+                            <i class="bi bi-building me-2"></i> {% trans "Configurações da Empresa" %}
+                        </a>
+                    </li>
+                {% endif %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="dropdown-item text-danger" type="submit">
+                        <i class="bi bi-box-arrow-right me-2"></i> {% trans "Sair" %}
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>

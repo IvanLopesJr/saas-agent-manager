@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ company.name }}</h1>
+    <div>
+        <a href="{% url 'company_edit' company.pk %}" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> {% trans "Editar" %}
+        </a>
+        <form method="post" action="{% url 'company_toggle_status' company.pk %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">
+                <i class="bi bi-toggle-on"></i>
+                {% if company.status == 'active' %}
+                    {% trans "Inativar" %}
+                {% else %}
+                    {% trans "Ativar" %}
+                {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="row g-3">
+    <!-- Informações da Empresa -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Informações da Empresa" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>{% trans "Documento de identificação Fiscal:" %}</strong> {{ company.identification_document }}</p>
+                        <p><strong>{% trans "Email:" %}</strong> {{ company.email }}</p>
+                        <p><strong>{% trans "Telefone:" %}</strong> {{ company.phone|default:"-" }}</p>
+                        <p><strong>{% trans "Endereço:" %}</strong> {{ company.address|default:"-" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>{% trans "Moeda:" %}</strong> {{ company.get_currency_display }} ({{ company.currency_symbol }})</p>
+                        <p><strong>{% trans "Modo de Cobrança:" %}</strong> {{ company.get_billing_mode_display }}</p>
+                        <p><strong>{% trans "Preço por Membro:" %}</strong> {{ company.currency_symbol }} {{ company.member_price }}</p>
+                        <p><strong>{% trans "Cobra Admin:" %}</strong> 
+                            {% if company.bill_admin_users %}
+                                <span class="badge bg-success">{% trans "Sim" %}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{% trans "Não" %}</span>
+                            {% endif %}
+                        </p>
+                        <p><strong>{% trans "Status:" %}</strong> 
+                            <span class="badge bg-{{ company.status|yesno:'success,danger' }}">
+                                {{ company.get_status_display }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Últimas Cobranças -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Últimas Cobranças" %}</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_billings %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Período" %}</th>
+                                    <th class="text-end">{% trans "Valor Total" %}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for billing in recent_billings %}
+                                    <tr>
+                                        <td>{{ billing.period_start|date:"d/m/Y" }} - {{ billing.period_end|date:"d/m/Y" }}</td>
+                                        <td class="text-end">{{ company.currency_symbol }} {{ billing.total_value|floatformat:2 }}</td>
+                                        <td class="text-end">
+                                            <a href="{% url 'billing_detail' billing.pk %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">{% trans "Nenhuma cobrança gerada" %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Estatísticas -->
+    <div class="col-lg-4">
+        <div class="card company-stats-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Estatísticas" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="stat-item-detail">
+                    <i class="bi bi-person-badge text-primary"></i>
+                    <div>
+                        <h3>{{ total_members }}</h3>
+                        <p>{% trans "Membros Ativos" %}</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item-detail">
+                    <i class="bi bi-robot text-info"></i>
+                    <div>
+                        <h3>{{ total_chatbots }}</h3>
+                        <p>{% trans "Chatbots Vinculados" %}</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item-detail">
+                    <i class="bi bi-people text-success"></i>
+                    <div>
+                        <h3>{{ total_users }}</h3>
+                        <p>{% trans "Usuários Admin" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ações Rápidas -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Ações Rápidas" %}</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'member_list' %}?company={{ company.pk }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="bi bi-person-badge"></i> {% trans "Ver Membros" %}
+                </a>
+                <a href="{% url 'billing_list' %}?company={{ company.pk }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="bi bi-currency-dollar"></i> {% trans "Ver Cobranças" %}
+                </a>
+                <a href="{% url 'user_create' %}?company={{ company.pk }}" class="btn btn-outline-success w-100">
+                    <i class="bi bi-person-plus"></i> {% trans "Novo Admin" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

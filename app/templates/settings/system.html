@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Configurações do Sistema" %}</h1>
+</div>
+
+<form method="post" enctype="multipart/form-data" id="settingsForm">
+    {% csrf_token %}
+
+    {# ── IDENTIDADE ── #}
+    <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0">{% trans "Identidade" %}</h5></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4"><div class="mb-3">{{ form.system_name.label_tag }}{{ form.system_name }}{% if form.system_name.errors %}<div class="text-danger small">{{ form.system_name.errors }}</div>{% endif %}</div></div>
+                <div class="col-md-4"><div class="mb-3">{{ form.logo_url.label_tag }}{{ form.logo_url }}{% if form.logo_url.errors %}<div class="text-danger small">{{ form.logo_url.errors }}</div>{% endif %}</div></div>
+                <div class="col-md-4"><div class="mb-3">{{ form.custom_favicon.label_tag }}{{ form.custom_favicon }}{% if form.custom_favicon.errors %}<div class="text-danger small">{{ form.custom_favicon.errors }}</div>{% endif %}<small class="form-text text-muted">{% trans "Use .png, .ico ou .svg" %}</small></div></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6"><div class="mb-3">{{ form.login_background_url.label_tag }}{{ form.login_background_url }}</div></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── CORES DO TEMA ── #}
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{% trans "Cores do Tema" %}</h5>
+            <button type="submit" form="resetThemeForm" class="btn btn-outline-danger btn-sm" onclick="return confirm('{% trans "Tem certeza que deseja restaurar a aparência padrão?" %}')">
+                <i class="bi bi-arrow-counterclockwise"></i> {% trans "Restaurar" %}
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2"><div class="mb-3">{{ form.primary_color.label_tag }}{{ form.primary_color }}</div></div>
+                <div class="col-md-2"><div class="mb-3">{{ form.secondary_color.label_tag }}{{ form.secondary_color }}</div></div>
+                <div class="col-md-2"><div class="mb-3">{{ form.link_color.label_tag }}{{ form.link_color }}</div></div>
+                <div class="col-md-2"><div class="mb-3">{{ form.light_color.label_tag }}{{ form.light_color }}</div></div>
+                <div class="col-md-2"><div class="mb-3">{{ form.page_background_color.label_tag }}{{ form.page_background_color }}</div></div>
+                <div class="col-md-2"><div class="mb-3">{{ form.list_item_background_color.label_tag }}{{ form.list_item_background_color }}</div></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── SIDEBAR ── #}
+    <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0">{% trans "Sidebar" %}</h5></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3"><div class="mb-3">{{ form.sidebar_bg.label_tag }}{{ form.sidebar_bg }}</div></div>
+                <div class="col-md-3"><div class="mb-3">{{ form.sidebar_text.label_tag }}{{ form.sidebar_text }}</div></div>
+                <div class="col-md-3"><div class="mb-3">{{ form.sidebar_active_bg.label_tag }}{{ form.sidebar_active_bg }}</div></div>
+                <div class="col-md-3"><div class="mb-3">{{ form.sidebar_active_text.label_tag }}{{ form.sidebar_active_text }}</div></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── TIPOGRAFIA ── #}
+    <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0">{% trans "Tipografia" %}</h5></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3"><div class="mb-3">{{ form.base_font_size.label_tag }}{{ form.base_font_size }}<small class="form-text text-muted">{% trans "Ex.: 16px" %}</small></div></div>
+                <div class="col-md-3"><div class="mb-3">{{ form.heading_font_size.label_tag }}{{ form.heading_font_size }}<small class="form-text text-muted">{% trans "Ex.: 1.75rem" %}</small></div></div>
+                <div class="col-md-3"><div class="mb-3">{{ form.sidebar_font_size.label_tag }}{{ form.sidebar_font_size }}<small class="form-text text-muted">{% trans "Ex.: 0.95rem" %}</small></div></div>
+                <div class="col-md-3"><div class="mb-3">{{ form.chart_title_font_size.label_tag }}{{ form.chart_title_font_size }}<small class="form-text text-muted">{% trans "Ex.: 1.25rem" %}</small></div></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── BOTÕES (colapsado) ── #}
+    <div class="card mb-4">
+        <div class="card-header" role="button" data-bs-toggle="collapse" data-bs-target="#collapseButtons" aria-expanded="false" style="cursor:pointer;">
+            <h5 class="mb-0 d-flex align-items-center gap-2">
+                <i class="bi bi-chevron-right collapse-icon"></i> {% trans "Botões" %}
+                <small class="text-muted fw-normal">{% trans "10 tipos de botão" %}</small>
+            </h5>
+        </div>
+        <div class="collapse" id="collapseButtons">
+            <div class="card-body">
+                <p class="text-muted small">{% trans "Cada botão tem cor de fundo (bg) e cor do texto (text)." %}</p>
+                <div class="row">
+                    {% for field in form %}
+                        {% if 'btn_' in field.name and '_text' in field.name or '_bg' in field.name %}
+                            {% if '_bg' in field.name %}
+                                {% with label=field.label|cut:'Cor do Botão '|cut:'Cor do Texto do Botão '|cut:'Cor do Botão de '|cut:'Cor do Texto de '|cut:'Cor do Texto do Botão de '|cut:' de ' %}
+                                {% endwith %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Primário (bg)" %}</label>{{ form.btn_primary_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Primário (text)" %}</label>{{ form.btn_primary_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Secundário (bg)" %}</label>{{ form.btn_secondary_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Secundário (text)" %}</label>{{ form.btn_secondary_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Sucesso (bg)" %}</label>{{ form.btn_success_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Sucesso (text)" %}</label>{{ form.btn_success_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Info (bg)" %}</label>{{ form.btn_info_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Info (text)" %}</label>{{ form.btn_info_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Alerta (bg)" %}</label>{{ form.btn_warning_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Alerta (text)" %}</label>{{ form.btn_warning_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Perigo (bg)" %}</label>{{ form.btn_danger_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Perigo (text)" %}</label>{{ form.btn_danger_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Filtro (bg)" %}</label>{{ form.btn_filter_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Filtro (text)" %}</label>{{ form.btn_filter_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Limpar filtros (bg)" %}</label>{{ form.btn_clear_filter_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Limpar filtros (text)" %}</label>{{ form.btn_clear_filter_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Exportar (bg)" %}</label>{{ form.btn_export_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Exportar (text)" %}</label>{{ form.btn_export_text }}</div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3"><label class="small text-muted">{% trans "Importar (bg)" %}</label>{{ form.btn_import_bg }}</div>
+                        <div class="mb-3"><label class="small text-muted">{% trans "Importar (text)" %}</label>{{ form.btn_import_text }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ── RODAPÉ & DOMÍNIO ── #}
+    <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0">{% trans "Rodapé & Domínio" %}</h5></div>
+        <div class="card-body">
+            <h6 class="text-muted">{% trans "Rodapé" %}</h6>
+            <div class="row mb-3">
+                <div class="col-md-8"><div class="mb-3">{{ form.footer_text.label_tag }}{{ form.footer_text }}<small class="form-text text-muted">{% trans "Informações legais exibidas no rodapé." %}</small></div></div>
+                <div class="col-md-4"><div class="form-check mt-4">{{ form.show_footer_text }}{{ form.show_footer_text.label_tag }}</div></div>
+            </div>
+            <h6 class="text-muted">{% trans "Domínio Personalizado" %}</h6>
+            <div class="row mb-3">
+                <div class="col-md-6"><div class="mb-3">{{ form.custom_domain.label_tag }}{{ form.custom_domain }}<small class="form-text text-muted">{% trans "Inclua o protocolo (ex.: https://app.suaempresa.com)." %}</small></div></div>
+                <div class="col-md-6"><div class="form-check mt-4">{{ form.use_custom_domain }}{{ form.use_custom_domain.label_tag }}</div></div>
+            </div>
+            <h6 class="text-muted">{% trans "Suporte" %}</h6>
+            <div class="row">
+                <div class="col-md-6"><div class="mb-3">{{ form.support_email.label_tag }}{{ form.support_email }}<small class="form-text text-muted">{% trans "Exibido nos e-mails como canal de suporte." %}</small></div></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── COBRANÇA ── #}
+    <div class="card mb-4">
+        <div class="card-header"><h5 class="mb-0">{% trans "Cobrança" %}</h5></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6"><div class="mb-3">{{ form.billing_cutoff_day.label_tag }}{{ form.billing_cutoff_day }}<small class="form-text text-muted">{% trans "Ativações até este dia são cobradas integralmente" %}</small></div></div>
+                <div class="col-md-6"><div class="form-check mt-4">{{ form.default_bill_admin_users }}{{ form.default_bill_admin_users.label_tag }}</div></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── SMTP (colapsado) ── #}
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center gap-2" role="button" data-bs-toggle="collapse" data-bs-target="#collapseSmtp" aria-expanded="false" style="cursor:pointer;">
+            <i class="bi bi-chevron-right collapse-icon"></i>
+            <h5 class="mb-0">{% trans "SMTP" %}</h5>
+            {% if smtp_configured %}
+                <span class="badge bg-success">✓ {% trans "Configurado" %}</span>
+            {% else %}
+                <span class="badge bg-warning text-dark">⚠ {% trans "Não configurado" %}</span>
+            {% endif %}
+        </div>
+        <div class="collapse" id="collapseSmtp">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6"><div class="mb-3">{{ form.smtp_host.label_tag }}{{ form.smtp_host }}</div></div>
+                    <div class="col-md-6"><div class="mb-3">{{ form.smtp_port.label_tag }}{{ form.smtp_port }}</div></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6"><div class="mb-3">{{ form.smtp_user.label_tag }}{{ form.smtp_user }}</div></div>
+                    <div class="col-md-6">
+                        <div class="mb-3">{{ form.smtp_password.label_tag }}{{ form.smtp_password }}
+                            {% if smtp_configured %}<small class="form-text text-muted">{% trans "Deixe em branco para manter a atual." %}</small>{% endif %}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" form="testSmtpForm" class="btn btn-outline-primary"><i class="bi bi-envelope"></i> {% trans "Testar Envio" %}</button>
+            </div>
+        </div>
+    </div>
+
+    {# ── AÇÕES ── #}
+    <div class="d-flex justify-content-end gap-2 mb-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> {% trans "Voltar" %}</a>
+        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> {% trans "Salvar" %}</button>
+    </div>
+</form>
+<form method="post" action="{% url 'reset_theme' %}" id="resetThemeForm">
+    {% csrf_token %}
+</form>
+<form method="post" action="{% url 'test_smtp' %}" id="testSmtpForm">
+    {% csrf_token %}
+</form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input[type="color"]').forEach(function(input) {
+        input.addEventListener('change', function() {
+            document.documentElement.style.setProperty('--' + this.name, this.value);
+        });
+    });
+    document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var icon = this.querySelector('.collapse-icon');
+            if (icon) icon.classList.toggle('bi-chevron-right');
+            if (icon) icon.classList.toggle('bi-chevron-down');
+        });
+    });
+});
+</script>
+{% endblock %}

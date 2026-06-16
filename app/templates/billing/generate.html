@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Gerar Cobrança" %}</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.period_start.label_tag }}
+                        {{ form.period_start }}
+                        {% if form.period_start.errors %}
+                            <div class="text-danger small">{{ form.period_start.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.period_end.label_tag }}
+                        {{ form.period_end }}
+                        {% if form.period_end.errors %}
+                            <div class="text-danger small">{{ form.period_end.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">{% trans "Empresas" %}</label>
+                {{ form.companies }}
+                {% if form.companies.errors %}
+                    <div class="text-danger small">{{ form.companies.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">
+                    {% trans "Deixe em branco para gerar para todas as empresas ativas" %}
+                </small>
+            </div>
+            
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                {% trans "A cobrança será gerada considerando:" %}
+                <ul class="mb-0">
+                    <li>{% trans "Membros ativos no período" %}</li>
+                    <li>{% trans "Chatbots vinculados (se modo = Por Usuário/Chatbot)" %}</li>
+                    <li>{% trans "Dia de corte configurado no sistema" %}</li>
+                    <li>{% trans "Se a empresa cobra Admin ou não" %}</li>
+                </ul>
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'billing_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> {% trans "Cancelar" %}
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle"></i> {% trans "Gerar Cobranças" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

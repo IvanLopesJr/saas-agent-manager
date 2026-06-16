@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Membros" %}</h1>
+    <div class="page-actions">
+        <a href="{% url 'member_create' %}{% if user.is_admin_company %}{% else %}?company={{ selected_company }}{% endif %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> {% trans "Novo Membro" %}
+        </a>
+        <a href="{% url 'member_import' %}{% if user.is_admin_company %}{% else %}?company={{ selected_company }}{% endif %}" class="btn btn-import">
+            <i class="bi bi-upload"></i> {% trans "Importar" %}
+        </a>
+        <a href="{% url 'member_export' %}{% if selected_company %}?company={{ selected_company }}{% endif %}" class="btn btn-export">
+            <i class="bi bi-download"></i> {% trans "Exportar" %}
+        </a>
+    </div>
+</div>
+
+<!-- Estatísticas -->
+<div class="row g-3 mb-4">
+    <div class="col-sm-6 col-lg-3">
+        <div class="stat-card-small">
+            <div class="stat-icon bg-primary">
+                <i class="bi bi-people"></i>
+            </div>
+            <div>
+                <h4>{{ total_members }}</h4>
+                <p>{% trans "Total" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="stat-card-small">
+            <div class="stat-icon bg-success">
+                <i class="bi bi-check-circle"></i>
+            </div>
+            <div>
+                <h4>{{ active_members }}</h4>
+                <p>{% trans "Ativos" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="stat-card-small">
+            <div class="stat-icon bg-warning">
+                <i class="bi bi-hourglass-split"></i>
+            </div>
+            <div>
+                <h4>{{ pending_members }}</h4>
+                <p>{% trans "Pendentes" %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="stat-card-small">
+            <div class="stat-icon bg-danger">
+                <i class="bi bi-x-circle"></i>
+            </div>
+            <div>
+                <h4>{{ inactive_members }}</h4>
+                <p>{% trans "Inativos" %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 g-md-2 align-items-end">
+            {% if user.is_super_admin %}
+                <div class="col-12 col-md-6 col-lg-2">
+                    <select name="company" class="form-select">
+                        <option value="">{% trans "Todas as Empresas" %}</option>
+                        {% for company in companies %}
+                            <option value="{{ company.id }}" {% if selected_company == company.id|stringformat:'s' %}selected{% endif %}>
+                                {{ company.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+            <div class="col-12 col-md-6 col-lg">
+                <input type="text" name="search" class="form-control" placeholder="{% trans 'Buscar por nome, email, documento, departamento ou telefone' %}" value="{{ search }}">
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <select name="status" class="form-select">
+                    <option value="">{% trans "Todos os Status" %}</option>
+                    <option value="active" {% if selected_status == 'active' %}selected{% endif %}>{% trans "Ativo" %}</option>
+                    <option value="inactive" {% if selected_status == 'inactive' %}selected{% endif %}>{% trans "Inativo" %}</option>
+                    <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>{% trans "Pendente" %}</option>
+                </select>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <select name="chatbot" class="form-select">
+                    <option value="">{% trans "Todos os Chatbots" %}</option>
+                    {% for chatbot in chatbots %}
+                        <option value="{{ chatbot.id }}" {% if selected_chatbot == chatbot.id|stringformat:'s' %}selected{% endif %}>
+                            {{ chatbot.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-auto">
+                <div class="d-flex gap-2 flex-column flex-sm-row">
+                    <a href="{% url 'member_list' %}" class="btn btn-clear-filter">
+                        <i class="bi bi-x-circle"></i> {% trans "Limpar" %}
+                    </a>
+                    <button type="submit" class="btn btn-filter">
+                        <i class="bi bi-search"></i> {% trans "Filtrar" %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Lista de Membros -->
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-stack">
+                <thead>
+                    <tr>
+                        <th>{% trans "Nome" %}</th>
+                        {% if user.is_super_admin %}
+                            <th>{% trans "Empresa" %}</th>
+                        {% endif %}
+                        <th>{% trans "Telefone" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Departamento" %}</th>
+                        <th>{% trans "Chatbots" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th class="text-end">{% trans "Ações" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in members %}
+                        <tr>
+                            <td data-label="{% trans 'Nome' %}">
+                                <strong>{{ member.name }}</strong><br>
+                                <!-- <small class="text-muted">{{ member.email }}</small> -->
+                            </td>
+                            {% if user.is_super_admin %}
+                                <td data-label="{% trans 'Empresa' %}">{{ member.company.name }}</td>
+                            {% endif %}
+                            <td data-label="{% trans 'Telefone' %}">{{ member.phone|default:"-" }}</td>
+                            <td data-label="{% trans 'Email' %}">{{ member.email }}</td>
+                            <td data-label="{% trans 'Departamento' %}">{{ member.department|default:"-" }}</td>
+                            <td data-label="{% trans 'Chatbots' %}">
+                                {% if member.chatbot_count > 0 %}
+                                    <span class="badge bg-info">
+                                        {{ member.chatbot_count }} {% trans "chatbot" %}{{ member.chatbot_count|pluralize }}
+                                    </span>
+                                {% else %}
+                                    <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td data-label="{% trans 'Status' %}">
+                                {% if member.status == 'active' %}
+                                    <span class="badge bg-success">{% trans "Ativo" %}</span>
+                                {% elif member.status == 'pending' %}
+                                    <span class="badge bg-warning">{% trans "Pendente" %}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{% trans "Inativo" %}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end" data-label="{% trans 'Ações' %}">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'member_edit' member.pk %}" class="btn btn-outline-primary btn-sm" title="{% trans 'Editar' %}">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'member_delete' member.pk %}" class="btn btn-outline-danger btn-sm" title="{% trans 'Deletar' %}">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="{% if user.is_super_admin %}7{% else %}6{% endif %}" class="text-center text-muted">
+                                {% trans "Nenhum membro encontrado." %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Paginação -->
+{% if members.has_other_pages %}
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if members.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ members.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if selected_company %}&company={{ selected_company }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_chatbot %}&chatbot={{ selected_chatbot }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
+                    </a>
+                </li>
+            {% endif %}
+            
+            <li class="page-item disabled">
+                <span class="page-link">
+                    {% trans "Página" %} {{ members.number }} {% trans "de" %} {{ members.paginator.num_pages }}
+                </span>
+            </li>
+            
+            {% if members.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ members.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if selected_company %}&company={{ selected_company }}{% endif %}{% if selected_status %}&status={{ selected_status }}{% endif %}{% if selected_chatbot %}&chatbot={{ selected_chatbot }}{% endif %}">
+                        {% trans "Próximo" %} <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}

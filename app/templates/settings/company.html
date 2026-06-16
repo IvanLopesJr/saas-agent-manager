@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Configurações da Empresa" %}</h1>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <h5 class="form-section-title">{% trans "Informações da Empresa" %}</h5>
+            <div class="mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-3">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <div class="text-danger small">{{ form.address.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.phone.label_tag }}
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <div class="text-danger small">{{ form.phone.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form.logo_url.label_tag }}
+                        {{ form.logo_url }}
+                        {% if form.logo_url.errors %}
+                            <div class="text-danger small">{{ form.logo_url.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <h5 class="form-section-title">{% trans "Informações de Cobrança" %} <small class="text-muted">({% trans "Somente Leitura" %})</small></h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>{% trans "Moeda:" %}</strong> {{ company.get_currency_display }} ({{ company.currency_symbol }})</p>
+                    <p><strong>{% trans "Modo de Cobrança:" %}</strong> {{ company.get_billing_mode_display }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>{% trans "Admin Cobrado:" %}</strong> 
+                        {% if company.bill_admin_users %}
+                            <span class="badge bg-success">{% trans "Sim" %}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{% trans "Não" %}</span>
+                        {% endif %}
+                    </p>
+                    <p><strong>{% trans "Valor por Membro:" %}</strong> {{ company.currency_symbol }} {{ company.member_price }}</p>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                {% trans "Para alterar configurações de cobrança, contate o administrador do sistema." %}
+            </div>
+            
+            <hr>
+            
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> {% trans "Voltar" %}
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> {% trans "Salvar" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,3072 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Sistema Multi-Empresas 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-19 16:47-0300\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Spanish Team\n"
+"Language-Team: Spanish Team\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\app\admin.py:18 .\app\templates\companies\form.html:18
+msgid "Informações Básicas"
+msgstr "Información básica"
+
+#: .\app\admin.py:21 .\app\templates\companies\form.html:77
+msgid "Configurações de Cobrança"
+msgstr "Configuración de facturación"
+
+#: .\app\admin.py:24
+msgid "Metadados"
+msgstr "Metadatos"
+
+#: .\app\admin.py:38 .\app\templates\settings\profile.html:14
+#: .\app\templates\users\form.html:17
+msgid "Informações Pessoais"
+msgstr "Información personal"
+
+#: .\app\admin.py:39 .\app\templates\users\form.html:66
+msgid "Empresa e Papel"
+msgstr "Empresa y Papel"
+
+#: .\app\admin.py:40 .\app\models.py:701
+msgid "Permissões"
+msgstr "Permisos"
+
+#: .\app\admin.py:43
+msgid "Datas Importantes"
+msgstr "Fechas Importantes"
+
+#: .\app\admin.py:88
+msgid "Alvo"
+msgstr "Objetivo"
+
+#: .\app\admin.py:107 .\app\templates\billing\detail_per_agente.html:47
+#: .\app\templates\billing\detail_per_user.html:48
+msgid "Usuário/Membro"
+msgstr "Usuario/Miembro"
+
+# Login
+#: .\app\forms.py:17
+msgid "E-mail ou Usuário"
+msgstr "Correo electrónico o nombre de usuario"
+
+# Login
+#: .\app\forms.py:20
+msgid "Digite seu e-mail ou usuário"
+msgstr "Introduce tu correo electrónico o nombre de usuario"
+
+#: .\app\forms.py:25 .\app\templates\users\form.html:127
+msgid "Senha"
+msgstr "Contraseña"
+
+#: .\app\forms.py:28
+msgid "Digite sua senha"
+msgstr "Introduce tu contraseña"
+
+#: .\app\forms.py:32
+msgid "Lembrar-me"
+msgstr "Acuérdate de mí"
+
+#: .\app\forms.py:55
+msgid "5511999999999"
+msgstr ""
+
+#: .\app\forms.py:57 .\app\forms.py:71
+#, fuzzy
+#| msgid "Documento (CPF, DNI, etc.)"
+msgid "Documento (CNPJ, RFC, etc.)"
+msgstr "Documento (CPF, DNI, etc.)"
+
+#: .\app\forms.py:70 .\app\models.py:32
+msgid "Documento de identificação Fiscal"
+msgstr "Documento de identificación fiscal"
+
+#: .\app\forms.py:80
+msgid "Enviar credenciais por e-mail"
+msgstr "Enviar credenciales por correo electrónico"
+
+#: .\app\forms.py:82
+msgid "Envie usuário e senha para o e-mail informado após salvar."
+msgstr ""
+"Enviar nombre de usuario y contraseña al correo electrónico proporcionado "
+"después de guardar."
+
+#: .\app\forms.py:86
+msgid "Membro ativo"
+msgstr "Miembro activo"
+
+#: .\app\forms.py:119 .\app\models.py:94
+msgid "Admin da Empresa"
+msgstr "Administrador de la empresa"
+
+#: .\app\forms.py:122
+msgid "Considerar membro?"
+msgstr "¿Considerar miembro?"
+
+#: .\app\forms.py:124
+msgid ""
+"Quando marcado, o administrador terá um registro de membro vinculado "
+"automaticamente."
+msgstr ""
+"Cuando está marcado, el administrador tendrá un registro de miembro "
+"vinculado automáticamente."
+
+#: .\app\forms.py:160
+msgid "Selecione uma empresa para administradores de empresa."
+msgstr "Selecciona una empresa para administradores de empresa."
+
+#: .\app\forms.py:187
+msgid "Já existe um usuário com este nome de usuário."
+msgstr ""
+
+#: .\app\forms.py:203
+msgid "Já existe um usuário com este e-mail."
+msgstr ""
+
+#: .\app\forms.py:228 .\app\templates\members\form_per_agente.html:189
+#: .\app\templates\members\form_per_user.html:191
+msgid "Chatbots com Acesso"
+msgstr "Agentes con acceso"
+
+#: .\app\forms.py:241
+msgid "Ex: 5511999999999"
+msgstr "Ej.: 5511999999999"
+
+#: .\app\forms.py:242
+msgid "Documento (CPF, DNI, etc.)"
+msgstr "Documento (CPF, DNI, etc.)"
+
+#: .\app\forms.py:284 .\app\views\members.py:156
+msgid "Já existe um membro com este e-mail nesta empresa."
+msgstr ""
+
+#: .\app\forms.py:291 .\app\forms.py:293
+msgid "Informe o telefone com DDI e apenas números (ex: 5511999999999)."
+msgstr "Informe el teléfono con DDI y solo números (ej.: 5511999999999)."
+
+#: .\app\forms.py:295
+msgid "Telefone deve ter no mínimo 11 dígitos."
+msgstr "El teléfono debe tener al menos 11 dígitos."
+
+#: .\app\forms.py:319 .\app\forms.py:495 .\app\models.py:71
+#: .\app\templates\billing\generate.html:37
+#: .\app\templates\companies\list.html:7
+#: .\app\templates\components\sidebar.html:40 .\app\views\companies.py:48
+msgid "Empresas"
+msgstr "Empresas"
+
+#: .\app\forms.py:329 .\app\templates\agentes\vincular.html:70
+msgid "Deixe em branco para usar preço base"
+msgstr "Déjelo en blanco para usar el precio base"
+
+#: .\app\forms.py:395
+msgid "16px"
+msgstr "16px"
+
+#: .\app\forms.py:396
+msgid "1.75rem"
+msgstr "1,75 rem"
+
+#: .\app\forms.py:397
+msgid "0.95rem"
+msgstr "0,95 rem"
+
+#: .\app\forms.py:398
+msgid "1.25rem"
+msgstr "1,25 rem"
+
+#: .\app\forms.py:399
+msgid "https://app.suaempresa.com"
+msgstr "https://app.suaempresa.com"
+
+#: .\app\forms.py:401
+#, fuzzy
+#| msgid "https://app.suaempresa.com"
+msgid "suporte@suaempresa.com"
+msgstr "https://app.suaempresa.com"
+
+#: .\app\forms.py:438
+msgid "Arquivo CSV"
+msgstr "archivo CSV"
+
+#: .\app\forms.py:443
+msgid "Faça upload de um arquivo CSV com os dados dos membros"
+msgstr "Cargue un archivo CSV con los detalles del miembro"
+
+#: .\app\forms.py:450
+msgid "O arquivo deve ser um CSV (.csv)"
+msgstr "El archivo debe ser un CSV (.csv)"
+
+#: .\app\forms.py:454 .\app\templates\base.html:69
+msgid "O arquivo não pode ser maior que 5MB"
+msgstr "El archivo no puede tener más de 5 MB."
+
+# Companies
+#: .\app\forms.py:464 .\app\templates\members\list.html:76
+#: .\app\templates\users\list.html:24
+msgid "Todas as Empresas"
+msgstr "Todas las empresas"
+
+#: .\app\forms.py:469
+msgid "Período Início"
+msgstr "Período de inicio"
+
+#: .\app\forms.py:474
+msgid "Período Fim"
+msgstr "Periodo de finalización"
+
+#: .\app\forms.py:482 .\app\models.py:459
+msgid "Início do Período"
+msgstr "Inicio del período"
+
+#: .\app\forms.py:484
+msgid "Data de início do período de cobrança"
+msgstr "Fecha de inicio del período de facturación"
+
+#: .\app\forms.py:487 .\app\models.py:460
+msgid "Fim do Período"
+msgstr "Fin del periodo"
+
+#: .\app\forms.py:489
+msgid "Data de fim do período de cobrança"
+msgstr "Fecha de finalización del período de facturación"
+
+#: .\app\forms.py:496 .\app\templates\billing\generate.html:43
+msgid "Deixe em branco para gerar para todas as empresas ativas"
+msgstr "Dejar en blanco para generar para todas las empresas activas"
+
+#: .\app\forms.py:506
+msgid "A data de início deve ser anterior à data de fim"
+msgstr "La fecha de inicio debe ser anterior a la fecha de finalización."
+
+#: .\app\middleware\audit.py:55
+#, python-format
+msgid "%(username)s executou %(acao)s em %(rota)s"
+msgstr "%(username)s ejecutó %(acao)s en %(rota)s"
+
+#: .\app\models.py:12
+msgid "Real Brasileiro (R$)"
+msgstr "Real brasileño (R$)"
+
+#: .\app\models.py:13
+msgid "Dólar Americano ($)"
+msgstr "Dólar estadounidense ($)"
+
+#: .\app\models.py:14
+msgid "Euro (€)"
+msgstr "euros (€)"
+
+#: .\app\models.py:15
+msgid "Peso Mexicano ($)"
+msgstr "Peso mexicano ($)"
+
+#: .\app\models.py:19 .\app\templates\companies\list.html:37
+msgid "Por Usuário"
+msgstr "Por usuario"
+
+#: .\app\models.py:20 .\app\templates\companies\list.html:40
+msgid "Por Usuário/Chatbot"
+msgstr "Por usuario/agente"
+
+#: .\app\models.py:24 .\app\models.py:98 .\app\models.py:165
+#: .\app\models.py:260 .\app\models.py:288 .\app\models.py:334
+#: .\app\models.py:408 .\app\templates\agentes\list.html:25
+#: .\app\templates\companies\list.html:26 .\app\templates\members\list.html:91
+#: .\app\templates\members\list.html:163 .\app\templates\users\list.html:42
+msgid "Ativo"
+msgstr "Activo"
+
+#: .\app\models.py:25 .\app\models.py:99 .\app\models.py:166
+#: .\app\models.py:261 .\app\models.py:289 .\app\models.py:335
+#: .\app\models.py:409 .\app\templates\agentes\list.html:26
+#: .\app\templates\companies\list.html:29 .\app\templates\members\list.html:92
+#: .\app\templates\members\list.html:167 .\app\templates\users\list.html:43
+msgid "Inativo"
+msgstr "Inactivo"
+
+# Common
+#: .\app\models.py:28 .\app\models.py:197 .\app\models.py:264
+#: .\app\models.py:696 .\app\templates\agentes\list.html:50
+#: .\app\templates\agentes\list.html:61 .\app\templates\agentes\list.html:65
+#: .\app\templates\dashboard\admin_empresa.html:200
+#: .\app\templates\members\import_preview.html:42
+#: .\app\templates\members\list.html:127 .\app\templates\members\list.html:142
+#: .\app\templates\users\list.html:67 .\app\templates\users\list.html:79
+#: .\app\views\members.py:26
+msgid "Nome"
+msgstr "Nombre"
+
+#: .\app\models.py:29 .\app\models.py:110 .\app\models.py:198
+#: .\app\templates\registration\password_reset_form.html:45
+msgid "E-mail"
+msgstr "Correo electrónico"
+
+#: .\app\models.py:30 .\app\models.py:111 .\app\models.py:199
+#: .\app\templates\members\import_preview.html:45
+#: .\app\templates\members\list.html:131 .\app\templates\members\list.html:149
+#: .\app\views\members.py:28
+msgid "Telefone"
+msgstr "Teléfono"
+
+#: .\app\models.py:36 .\app\templates\emails\user_credentials_email.html:180
+#: .\app\templates\emails\user_credentials_email.txt:9
+msgid "Endereço"
+msgstr "DIRECCIÓN"
+
+#: .\app\models.py:37
+msgid "Logo"
+msgstr "Logo"
+
+#: .\app\models.py:39
+msgid "Preço por Membro"
+msgstr "Precio por Socio"
+
+# Help text
+#: .\app\models.py:43
+msgid "Usado quando billing_mode = per_user"
+msgstr "Se utiliza cuando billing_mode = per_user"
+
+#: .\app\models.py:45
+msgid "Cobra Admin da Empresa"
+msgstr "Administrador de la empresa Cobra"
+
+#: .\app\models.py:46 .\app\templates\billing\list.html:57
+#: .\app\templates\billing\list.html:83
+#: .\app\templates\agentes\vincular.html:80
+msgid "Moeda"
+msgstr "Acuñar"
+
+#: .\app\models.py:47
+msgid "Símbolo da Moeda"
+msgstr "Símbolo de moneda"
+
+#: .\app\models.py:49 .\app\templates\dashboard\admin_empresa.html:23
+msgid "Modo de Cobrança"
+msgstr "Modo de facturación"
+
+#: .\app\models.py:54 .\app\models.py:113 .\app\models.py:213
+#: .\app\models.py:272 .\app\models.py:313 .\app\models.py:351
+#: .\app\models.py:429 .\app\templates\agentes\list.html:54
+#: .\app\templates\agentes\list.html:74
+#: .\app\templates\dashboard\admin_empresa.html:29
+#: .\app\templates\dashboard\admin_empresa.html:202
+#: .\app\templates\members\form_per_agente.html:211
+#: .\app\templates\members\form_per_user.html:213
+#: .\app\templates\members\import_preview.html:58
+#: .\app\templates\members\list.html:135 .\app\templates\members\list.html:161
+#: .\app\templates\users\list.html:72 .\app\templates\users\list.html:102
+#: .\app\views\members.py:37
+msgid "Status"
+msgstr "Estado"
+
+#: .\app\models.py:55 .\app\models.py:214 .\app\models.py:273
+#: .\app\models.py:314 .\app\models.py:352 .\app\models.py:439
+#: .\app\models.py:474 .\app\models.py:756
+msgid "Criado em"
+msgstr "Creado en"
+
+#: .\app\models.py:56 .\app\models.py:215 .\app\models.py:274
+#: .\app\models.py:315 .\app\models.py:353 .\app\models.py:673
+msgid "Atualizado em"
+msgstr "Actualizado el"
+
+#: .\app\models.py:58 .\app\models.py:217 .\app\models.py:355
+msgid "Snapshot de Preço (1º ciclo)"
+msgstr "Resumen de precios (primer ciclo)"
+
+#: .\app\models.py:65 .\app\models.py:224 .\app\models.py:362
+msgid "Primeiro ciclo concluído"
+msgstr "Primer ciclo completado"
+
+#: .\app\models.py:70 .\app\models.py:108 .\app\models.py:187
+#: .\app\models.py:296 .\app\models.py:457 .\app\templates\billing\list.html:53
+#: .\app\templates\billing\list.html:65
+#: .\app\templates\dashboard\super_admin.html:195
+#: .\app\templates\members\list.html:129 .\app\templates\members\list.html:147
+#: .\app\templates\users\list.html:69 .\app\templates\users\list.html:83
+msgid "Empresa"
+msgstr "Empresa"
+
+#: .\app\models.py:93 .\app\templates\users\list.html:35
+msgid "Super Admin"
+msgstr "Súper administrador"
+
+#: .\app\models.py:112 .\app\templates\users\list.html:70
+#: .\app\templates\users\list.html:90
+msgid "Papel"
+msgstr "Papel"
+
+#: .\app\models.py:115
+msgid "Considerar como membro"
+msgstr ""
+
+#: .\app\models.py:117
+msgid "Quando habilitado, cria ou atualiza um membro vinculado a este admin."
+msgstr ""
+
+#: .\app\models.py:119 .\app\templates\users\list.html:71
+#: .\app\templates\users\list.html:95
+msgid "Último Login"
+msgstr "Último inicio de sesión"
+
+#: .\app\models.py:122 .\app\models.py:419 .\app\models.py:505
+#: .\app\models.py:714 .\app\models.py:751
+#: .\app\templates\emails\user_credentials_email.html:184
+#: .\app\templates\emails\user_credentials_email.txt:10
+msgid "Usuário"
+msgstr "Usuario"
+
+#: .\app\models.py:123 .\app\templates\components\sidebar.html:35
+#: .\app\views\users.py:107
+msgid "Usuários"
+msgstr "Usuarios"
+
+#: .\app\models.py:146
+msgid "Admin da empresa precisa estar vinculado a uma empresa."
+msgstr "El administrador de empresa debe estar vinculado a una empresa."
+
+#: .\app\models.py:167 .\app\models.py:410 .\app\templates\members\list.html:93
+#: .\app\templates\members\list.html:165
+msgid "Pendente"
+msgstr "Pendiente"
+
+#: .\app\models.py:170
+msgid "Gerencial"
+msgstr "Gerencial"
+
+#: .\app\models.py:171
+msgid "Operacional"
+msgstr "Operacional"
+
+#: .\app\models.py:172
+msgid "Técnico"
+msgstr "Técnico"
+
+#: .\app\models.py:173
+msgid "Suporte"
+msgstr "Soporte"
+
+#: .\app\models.py:174 .\app\models.py:179
+msgid "Outro"
+msgstr "Otro"
+
+#: .\app\models.py:177
+msgid "Masculino"
+msgstr "Masculino"
+
+#: .\app\models.py:178
+msgid "Feminino"
+msgstr "Femenino"
+
+#: .\app\models.py:180
+msgid "Prefere não informar"
+msgstr "Prefiere no informar"
+
+#: .\app\models.py:195
+#, fuzzy
+#| msgid "Usuários Admin"
+msgid "Usuário Administrador"
+msgstr "Usuarios administradores"
+
+#: .\app\models.py:200 .\app\templates\dashboard\admin_empresa.html:201
+#: .\app\templates\members\import_preview.html:46
+#: .\app\templates\members\list.html:133 .\app\templates\members\list.html:151
+#: .\app\views\members.py:30
+msgid "Departamento"
+msgstr "Departamento"
+
+#: .\app\models.py:201 .\app\templates\members\import_preview.html:48
+#: .\app\views\members.py:32
+msgid "Tipo de cargo"
+msgstr "Tipo de puesto"
+
+#: .\app\models.py:202 .\app\templates\members\import_preview.html:49
+#: .\app\views\members.py:33
+msgid "Cargo"
+msgstr "Posición"
+
+#: .\app\models.py:203 .\app\templates\members\import_preview.html:50
+#: .\app\views\members.py:34
+msgid "Sexo"
+msgstr "Sexo"
+
+#: .\app\models.py:204 .\app\templates\members\import_preview.html:47
+#: .\app\views\members.py:31
+msgid "Regional"
+msgstr "Regional"
+
+#: .\app\models.py:205 .\app\views\members.py:29
+msgid "Documento de identificação"
+msgstr "Documento de identificación"
+
+#: .\app\models.py:206
+msgid "Data de nascimento"
+msgstr "Fecha de nacimiento"
+
+#: .\app\models.py:207 .\app\views\members.py:36
+msgid "Data de Admissão"
+msgstr "Fecha de admisión"
+
+#: .\app\models.py:208 .\app\templates\members\import_preview.html:53
+#: .\app\views\members.py:38
+msgid "Cidade"
+msgstr "Ciudad"
+
+#: .\app\models.py:209 .\app\templates\members\import_preview.html:54
+#: .\app\views\members.py:39
+msgid "Estado"
+msgstr "Estado"
+
+#: .\app\models.py:210 .\app\templates\members\import_preview.html:55
+#: .\app\views\members.py:40
+msgid "País"
+msgstr "País"
+
+#: .\app\models.py:211 .\app\templates\members\import_preview.html:56
+msgid "Concessionária"
+msgstr "Concesión"
+
+#: .\app\models.py:212
+msgid "Número da Concessionária"
+msgstr "Número de concesionario"
+
+#: .\app\models.py:229
+msgid "Membro da Empresa"
+msgstr "Miembro de la empresa"
+
+#: .\app\models.py:230
+msgid "Membros da Empresa"
+msgstr "Miembros de la empresa"
+
+#: .\app\models.py:265 .\app\models.py:697 .\app\models.py:754
+#: .\app\templates\agentes\list.html:51
+msgid "Descrição"
+msgstr "Descripción"
+
+#: .\app\models.py:267 .\app\templates\billing\detail_per_agente.html:49
+#: .\app\templates\billing\detail_per_user.html:50
+#: .\app\templates\agentes\list.html:53 .\app\templates\agentes\list.html:73
+msgid "Preço Base"
+msgstr "Precio base"
+
+#: .\app\models.py:277 .\app\models.py:302 .\app\models.py:348
+#: .\app\models.py:521 .\app\templates\billing\detail_per_agente.html:48
+#: .\app\templates\agentes\meus_agentes.html:41
+msgid "Chatbot"
+msgstr "Agente"
+
+#: .\app\models.py:278 .\app\templates\agentes\list.html:7
+#: .\app\templates\components\sidebar.html:45
+#: .\app\templates\members\import_preview.html:59
+#: .\app\templates\members\list.html:134 .\app\templates\members\list.html:152
+#: .\app\views\agentes.py:43
+msgid "Chatbots"
+msgstr "Agentes"
+
+#: .\app\models.py:305
+msgid "Preço Customizado"
+msgstr "Precio personalizado"
+
+#: .\app\models.py:311
+msgid "Deixe em branco para usar o preço base do chatbot"
+msgstr "Déjalo en blanco para usar el precio base del agente."
+
+#: .\app\models.py:318
+msgid "Chatbot da Empresa"
+msgstr "Agente de empresa"
+
+#: .\app\models.py:319
+msgid "Chatbots das Empresas"
+msgstr "Agentes de empresa"
+
+#: .\app\models.py:342 .\app\models.py:427 .\app\models.py:513
+msgid "Membro"
+msgstr "Miembro"
+
+#: .\app\models.py:350 .\app\models.py:523
+#: .\app\templates\billing\detail_per_agente.html:50
+#: .\app\templates\billing\detail_per_user.html:51
+msgid "Data de Ativação"
+msgstr "Fecha de activación"
+
+#: .\app\models.py:367
+msgid "Acesso ao Chatbot"
+msgstr "Acceso al agente"
+
+#: .\app\models.py:368
+msgid "Acessos aos Chatbots"
+msgstr "Acceso a agentes"
+
+#: .\app\models.py:430
+msgid "Data Início"
+msgstr "Fecha de inicio"
+
+#: .\app\models.py:431
+msgid "Data Fim"
+msgstr "Fecha de finalización"
+
+#: .\app\models.py:437
+msgid "Criado por"
+msgstr "Creado por"
+
+#: .\app\models.py:442
+msgid "Histórico de Status"
+msgstr "Historial de estado"
+
+#: .\app\models.py:443
+msgid "Históricos de Status"
+msgstr "Historiales de estado"
+
+#: .\app\models.py:462 .\app\templates\billing\list.html:58
+#: .\app\templates\billing\list.html:84
+#: .\app\templates\companies\detail.html:71
+msgid "Valor Total"
+msgstr "Valor total"
+
+#: .\app\models.py:472
+msgid "Gerado por"
+msgstr "Generado por"
+
+#: .\app\models.py:477 .\app\models.py:497
+#: .\app\templates\billing\detail_per_agente.html:51
+#: .\app\templates\billing\detail_per_user.html:52
+#: .\app\templates\settings\system.html:323 .\app\views\billing.py:255
+msgid "Cobrança"
+msgstr "Cargar"
+
+#: .\app\models.py:478 .\app\templates\billing\list.html:7
+#: .\app\templates\components\sidebar.html:61 .\app\views\billing.py:59
+msgid "Cobranças"
+msgstr "Cargos"
+
+#: .\app\models.py:489 .\app\templates\billing\detail_per_agente.html:70
+#: .\app\templates\billing\detail_per_user.html:77
+msgid "Integral"
+msgstr "Lleno"
+
+#: .\app\models.py:490 .\app\templates\billing\detail_per_agente.html:72
+#: .\app\templates\billing\detail_per_user.html:79
+msgid "Proporcional"
+msgstr "Proporcional"
+
+#: .\app\models.py:524
+msgid "Dias Ativos"
+msgstr "Días activos"
+
+#: .\app\models.py:526
+msgid "Tarifa Diária"
+msgstr "Tarifa Diaria"
+
+#: .\app\models.py:532 .\app\templates\billing\detail_per_agente.html:52
+#: .\app\templates\billing\detail_per_user.html:53
+#: .\app\templates\dashboard\admin_empresa.html:247
+msgid "Valor"
+msgstr "Valor"
+
+#: .\app\models.py:538
+msgid "Preço Unitário"
+msgstr "Precio unitario"
+
+#: .\app\models.py:544
+msgid "Tipo de Cobrança"
+msgstr "Tipo de cargo"
+
+#: .\app\models.py:550
+msgid "Detalhe da Cobrança"
+msgstr "Detalle de facturación"
+
+#: .\app\models.py:551
+msgid "Detalhes das Cobranças"
+msgstr "Detalles de facturación"
+
+#: .\app\models.py:598
+msgid "Dia de Corte"
+msgstr "Día de corte"
+
+#: .\app\models.py:601
+msgid "Dia do mês para corte de cobrança integral"
+msgstr "Día del mes para el límite de facturación total"
+
+#: .\app\models.py:604
+msgid "Cobrar Admin da Empresa por Padrão"
+msgstr "Facturar al administrador de la empresa de forma predeterminada"
+
+#: .\app\models.py:607
+msgid "SMTP Host"
+msgstr "Anfitrión SMTP"
+
+#: .\app\models.py:608
+msgid "SMTP Port"
+msgstr "Puerto SMTP"
+
+#: .\app\models.py:609
+msgid "SMTP User"
+msgstr "Usuario SMTP"
+
+#: .\app\models.py:610
+msgid "SMTP Password"
+msgstr "Contraseña SMTP"
+
+#: .\app\models.py:611
+msgid "Cor Primária"
+msgstr "Color primario"
+
+#: .\app\models.py:612
+msgid "Cor Secundária"
+msgstr "Color secundario"
+
+#: .\app\models.py:613
+msgid "Cor do Botão Primário"
+msgstr "Color del botón principal"
+
+#: .\app\models.py:614
+msgid "Cor do Texto do Botão Primário"
+msgstr "Color del texto del botón principal"
+
+#: .\app\models.py:615
+msgid "Cor do Botão Secundário"
+msgstr "Color del botón secundario"
+
+#: .\app\models.py:616
+msgid "Cor do Texto do Botão Secundário"
+msgstr "Color del texto del botón secundario"
+
+#: .\app\models.py:617
+msgid "Cor do Botão de Sucesso"
+msgstr "Color del botón de éxito"
+
+#: .\app\models.py:618
+msgid "Cor do Texto de Sucesso"
+msgstr "Color del texto de éxito"
+
+#: .\app\models.py:619
+msgid "Cor do Botão de Informação"
+msgstr "Color del botón de información"
+
+#: .\app\models.py:620
+msgid "Cor do Texto de Informação"
+msgstr "Color del texto de información"
+
+#: .\app\models.py:621
+msgid "Cor do Botão de Alerta"
+msgstr "Color del botón de alerta"
+
+#: .\app\models.py:622
+msgid "Cor do Texto de Alerta"
+msgstr "Color del texto de alerta"
+
+#: .\app\models.py:623
+msgid "Cor do Botão de Perigo"
+msgstr "Color del botón de peligro"
+
+#: .\app\models.py:624
+msgid "Cor do Texto de Perigo"
+msgstr "Color del texto de peligro"
+
+#: .\app\models.py:625
+msgid "Cor do Botão de Filtro"
+msgstr "Color del botón de filtro"
+
+#: .\app\models.py:626
+msgid "Cor do Texto do Botão de Filtro"
+msgstr "Color del texto del botón de filtro"
+
+#: .\app\models.py:628
+#, fuzzy
+#| msgid "Cor do Botão de Filtro"
+msgid "Cor do Botão de Limpar Filtros"
+msgstr "Color del botón de filtro"
+
+#: .\app\models.py:634
+#, fuzzy
+#| msgid "Cor do Texto do Botão de Filtro"
+msgid "Cor do Texto do Botão de Limpar Filtros"
+msgstr "Color del texto del botón de filtro"
+
+#: .\app\models.py:639
+msgid "Cor do Botão de Exportação"
+msgstr "Color del botón Exportar"
+
+#: .\app\models.py:640
+msgid "Cor do Texto do Botão de Exportação"
+msgstr "Color del texto del botón Exportar"
+
+#: .\app\models.py:641
+msgid "Cor do Botão de Importação"
+msgstr "Importar color del botón"
+
+#: .\app\models.py:642
+msgid "Cor do Texto do Botão de Importação"
+msgstr "Importar color del texto del botón"
+
+#: .\app\models.py:643
+msgid "Cor dos Links"
+msgstr "Color del enlace"
+
+#: .\app\models.py:644
+msgid "Cor do Fundo do Sidebar"
+msgstr "Color de fondo de la barra lateral"
+
+#: .\app\models.py:645
+msgid "Cor do Texto do Sidebar"
+msgstr "Color del texto de la barra lateral"
+
+#: .\app\models.py:646
+msgid "Cor do Item Ativo do Sidebar"
+msgstr "Color del elemento activo de la barra lateral"
+
+#: .\app\models.py:647
+msgid "Cor do Texto Ativo do Sidebar"
+msgstr "Color de texto en vivo de la barra lateral"
+
+#: .\app\models.py:648
+msgid "Tamanho Base da Fonte"
+msgstr "Tamaño de fuente base"
+
+#: .\app\models.py:649
+msgid "Tamanho da Fonte dos Títulos"
+msgstr "Tamaño de fuente del título"
+
+#: .\app\models.py:650
+msgid "Tamanho da Fonte do Sidebar"
+msgstr "Tamaño de fuente de la barra lateral"
+
+#: .\app\models.py:651
+msgid "Tamanho dos Títulos de Gráficos"
+msgstr "Tamaño de los títulos de los gráficos"
+
+#: .\app\models.py:652
+msgid "Cor de Fundo das Páginas"
+msgstr "Color de fondo de la página"
+
+#: .\app\models.py:654
+msgid "Cor de Fundo das Linhas de Tabela"
+msgstr "Color de fondo de las filas de tabla"
+
+#: .\app\models.py:659
+msgid "Favicon Personalizado"
+msgstr "Favicón personalizado"
+
+#: .\app\models.py:660
+msgid "Domínio personalizado"
+msgstr "Dominio personalizado"
+
+#: .\app\models.py:661
+msgid "Usar domínio personalizado"
+msgstr "Usar dominio personalizado"
+
+#: .\app\models.py:662
+msgid "Nome do Sistema"
+msgstr "Nombre del sistema"
+
+#: .\app\models.py:663
+msgid "Logo do Sistema"
+msgstr "Logotipo del sistema"
+
+#: .\app\models.py:665
+msgid "Background Login"
+msgstr "Inicio de sesión en segundo plano"
+
+# Login
+#: .\app\models.py:670
+#, fuzzy
+#| msgid "E-mail ou Usuário"
+msgid "E-mail de suporte"
+msgstr "Correo de soporte"
+
+#: .\app\models.py:671
+#, fuzzy
+#| msgid "Rodapé"
+msgid "Texto do Rodapé"
+msgstr "Pie de página"
+
+#: .\app\models.py:672
+msgid "Exibir texto do rodapé"
+msgstr ""
+
+# Settings
+#: .\app\models.py:676
+msgid "Configuração do Sistema"
+msgstr "Configuración del sistema"
+
+# Settings
+#: .\app\models.py:677 .\app\models.py:680
+#: .\app\templates\settings\system.html:7 .\app\views\system_settings.py:44
+msgid "Configurações do Sistema"
+msgstr "Configuración del sistema"
+
+#: .\app\models.py:700 .\app\models.py:720
+msgid "Permissão"
+msgstr "Permiso"
+
+# Login
+#: .\app\models.py:724
+msgid "Permissão do Usuário"
+msgstr "Permiso de usuario"
+
+# Login
+#: .\app\models.py:725
+msgid "Permissões dos Usuários"
+msgstr "Permisos de usuario"
+
+#: .\app\models.py:735
+msgid "Super Admin Criado"
+msgstr "Super Admin creado"
+
+#: .\app\models.py:736
+#, fuzzy
+#| msgid "Cobrança"
+msgid "Cobrança Gerada"
+msgstr "Cargar"
+
+#: .\app\models.py:737
+msgid "Preço de Membro Alterado"
+msgstr "Precio de miembro modificado"
+
+#: .\app\models.py:738
+msgid "Login Falhou"
+msgstr "Inicio de sesión fallido"
+
+#: .\app\models.py:739
+msgid "Modo de Cobrança Alterado"
+msgstr "Modo de facturación modificado"
+
+#: .\app\models.py:740
+#, fuzzy
+#| msgid "Agentes Vinculados"
+msgid "Chatbot Vinculado"
+msgstr "Agentes vinculados"
+
+#: .\app\models.py:741
+#, fuzzy
+#| msgid "Agentes Vinculados"
+msgid "Chatbot Desvinculado"
+msgstr "Agente desvinculado"
+
+#: .\app\models.py:742
+msgid "Status de Membro Alterado"
+msgstr "Estado del miembro modificado"
+
+#: .\app\models.py:753
+msgid "Ação"
+msgstr "Acción"
+
+#: .\app\models.py:755
+msgid "IP"
+msgstr "IP"
+
+#: .\app\models.py:759
+msgid "Log de Auditoria"
+msgstr "Registro de auditoría"
+
+#: .\app\models.py:760
+msgid "Logs de Auditoria"
+msgstr "Registros de auditoría"
+
+#: .\app\signals.py:56
+#, python-format
+msgid "Status do membro %(nome)s alterado de %(anterior)s para %(novo)s"
+msgstr "El estado del miembro %(nome)s cambió de %(anterior)s a %(novo)s"
+
+#: .\app\signals.py:114
+#, python-format
+msgid "Super Admin criado: %(usuario)s (%(email)s)"
+msgstr "Super Admin creado: %(usuario)s (%(email)s)"
+
+#: .\app\templates\base.html:8
+#: .\app\templates\emails\user_credentials_email.html:161
+#: .\app\templates\emails\user_credentials_email.html:163
+#: .\app\templates\emails\user_credentials_email.html:214
+#: .\app\templates\emails\user_credentials_email.txt:23
+#: .\app\templates\login.html:8
+#: .\app\templates\registration\password_reset_complete.html:9
+#: .\app\templates\registration\password_reset_confirm.html:9
+#: .\app\templates\registration\password_reset_done.html:9
+#: .\app\templates\registration\password_reset_email.html:160
+#: .\app\templates\registration\password_reset_email.html:162
+#: .\app\templates\registration\password_reset_email.html:185
+#: .\app\templates\registration\password_reset_email.html:200
+#: .\app\templates\registration\password_reset_email.txt:18
+#: .\app\templates\registration\password_reset_form.html:9
+#: .\app\templates\registration\password_reset_subject.txt:3
+#: .\app\views\users.py:163
+msgid "Sistema Multi-Empresas"
+msgstr "Sistema Multiempresa"
+
+#: .\app\templates\base.html:61
+msgid ""
+"Tem certeza que deseja deletar este item? Esta ação não pode ser desfeita."
+msgstr ""
+"¿Está seguro de que desea eliminar este elemento? Esta acción no se puede "
+"deshacer."
+
+#: .\app\templates\base.html:62
+msgid "Copiado para a área de transferência!"
+msgstr "¡Copiado al portapapeles!"
+
+#: .\app\templates\base.html:63
+msgid "Falha ao copiar:"
+msgstr "No se pudo copiar:"
+
+#: .\app\templates\base.html:64
+msgid "Carregando..."
+msgstr "Cargando..."
+
+#: .\app\templates\base.html:65
+msgid "A data de fim deve ser posterior à data de início"
+msgstr "La fecha de finalización debe ser posterior a la fecha de inicio."
+
+#: .\app\templates\base.html:66
+msgid "Enviando..."
+msgstr "Envío..."
+
+#: .\app\templates\base.html:67 .\app\templates\agentes\form.html:57
+#: .\app\templates\companies\form.html:125
+#: .\app\templates\settings\company.html:85
+#: .\app\templates\settings\system.html:428 .\app\templates\users\form.html:168
+msgid "Salvar"
+msgstr "Ahorrar"
+
+#: .\app\templates\base.html:68
+msgid "Por favor, selecione um arquivo CSV (.csv)"
+msgstr "Seleccione un archivo CSV (.csv)"
+
+#: .\app\templates\base.html:70
+msgid "Documento duplicado"
+msgstr "Documento duplicado"
+
+#: .\app\templates\base.html:71
+msgid "Documento obrigatório não informado"
+msgstr "Documento obligatorio no informado"
+
+# Confirmation
+#: .\app\templates\billing\delete_confirm.html:7
+#: .\app\templates\agentes\delete_confirm.html:7
+#: .\app\templates\companies\delete_confirm.html:7
+#: .\app\templates\members\delete_confirm.html:7
+#: .\app\templates\users\delete_confirm.html:7
+msgid "Confirmar Exclusão"
+msgstr "Confirmar eliminación"
+
+#: .\app\templates\billing\delete_confirm.html:12
+#, python-format
+msgid ""
+"\n"
+"                Tem certeza que deseja deletar a cobrança da empresa "
+"%(company)s referente ao período %(start)s - %(end)s?\n"
+"            "
+msgstr ""
+
+#: .\app\templates\billing\delete_confirm.html:16
+#: .\app\templates\agentes\delete_confirm.html:14
+#: .\app\templates\members\delete_confirm.html:14
+#: .\app\templates\users\delete_confirm.html:14
+msgid "Esta ação não pode ser desfeita."
+msgstr "Esta acción no se puede deshacer."
+
+#: .\app\templates\billing\delete_confirm.html:19
+#: .\app\templates\members\delete_confirm.html:19
+#: .\app\templates\members\import.html:22
+#: .\app\templates\members\import_preview.html:12
+#: .\app\templates\settings\profile.html:80
+#: .\app\templates\users\delete_confirm.html:20
+msgid "Empresa:"
+msgstr "Empresa:"
+
+#: .\app\templates\billing\delete_confirm.html:20
+#: .\app\templates\billing\detail_per_agente.html:20
+#: .\app\templates\billing\detail_per_user.html:20
+msgid "Período:"
+msgstr "Período:"
+
+#: .\app\templates\billing\delete_confirm.html:21
+#: .\app\templates\billing\detail_per_agente.html:22
+#: .\app\templates\billing\detail_per_user.html:22
+#: .\app\templates\agentes\meus_agentes.html:16
+#: .\app\templates\companies\detail.html:40
+#: .\app\templates\settings\company.html:59
+msgid "Modo de Cobrança:"
+msgstr "Modo de facturación:"
+
+#: .\app\templates\billing\delete_confirm.html:23
+#, fuzzy
+#| msgid "Valor Total"
+msgid "Valor Total:"
+msgstr "Valor total"
+
+#: .\app\templates\billing\delete_confirm.html:32
+#: .\app\templates\billing\generate.html:62
+#: .\app\templates\agentes\delete_confirm.html:20
+#: .\app\templates\agentes\form.html:54
+#: .\app\templates\agentes\vincular.html:114
+#: .\app\templates\companies\delete_confirm.html:20
+#: .\app\templates\companies\form.html:122
+#: .\app\templates\members\delete_confirm.html:27
+#: .\app\templates\members\form_per_agente.html:223
+#: .\app\templates\members\form_per_user.html:225
+#: .\app\templates\members\import.html:39
+#: .\app\templates\settings\change_password.html:41
+#: .\app\templates\users\delete_confirm.html:28
+#: .\app\templates\users\form.html:165
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#: .\app\templates\billing\delete_confirm.html:35
+#: .\app\templates\agentes\delete_confirm.html:23
+#: .\app\templates\companies\delete_confirm.html:23
+#: .\app\templates\members\delete_confirm.html:30
+#: .\app\templates\users\delete_confirm.html:31
+msgid "Sim, Deletar"
+msgstr "Sí, eliminar"
+
+#: .\app\templates\billing\detail_per_agente.html:7
+#: .\app\templates\billing\detail_per_user.html:7 .\app\views\billing.py:161
+msgid "Detalhes da Cobrança"
+msgstr "Detalles de facturación"
+
+#: .\app\templates\billing\detail_per_agente.html:10
+#: .\app\templates\billing\detail_per_user.html:10
+#: .\app\templates\billing\list.html:92
+msgid "Exportar CSV"
+msgstr "Exportar CSV"
+
+#: .\app\templates\billing\detail_per_agente.html:21
+#: .\app\templates\billing\detail_per_user.html:21
+#: .\app\templates\agentes\meus_agentes.html:17
+#: .\app\templates\companies\detail.html:39
+#: .\app\templates\settings\company.html:58
+msgid "Moeda:"
+msgstr "Acuñar:"
+
+#: .\app\templates\billing\detail_per_agente.html:25
+#: .\app\templates\billing\detail_per_user.html:26
+#: .\app\templates\settings\company.html:62
+msgid "Admin Cobrado:"
+msgstr "Administrador cobrado:"
+
+#: .\app\templates\billing\detail_per_agente.html:27
+#: .\app\templates\billing\detail_per_user.html:28
+#: .\app\templates\billing\list.html:78
+#: .\app\templates\companies\detail.html:44
+#: .\app\templates\settings\company.html:64
+msgid "Sim"
+msgstr "Sí"
+
+#: .\app\templates\billing\detail_per_agente.html:29
+#: .\app\templates\billing\detail_per_user.html:30
+#: .\app\templates\billing\list.html:80
+#: .\app\templates\companies\detail.html:46
+#: .\app\templates\settings\company.html:66
+msgid "Não"
+msgstr "No"
+
+# Statistics
+#: .\app\templates\billing\detail_per_agente.html:32
+#: .\app\templates\billing\detail_per_agente.html:84
+#: .\app\templates\billing\detail_per_user.html:33
+#: .\app\templates\billing\detail_per_user.html:91
+msgid "Total:"
+msgstr "Total:"
+
+#: .\app\templates\billing\detail_per_agente.html:40
+#: .\app\templates\billing\detail_per_user.html:41
+msgid "Detalhamento"
+msgstr "Detallando"
+
+#: .\app\templates\billing\detail_per_agente.html:73
+#: .\app\templates\billing\detail_per_user.html:80
+msgid "dias"
+msgstr "días"
+
+#: .\app\templates\billing\detail_per_user.html:25
+#: .\app\templates\companies\detail.html:41
+msgid "Preço por Membro:"
+msgstr "Precio por Miembro:"
+
+#: .\app\templates\billing\detail_per_user.html:25
+#: .\app\templates\members\form_per_agente.html:205
+msgid "mês"
+msgstr "mes"
+
+#: .\app\templates\billing\detail_per_user.html:49
+msgid "Tipo"
+msgstr "Tipo"
+
+#: .\app\templates\billing\detail_per_user.html:68
+#: .\app\templates\users\list.html:36
+msgid "Admin Empresa"
+msgstr "Administrador de la empresa"
+
+#: .\app\templates\billing\detail_per_user.html:70
+msgid "Funcionário"
+msgstr "Empleado"
+
+# Billing
+#: .\app\templates\billing\generate.html:7 .\app\templates\billing\list.html:11
+#: .\app\views\billing.py:131
+msgid "Gerar Cobrança"
+msgstr "Generar factura"
+
+#: .\app\templates\billing\generate.html:49
+msgid "A cobrança será gerada considerando:"
+msgstr "El cargo se generará considerando:"
+
+#: .\app\templates\billing\generate.html:51
+msgid "Membros ativos no período"
+msgstr "Miembros activos en el periodo"
+
+#: .\app\templates\billing\generate.html:52
+msgid "Chatbots vinculados (se modo = Por Usuário/Chatbot)"
+msgstr "Agentes vinculados (si modo = Por usuario/Agente)"
+
+#: .\app\templates\billing\generate.html:53
+msgid "Dia de corte configurado no sistema"
+msgstr "Día de corte configurado en el sistema"
+
+#: .\app\templates\billing\generate.html:54
+msgid "Se a empresa cobra Admin ou não"
+msgstr "Si la empresa cobra al administrador o no"
+
+# Billing
+#: .\app\templates\billing\generate.html:65
+msgid "Gerar Cobranças"
+msgstr "Generar facturas"
+
+#: .\app\templates\billing\list.html:35 .\app\templates\agentes\list.html:32
+#: .\app\templates\companies\list.html:47 .\app\templates\members\list.html:109
+#: .\app\templates\users\list.html:49
+msgid "Limpar"
+msgstr "Limpiar"
+
+#: .\app\templates\billing\list.html:38 .\app\templates\agentes\list.html:35
+#: .\app\templates\companies\list.html:50 .\app\templates\members\list.html:112
+#: .\app\templates\users\list.html:52
+msgid "Filtrar"
+msgstr "Filtrar"
+
+#: .\app\templates\billing\list.html:54 .\app\templates\billing\list.html:68
+#: .\app\templates\companies\detail.html:70
+#: .\app\templates\dashboard\admin_empresa.html:246
+msgid "Período"
+msgstr "Período"
+
+#: .\app\templates\billing\list.html:55 .\app\templates\billing\list.html:71
+msgid "Modo"
+msgstr "Modo"
+
+#: .\app\templates\billing\list.html:56 .\app\templates\billing\list.html:76
+msgid "Admin"
+msgstr "Administración"
+
+#: .\app\templates\billing\list.html:59 .\app\templates\billing\list.html:87
+#: .\app\templates\agentes\list.html:55 .\app\templates\agentes\list.html:81
+#: .\app\templates\companies\list.html:97 .\app\templates\members\list.html:136
+#: .\app\templates\members\list.html:170 .\app\templates\users\list.html:73
+#: .\app\templates\users\list.html:109
+msgid "Ações"
+msgstr "Comportamiento"
+
+#: .\app\templates\billing\list.html:89
+msgid "Ver Detalhes"
+msgstr "Ver detalles"
+
+#: .\app\templates\billing\list.html:96 .\app\templates\companies\list.html:107
+#: .\app\templates\companies\list.html:109
+msgid "Excluir"
+msgstr "Borrar"
+
+#: .\app\templates\billing\list.html:106
+msgid "Nenhuma cobrança encontrada."
+msgstr "No se encontraron cargos."
+
+# Pagination
+#: .\app\templates\billing\list.html:123 .\app\templates\agentes\list.html:115
+#: .\app\templates\companies\list.html:131
+#: .\app\templates\members\list.html:201 .\app\templates\users\list.html:143
+msgid "Anterior"
+msgstr "Anterior"
+
+#: .\app\templates\billing\list.html:130 .\app\templates\agentes\list.html:122
+#: .\app\templates\companies\list.html:138
+#: .\app\templates\members\list.html:208 .\app\templates\users\list.html:150
+msgid "Página"
+msgstr "Página"
+
+#: .\app\templates\billing\list.html:130 .\app\templates\agentes\list.html:122
+#: .\app\templates\companies\list.html:138
+#: .\app\templates\members\list.html:208 .\app\templates\users\list.html:150
+msgid "de"
+msgstr "de"
+
+#: .\app\templates\billing\list.html:137 .\app\templates\agentes\list.html:129
+#: .\app\templates\companies\list.html:145
+#: .\app\templates\members\list.html:215 .\app\templates\users\list.html:157
+msgid "Próximo"
+msgstr "Próximo"
+
+#: .\app\templates\agentes\delete_confirm.html:12
+msgid "Tem certeza que deseja deletar o chatbot"
+msgstr "¿Estás seguro de que quieres eliminar el agente?"
+
+#: .\app\templates\agentes\form.html:38
+msgid "Preço padrão que será aplicado quando não houver preço customizado"
+msgstr "Precio estándar que se aplicará cuando no exista precio personalizado"
+
+#: .\app\templates\agentes\list.html:10 .\app\views\agentes.py:66
+msgid "Novo Chatbot"
+msgstr "Nuevo agente"
+
+#: .\app\templates\agentes\list.html:20
+msgid "Buscar por nome ou descrição"
+msgstr "Buscar por nombre o descripción"
+
+#: .\app\templates\agentes\list.html:24 .\app\templates\companies\list.html:24
+#: .\app\templates\members\list.html:90 .\app\templates\users\list.html:41
+msgid "Todos os Status"
+msgstr "Todo el estado"
+
+#: .\app\templates\agentes\list.html:52 .\app\templates\agentes\list.html:68
+msgid "Empresas Vinculadas"
+msgstr "Empresas Vinculadas"
+
+#: .\app\templates\agentes\list.html:70
+msgid "empresa"
+msgstr "empresa"
+
+# Additional
+#: .\app\templates\agentes\list.html:83
+msgid "Vincular"
+msgstr "Enlace"
+
+#: .\app\templates\agentes\list.html:86
+#: .\app\templates\companies\detail.html:10
+#: .\app\templates\companies\list.html:103
+#: .\app\templates\companies\list.html:104
+#: .\app\templates\members\list.html:172 .\app\templates\users\list.html:111
+msgid "Editar"
+msgstr "Editar"
+
+#: .\app\templates\agentes\list.html:89 .\app\templates\members\list.html:175
+#: .\app\templates\users\list.html:117
+msgid "Deletar"
+msgstr "Borrar"
+
+#: .\app\templates\agentes\list.html:98
+msgid "Nenhum chatbot encontrado."
+msgstr "No se encontraron agentes."
+
+#: .\app\templates\agentes\meus_agentes.html:7
+#: .\app\templates\components\sidebar.html:67 .\app\views\agentes.py:321
+msgid "Meus Chatbots"
+msgstr "Mis agentes"
+
+#: .\app\templates\agentes\meus_agentes.html:23
+msgid "Você é cobrado por usuário, independente dos chatbots utilizados."
+msgstr ""
+"Se le cobra por usuario, independientemente de los agentes utilizados."
+
+#: .\app\templates\agentes\meus_agentes.html:25
+msgid "Você é cobrado por cada chatbot que cada usuário utiliza."
+msgstr "Se le cobra por cada agente que utiliza cada usuario."
+
+#: .\app\templates\agentes\meus_agentes.html:43
+msgid "Preço por Usuário"
+msgstr "Precio por Usuario"
+
+#: .\app\templates\agentes\meus_agentes.html:45
+msgid "Preço por Acesso"
+msgstr "Precio por Acceso"
+
+#: .\app\templates\agentes\meus_agentes.html:46
+msgid "Membros com Acesso"
+msgstr "Miembros con acceso"
+
+#: .\app\templates\agentes\meus_agentes.html:62
+msgid "membro"
+msgstr "miembro"
+
+#: .\app\templates\agentes\meus_agentes.html:73
+msgid "Nenhum chatbot vinculado à sua empresa."
+msgstr "No hay agentes vinculados a su empresa."
+
+#: .\app\templates\agentes\meus_agentes.html:74
+msgid "Contate o administrador do sistema para vincular chatbots."
+msgstr "Comuníquese con el administrador de su sistema para vincular agentes."
+
+#: .\app\templates\agentes\vincular.html:8
+msgid "Vincular Chatbot a Empresas"
+msgstr "Vincular Agente a Empresas"
+
+#: .\app\templates\agentes\vincular.html:15
+msgid "Preço Base:"
+msgstr "Precio base:"
+
+#: .\app\templates\agentes\vincular.html:21
+msgid "Selecione as Empresas e Defina Preços"
+msgstr "Seleccionar empresas y fijar precios"
+
+#: .\app\templates\agentes\vincular.html:29
+msgid ""
+"O preço aplicado depende do modo de cobrança da empresa. Deixe em branco "
+"para usar o preço base."
+msgstr ""
+"El precio aplicado depende del método de cobro de la empresa. Déjelo en "
+"blanco para utilizar el precio base."
+
+#: .\app\templates\agentes\vincular.html:34
+msgid "Impacto da Desvinculação"
+msgstr "Impacto de la desvinculación"
+
+#: .\app\templates\agentes\vincular.html:36
+msgid "Ao salvar, os membros abaixo perderão acesso ao chatbot:"
+msgstr "Al guardar, los miembros a continuación perderán acceso al agente:"
+
+#: .\app\templates\agentes\vincular.html:40
+#, fuzzy
+#| msgid "membros"
+msgid "membro(s)"
+msgstr "miembros"
+
+#: .\app\templates\agentes\vincular.html:58
+msgid "Já vinculado"
+msgstr "Ya vinculado"
+
+#: .\app\templates\agentes\vincular.html:65
+msgid "Preço Personalizado"
+msgstr "Precio personalizado"
+
+#: .\app\templates\agentes\vincular.html:73
+msgid "Será cobrado por usuário"
+msgstr "Se cobrará por usuario."
+
+#: .\app\templates\agentes\vincular.html:75
+msgid "Será cobrado por usuário/chatbot"
+msgstr "Se cobrará por usuario/agente"
+
+#: .\app\templates\agentes\vincular.html:89
+msgid "Nenhuma empresa ativa disponível."
+msgstr "No hay empresas activas disponibles."
+
+#: .\app\templates\agentes\vincular.html:99
+msgid "Estou ciente de que os membros listados perderão o acesso ao chatbot."
+msgstr ""
+"Soy consciente de que los miembros listados perderán el acceso al agente."
+
+#: .\app\templates\agentes\vincular.html:104
+msgid "Confirme o aviso acima antes de salvar as alterações."
+msgstr "Confirme el aviso anterior antes de guardar los cambios."
+
+#: .\app\templates\agentes\vincular.html:117
+msgid "Salvar Vínculos"
+msgstr "Guardar enlaces"
+
+#: .\app\templates\companies\delete_confirm.html:12
+msgid "Tem certeza que deseja deletar a empresa"
+msgstr "¿Estás seguro de que quieres eliminar la empresa?"
+
+#: .\app\templates\companies\delete_confirm.html:14
+msgid ""
+"Esta ação não pode ser desfeita. Todos os dados relacionados serão "
+"permanentemente removidos."
+msgstr ""
+"Esta acción no se puede deshacer. Todos los datos relacionados se eliminarán "
+"permanentemente."
+
+#: .\app\templates\companies\detail.html:15
+msgid "Inativar"
+msgstr "Inactivar"
+
+#: .\app\templates\companies\detail.html:17
+msgid "Ativar"
+msgstr "Activar"
+
+#: .\app\templates\companies\detail.html:28
+#: .\app\templates\settings\company.html:15
+msgid "Informações da Empresa"
+msgstr "Información de la empresa"
+
+#: .\app\templates\companies\detail.html:33
+msgid "Documento de identificação Fiscal:"
+msgstr "Documento de identificación fiscal:"
+
+#: .\app\templates\companies\detail.html:34
+#: .\app\templates\members\delete_confirm.html:17
+#: .\app\templates\users\delete_confirm.html:17
+msgid "Email:"
+msgstr "Correo electrónico:"
+
+#: .\app\templates\companies\detail.html:35
+msgid "Telefone:"
+msgstr "Teléfono:"
+
+#: .\app\templates\companies\detail.html:36
+msgid "Endereço:"
+msgstr "DIRECCIÓN:"
+
+#: .\app\templates\companies\detail.html:42
+msgid "Cobra Admin:"
+msgstr "Administrador de cobra:"
+
+#: .\app\templates\companies\detail.html:49
+msgid "Status:"
+msgstr "Estado:"
+
+#: .\app\templates\companies\detail.html:62
+#: .\app\templates\dashboard\admin_empresa.html:234
+msgid "Últimas Cobranças"
+msgstr "Últimos cargos"
+
+#: .\app\templates\companies\detail.html:91
+#: .\app\templates\dashboard\admin_empresa.html:274
+msgid "Nenhuma cobrança gerada"
+msgstr "No se generan cargos"
+
+#: .\app\templates\companies\detail.html:101
+msgid "Estatísticas"
+msgstr "Estadística"
+
+#: .\app\templates\companies\detail.html:108
+#: .\app\templates\dashboard\admin_empresa.html:55
+#: .\app\templates\dashboard\super_admin.html:24
+#: .\app\templates\dashboard\super_admin.html:232
+msgid "Membros Ativos"
+msgstr "Miembros activos"
+
+#: .\app\templates\companies\detail.html:116
+msgid "Chatbots Vinculados"
+msgstr "Agentes vinculados"
+
+#: .\app\templates\companies\detail.html:124
+msgid "Usuários Admin"
+msgstr "Usuarios administradores"
+
+#: .\app\templates\companies\detail.html:133
+msgid "Ações Rápidas"
+msgstr "Acciones rápidas"
+
+#: .\app\templates\companies\detail.html:137
+msgid "Ver Membros"
+msgstr "Ver miembros"
+
+#: .\app\templates\companies\detail.html:140
+msgid "Ver Cobranças"
+msgstr "Ver cargos"
+
+#: .\app\templates\companies\detail.html:143
+msgid "Novo Admin"
+msgstr "Nuevo administrador"
+
+#: .\app\templates\companies\form.html:93
+msgid "Define como a empresa será cobrada"
+msgstr "Define cómo se cobrará a la empresa."
+
+#: .\app\templates\companies\form.html:104
+msgid "Usado quando modo de cobrança = Por Usuário"
+msgstr "Se utiliza cuando el modo de facturación = Por usuario"
+
+# Companies
+#: .\app\templates\companies\list.html:9 .\app\views\companies.py:81
+msgid "Nova Empresa"
+msgstr "Nueva empresa"
+
+#: .\app\templates\companies\list.html:19
+msgid "Buscar por nome, documento ou email"
+msgstr "Buscar por nombre, documento o correo electrónico"
+
+#: .\app\templates\companies\list.html:35
+msgid "Todos os Modos"
+msgstr "Todos los modos"
+
+#: .\app\templates\companies\list.html:87
+msgid "membros"
+msgstr "miembros"
+
+#: .\app\templates\companies\list.html:88
+msgid "chatbots"
+msgstr "agentes"
+
+#: .\app\templates\companies\list.html:92
+msgid "Cobra Admin"
+msgstr "Administrador de serpientes"
+
+#: .\app\templates\companies\list.html:99
+#: .\app\templates\companies\list.html:100
+#: .\app\templates\dashboard\admin_empresa.html:263
+msgid "Ver"
+msgstr "Ver"
+
+#: .\app\templates\companies\list.html:108
+msgid "Tem certeza que deseja excluir esta empresa?"
+msgstr "¿Está seguro de que desea eliminar esta empresa?"
+
+#: .\app\templates\companies\list.html:118
+msgid "Nenhuma empresa encontrada."
+msgstr "No se encontraron empresas."
+
+# #-#-#-#-#  django.po (Sistema Multi-Empresas 1.0)  #-#-#-#-#
+# Dashboard
+#: .\app\templates\components\header.html:12
+#: .\app\templates\components\sidebar.html:24 .\app\views\dashboard.py:147
+#: .\app\views\dashboard.py:263
+msgid "Dashboard"
+msgstr "Panel"
+
+#: .\app\templates\components\header.html:18 .\temp_header.txt:18
+msgid "Selecionar idioma"
+msgstr "Seleccionar idioma"
+
+#: .\app\templates\components\header.html:49
+msgid "Português (PT)"
+msgstr "Portugués (PT)"
+
+#: .\app\templates\components\header.html:60
+msgid "English (EN)"
+msgstr "Inglés (ES)"
+
+#: .\app\templates\components\header.html:71
+msgid "Español (ES)"
+msgstr "Español (ES)"
+
+#: .\app\templates\components\header.html:80
+#: .\app\templates\components\header.html:86 .\temp_header.txt:47
+#: .\temp_header.txt:53
+msgid "Notificações"
+msgstr "Notificaciones"
+
+#: .\app\templates\components\header.html:103 .\temp_header.txt:70
+msgid "Ver todas"
+msgstr "Ver todo"
+
+#: .\app\templates\components\header.html:111 .\temp_header.txt:78
+msgid "Menu do usuário"
+msgstr "Menú de usuario"
+
+#: .\app\templates\components\header.html:148
+#: .\app\templates\settings\profile.html:7 .\app\views\system_settings.py:134
+#: .\temp_header.txt:115
+msgid "Meu Perfil"
+msgstr "Mi perfil"
+
+#: .\app\templates\components\header.html:153
+#: .\app\templates\settings\change_password.html:7
+#: .\app\templates\settings\change_password.html:44
+#: .\app\templates\settings\profile.html:93 .\app\views\system_settings.py:160
+#: .\temp_header.txt:120
+msgid "Alterar Senha"
+msgstr "Cambiar la contraseña"
+
+#: .\app\templates\components\header.html:159
+#: .\app\templates\settings\company.html:7 .\app\views\system_settings.py:111
+#: .\temp_header.txt:126
+msgid "Configurações da Empresa"
+msgstr "Configuración de la empresa"
+
+#: .\app\templates\components\header.html:166
+#: .\app\templates\components\sidebar.html:110 .\temp_header.txt:133
+msgid "Sair"
+msgstr "para salir"
+
+#: .\app\templates\components\sidebar.html:30
+msgid "ADMINISTRAÇÃO"
+msgstr "ADMINISTRACIÓN"
+
+#: .\app\templates\components\sidebar.html:51
+msgid "GESTÃO"
+msgstr "GESTIÓN"
+
+#: .\app\templates\components\sidebar.html:56
+#: .\app\templates\members\list.html:7 .\app\views\members.py:113
+msgid "Membros"
+msgstr "Miembros"
+
+#: .\app\templates\components\sidebar.html:73 .\app\views\reports.py:66
+#: .\app\views\reports.py:117
+msgid "Relatórios"
+msgstr "Informes"
+
+#: .\app\templates\components\sidebar.html:78
+msgid "SISTEMA"
+msgstr "SISTEMA"
+
+#: .\app\templates\components\sidebar.html:84
+#: .\app\templates\components\sidebar.html:89
+msgid "Configurações"
+msgstr "Ajustes"
+
+#: .\app\templates\dashboard\admin_empresa.html:25
+msgid "mês por membro"
+msgstr "mes por miembro"
+
+#: .\app\templates\dashboard\admin_empresa.html:59
+msgid "Ativos atualmente"
+msgstr "Actualmente activo"
+
+#: .\app\templates\dashboard\admin_empresa.html:67
+msgid "Membros Pendentes"
+msgstr "Miembros pendientes"
+
+#: .\app\templates\dashboard\admin_empresa.html:71
+msgid "Aguardando aprovação"
+msgstr "En espera de aprobación"
+
+#: .\app\templates\dashboard\admin_empresa.html:79
+#, fuzzy
+#| msgid "Agentes disponíveis"
+msgid "Chatbots Disponíveis"
+msgstr "Agentes disponibles"
+
+#: .\app\templates\dashboard\admin_empresa.html:83
+msgid "Para uso"
+msgstr "Para uso"
+
+#: .\app\templates\dashboard\admin_empresa.html:91
+msgid "Custo Mensal"
+msgstr "Costo Mensual"
+
+#: .\app\templates\dashboard\admin_empresa.html:95
+#: .\app\templates\dashboard\super_admin.html:52
+msgid "Estimado"
+msgstr "Estimado"
+
+#: .\app\templates\dashboard\admin_empresa.html:107
+#: .\app\templates\dashboard\super_admin.html:64
+msgid "Faturamento Mensal"
+msgstr "Facturación mensual"
+
+#: .\app\templates\dashboard\admin_empresa.html:122
+msgid "Distribuição de Status"
+msgstr "Distribución de estado"
+
+#: .\app\templates\dashboard\admin_empresa.html:140
+msgid "Composição da Equipe"
+msgstr ""
+
+#: .\app\templates\dashboard\admin_empresa.html:155
+#, fuzzy
+#| msgid "Todos os Agentes"
+msgid "Status dos Chatbots"
+msgstr "Todos los agentes"
+
+#: .\app\templates\dashboard\admin_empresa.html:170
+msgid "Uso de Chatbots"
+msgstr "Uso de agentes"
+
+#: .\app\templates\dashboard\admin_empresa.html:188
+msgid "Membros Recentes"
+msgstr "Miembros recientes"
+
+#: .\app\templates\dashboard\admin_empresa.html:191
+msgid "Ver Todos"
+msgstr "Ver todo"
+
+#: .\app\templates\dashboard\admin_empresa.html:223
+msgid "Nenhum membro cadastrado"
+msgstr "No hay miembros registrados"
+
+#: .\app\templates\dashboard\admin_empresa.html:237
+msgid "Ver Todas"
+msgstr "Ver todo"
+
+#: .\app\templates\dashboard\admin_empresa.html:321
+#: .\app\templates\dashboard\super_admin.html:211
+#: .\app\templates\dashboard\super_admin.html:288
+msgid "Sem dados suficientes para este gráfico."
+msgstr "No hay suficientes datos para este gráfico."
+
+#: .\app\templates\dashboard\no_company.html:13
+msgid "Nenhuma empresa vinculada"
+msgstr "Ninguna empresa vinculada"
+
+#: .\app\templates\dashboard\no_company.html:15
+msgid ""
+"Seu usuário ainda não está associado a uma empresa. Sem essa associação, não "
+"conseguimos carregar o dashboard."
+msgstr ""
+"Tu usuario aún no está asociado a una empresa. Sin esa asociación no podemos "
+"cargar el panel."
+
+#: .\app\templates\dashboard\no_company.html:18
+msgid ""
+"Solicite a um administrador que vincule seu acesso a uma empresa existente "
+"ou crie uma nova para você."
+msgstr ""
+"Solicita a un administrador que vincule tu acceso a una empresa existente o "
+"cree una nueva para ti."
+
+#: .\app\templates\dashboard\no_company.html:21
+#, fuzzy
+#| msgid "Solicitar novamente"
+msgid "Sair e tentar novamente"
+msgstr "Solicitar nuevamente"
+
+#: .\app\templates\dashboard\super_admin.html:12
+#: .\app\templates\dashboard\super_admin.html:228
+msgid "Empresas Ativas"
+msgstr "Empresas activas"
+
+#: .\app\templates\dashboard\super_admin.html:16
+msgid "Atualmente ativas"
+msgstr "Actualmente activo"
+
+# Login
+#: .\app\templates\dashboard\super_admin.html:28
+msgid "Total de usuários"
+msgstr "Usuarios totales"
+
+#: .\app\templates\dashboard\super_admin.html:36
+#: .\app\templates\dashboard\super_admin.html:236
+msgid "Chatbots Ativos"
+msgstr "Agentes activos"
+
+#: .\app\templates\dashboard\super_admin.html:40
+msgid "Em operação"
+msgstr "En funcionamiento"
+
+#: .\app\templates\dashboard\super_admin.html:48
+#: .\app\templates\dashboard\super_admin.html:240
+msgid "Custo Mensal Estimado"
+msgstr "Costo mensual estimado"
+
+#: .\app\templates\dashboard\super_admin.html:79
+#, fuzzy
+#| msgid "Modo de Cobrança"
+msgid "Modalidade de Cobrança"
+msgstr "Modalidad de Cobranza"
+
+#: .\app\templates\dashboard\super_admin.html:97
+msgid "Evolução Mensal"
+msgstr "Evolución mensual"
+
+#: .\app\templates\dashboard\super_admin.html:112
+#, fuzzy
+#| msgid "Deletar Empresa"
+msgid "Crescimento por Empresa"
+msgstr "Crecimiento por Empresa"
+
+#: .\app\templates\dashboard\super_admin.html:130
+msgid "Últimas Atividades"
+msgstr "Últimas actividades"
+
+#: .\app\templates\dashboard\super_admin.html:146
+msgid "Sistema"
+msgstr "Sistema"
+
+# Empty states
+#: .\app\templates\dashboard\super_admin.html:158
+msgid "Nenhuma atividade recente"
+msgstr "Ninguna actividad reciente"
+
+#: .\app\templates\dashboard\super_admin.html:168
+msgid "Top Empresas - Gráfico"
+msgstr "Principales Empresas - Gráfico"
+
+#: .\app\templates\dashboard\super_admin.html:186
+msgid "Empresas com mais membros"
+msgstr "Empresas con más miembros"
+
+#: .\app\templates\dashboard\super_admin.html:196 .\app\views\dashboard.py:240
+msgid "Membros ativos"
+msgstr "Miembros activos"
+
+#: .\app\templates\dashboard\super_admin.html:222
+msgid "Resumo Geral"
+msgstr "Resumen General"
+
+#: .\app\templates\emails\user_credentials_email.html:6
+#, fuzzy
+#| msgid "%(system_name)s - Seus dados de acesso"
+msgid "Seus dados de acesso"
+msgstr "Tus datos de acceso - %(system_name)s"
+
+#: .\app\templates\emails\user_credentials_email.html:167
+#, python-format
+msgid "Olá, %(recipient_name)s!"
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:170
+#, python-format
+msgid "Você agora tem acesso ao %(system_name)s."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:173
+msgid ""
+"Use o botão abaixo para abrir a área de login e utilize as credenciais "
+"enviadas."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:176
+#, fuzzy
+#| msgid "Nome do Sistema"
+msgid "Acessar o sistema"
+msgstr "Nombre del sistema"
+
+#: .\app\templates\emails\user_credentials_email.html:188
+#: .\app\templates\emails\user_credentials_email.txt:11
+#, fuzzy
+#| msgid "Senha redefinida"
+msgid "Senha provisória"
+msgstr "Restablecer contraseña"
+
+#: .\app\templates\emails\user_credentials_email.html:193
+msgid ""
+"Por segurança, altere a senha após o primeiro login e mantenha suas "
+"credenciais em local seguro."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:197
+msgid "Compartilhe suas credenciais apenas com pessoas autorizadas."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:198
+msgid "Desconecte-se ao finalizar o uso em dispositivos compartilhados."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:199
+msgid "Procure o suporte se notar qualquer atividade suspeita."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.html:204
+#, python-format
+msgid ""
+"Precisa de ajuda? Fale com nossa equipe pelo e-mail <a href=\"mailto:"
+"%(support_email)s\">%(support_email)s</a>."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:3
+#, python-format
+msgid "Olá, %(recipient_name)s,"
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:5
+#, python-format
+msgid "Um acesso foi criado para você no %(system_name)s."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:7
+msgid "Use os dados abaixo para entrar:"
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:13
+msgid "Por segurança, altere a senha após o primeiro login."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:16
+#, python-format
+msgid "Responsável: %(sender_name)s"
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:19
+#: .\app\templates\registration\password_reset_email.html:189
+#, python-format
+msgid "Precisa de ajuda? Fale com nossa equipe pelo e-mail %(support_email)s."
+msgstr ""
+
+#: .\app\templates\emails\user_credentials_email.txt:22
+#: .\app\templates\registration\password_reset_email.html:184
+#: .\app\templates\registration\password_reset_email.txt:17
+msgid "Atenciosamente,"
+msgstr "Tuyo sinceramente,"
+
+#: .\app\templates\login.html:8 .\app\views\auth.py:81
+msgid "Login"
+msgstr "Acceso"
+
+#: .\app\templates\login.html:80 .\multi_empresas_agentes\urls.py:27
+msgid "Sistema Multi-Empresas Chatbots"
+msgstr "Sistema de agentes multiempresa"
+
+#: .\app\templates\login.html:131
+msgid "Entrar"
+msgstr "para entrar"
+
+#: .\app\templates\login.html:136
+msgid "Esqueceu a senha?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: .\app\templates\members\delete_confirm.html:12
+msgid "Tem certeza que deseja deletar o membro"
+msgstr "¿Estás seguro de que deseas eliminar al miembro?"
+
+#: .\app\templates\members\delete_confirm.html:18
+msgid "Documento de identificação:"
+msgstr "Documento de identificación:"
+
+#: .\app\templates\members\delete_confirm.html:20
+msgid "Departamento:"
+msgstr "Departamento:"
+
+#: .\app\templates\members\form_per_agente.html:16
+#: .\app\templates\members\form_per_user.html:16
+msgid "Dados Pessoais"
+msgstr "Datos personales"
+
+#: .\app\templates\members\form_per_agente.html:43
+#: .\app\templates\members\form_per_user.html:43
+msgid "Inclua o código do país e o código local (DDD). Ex: 5511999999999"
+msgstr "Incluya el código del país y el código local (DDD). Ej.: 5511999999999"
+
+#: .\app\templates\members\form_per_agente.html:84
+#: .\app\templates\members\form_per_user.html:84
+msgid "Dados Profissionais"
+msgstr "Datos profesionales"
+
+#: .\app\templates\members\form_per_agente.html:155
+#: .\app\templates\members\form_per_user.html:157
+msgid "Localização"
+msgstr ""
+
+#: .\app\templates\members\form_per_agente.html:197
+#: .\app\templates\members\form_per_user.html:199
+msgid "Selecionar Todos"
+msgstr "Seleccionar todo"
+
+#: .\app\templates\members\form_per_agente.html:204
+msgid "Custo total se todos selecionados:"
+msgstr "Costo total si todos seleccionados:"
+
+# Members
+#: .\app\templates\members\form_per_agente.html:226
+#: .\app\templates\members\form_per_user.html:228
+msgid "Salvar Membro"
+msgstr "Guardar miembro"
+
+#: .\app\templates\members\form_per_user.html:206
+msgid "Cobrança:"
+msgstr "Cargar:"
+
+#: .\app\templates\members\form_per_user.html:207
+msgid "independente dos chatbots selecionados"
+msgstr "independiente de los agentes seleccionados"
+
+# Import/Export
+#: .\app\templates\members\import.html:7 .\app\views\members.py:371
+msgid "Importar Membros"
+msgstr "Importar miembros"
+
+#: .\app\templates\members\import.html:14
+msgid "Upload de Arquivo CSV"
+msgstr "Subir archivo CSV"
+
+#: .\app\templates\members\import.html:33
+msgid "Tamanho máximo: 5MB"
+msgstr "Tamaño máximo: 5 MB"
+
+#: .\app\templates\members\import.html:42
+msgid "Upload e Preview"
+msgstr "Cargar y obtener vista previa"
+
+#: .\app\templates\members\import.html:53
+msgid "Formato do CSV"
+msgstr "formato CSV"
+
+#: .\app\templates\members\import.html:56
+#, fuzzy
+#| msgid "O arquivo CSV deve conter as seguintes colunas:"
+msgid ""
+"O arquivo CSV deve conter as seguintes colunas (separadas por ponto e "
+"vírgula):"
+msgstr "El archivo CSV debe contener las siguientes columnas:"
+
+#: .\app\templates\members\import.html:61
+msgid "(usar DDI e apenas números, ex: 5511999999999)"
+msgstr "(usar DDI y solo números, ej.: 5511999999999)"
+
+#: .\app\templates\members\import.html:62
+msgid "(único)"
+msgstr "(soltero)"
+
+#: .\app\templates\members\import.html:65
+msgid "(Gerencial, Operacional, Técnico, Suporte, etc.)"
+msgstr ""
+
+#: .\app\templates\members\import.html:67
+#, fuzzy
+#| msgid ""
+#| "Sexo inválido. Valores aceitos: masculino, feminino, outro, prefere não "
+#| "informar."
+msgid "(masculino/feminino/outro/prefere não informar)"
+msgstr ""
+"Sexo inválido. Valores permitidos: masculino, femenino, otro, prefiere no "
+"informar."
+
+#: .\app\templates\members\import.html:76
+msgid "nomes separados por vírgula"
+msgstr "nombres separados por comas"
+
+#: .\app\templates\members\import.html:79
+msgid "Campos obrigatórios"
+msgstr "Campos obligatorios"
+
+#: .\app\templates\members\import.html:83
+msgid "Exemplo:"
+msgstr "Ejemplo:"
+
+#: .\app\templates\members\import.html:89
+msgid "Baixar Template"
+msgstr "Descargar plantilla"
+
+#: .\app\templates\members\import_preview.html:7 .\app\views\members.py:518
+msgid "Preview de Importação"
+msgstr "Vista previa de importación"
+
+#: .\app\templates\members\import_preview.html:13
+msgid "Total de registros:"
+msgstr "Registros totales:"
+
+#: .\app\templates\members\import_preview.html:18
+msgid "Erros encontrados durante a importação"
+msgstr "Errores encontrados durante la importación"
+
+#: .\app\templates\members\import_preview.html:19
+msgid "Corrija os campos destacados antes de confirmar a importação."
+msgstr "Corrija los campos destacados antes de confirmar la importación."
+
+#: .\app\templates\members\import_preview.html:23
+#, python-format
+msgid ""
+"\n"
+"                    Linha %(line)s\n"
+"                "
+msgstr ""
+
+#: .\app\templates\members\import_preview.html:34
+msgid "Dados a Serem Importados"
+msgstr "Datos a importar"
+
+#: .\app\templates\members\import_preview.html:43
+#: .\app\templates\members\list.html:132 .\app\templates\members\list.html:150
+#: .\app\templates\users\list.html:68 .\app\templates\users\list.html:82
+#: .\app\views\members.py:27
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: .\app\templates\members\import_preview.html:44
+msgid "Documento"
+msgstr "Documento"
+
+#: .\app\templates\members\import_preview.html:51
+#, fuzzy
+#| msgid "Departamento"
+msgid "Data Nascimento"
+msgstr "Departamento"
+
+#: .\app\templates\members\import_preview.html:52
+msgid "Data Admissão"
+msgstr "Fecha de admisión"
+
+#: .\app\templates\members\import_preview.html:57
+msgid "Nº Concessionária"
+msgstr "Distribuidor No."
+
+#: .\app\templates\members\import_preview.html:188
+msgid "Atenção: Esta ação irá criar"
+msgstr "Advertencia: esta acción creará"
+
+#: .\app\templates\members\import_preview.html:189
+msgid "novos membros. Verifique os dados acima antes de confirmar."
+msgstr "nuevos miembros. Comprueba los datos anteriores antes de confirmar."
+
+#: .\app\templates\members\import_preview.html:194
+#: .\app\templates\settings\company.html:82
+#: .\app\templates\settings\system.html:425
+msgid "Voltar"
+msgstr "para volver"
+
+#: .\app\templates\members\import_preview.html:197
+msgid "Confirmar Importação"
+msgstr "Confirmar importación"
+
+#: .\app\templates\members\import_preview.html:203
+msgid ""
+"Existem erros que impedem a importação. Corrija o arquivo e tente novamente."
+msgstr ""
+"Hay errores que impiden la importación. Corrija el archivo e inténtelo "
+"nuevamente."
+
+# Members
+#: .\app\templates\members\list.html:10 .\app\views\members.py:191
+msgid "Novo Membro"
+msgstr "Nuevo miembro"
+
+#: .\app\templates\members\list.html:13
+msgid "Importar"
+msgstr "Importar"
+
+#: .\app\templates\members\list.html:16
+msgid "Exportar"
+msgstr "Exportar"
+
+# Statistics
+#: .\app\templates\members\list.html:30
+msgid "Total"
+msgstr "Total"
+
+#: .\app\templates\members\list.html:41
+msgid "Ativos"
+msgstr "Activos"
+
+#: .\app\templates\members\list.html:52
+msgid "Pendentes"
+msgstr "Colgantes"
+
+#: .\app\templates\members\list.html:63
+msgid "Inativos"
+msgstr "Inactivo"
+
+#: .\app\templates\members\list.html:86
+msgid "Buscar por nome, email, documento, departamento ou telefone"
+msgstr "Buscar por nombre, correo, documento, departamento o teléfono"
+
+#: .\app\templates\members\list.html:98
+msgid "Todos os Chatbots"
+msgstr "Todos los agentes"
+
+#: .\app\templates\members\list.html:184
+msgid "Nenhum membro encontrado."
+msgstr "No se encontraron miembros."
+
+#: .\app\templates\registration\password_reset_complete.html:9
+msgid "Senha redefinida"
+msgstr "Restablecer contraseña"
+
+#: .\app\templates\registration\password_reset_complete.html:28
+msgid "Senha redefinida com sucesso!"
+msgstr "¡Restablecimiento de contraseña exitoso!"
+
+#: .\app\templates\registration\password_reset_complete.html:30
+msgid "Agora você já pode acessar o sistema com a nova senha."
+msgstr "Ahora puede acceder al sistema con la nueva contraseña."
+
+#: .\app\templates\registration\password_reset_complete.html:33
+msgid "Ir para o Login"
+msgstr "Ir a Iniciar sesión"
+
+#: .\app\templates\registration\password_reset_confirm.html:9
+msgid "Definir nova senha"
+msgstr "Establecer nueva contraseña"
+
+#: .\app\templates\registration\password_reset_confirm.html:31
+msgid "Defina sua nova senha"
+msgstr "Establece tu nueva contraseña"
+
+#: .\app\templates\registration\password_reset_confirm.html:44
+#, fuzzy
+#| msgid "Digite sua senha"
+msgid "Digite a nova senha"
+msgstr "Introduce tu contraseña"
+
+#: .\app\templates\registration\password_reset_confirm.html:69
+#, fuzzy
+#| msgid "Defina sua nova senha"
+msgid "Repita a nova senha"
+msgstr "Establece tu nueva contraseña"
+
+#: .\app\templates\registration\password_reset_confirm.html:82
+msgid "Salvar nova senha"
+msgstr "Guardar nueva contraseña"
+
+#: .\app\templates\registration\password_reset_confirm.html:86
+msgid "Link inválido"
+msgstr "Enlace no válido"
+
+#: .\app\templates\registration\password_reset_confirm.html:88
+msgid ""
+"O link utilizado não é válido ou já foi usado. Solicite um novo reset de "
+"senha."
+msgstr ""
+"El enlace utilizado no es válido o ya ha sido utilizado. Solicite un nuevo "
+"restablecimiento de contraseña."
+
+#: .\app\templates\registration\password_reset_confirm.html:91
+msgid "Solicitar novamente"
+msgstr "Solicitar nuevamente"
+
+#: .\app\templates\registration\password_reset_done.html:9
+msgid "Verifique seu e-mail"
+msgstr "Revisa tu correo electrónico"
+
+#: .\app\templates\registration\password_reset_done.html:28
+msgid "Confira sua caixa de entrada"
+msgstr "Revisa tu bandeja de entrada"
+
+#: .\app\templates\registration\password_reset_done.html:30
+msgid ""
+"Enviamos um e-mail com instruções para redefinir sua senha. Caso não "
+"encontre, verifique a pasta de spam."
+msgstr ""
+"Le hemos enviado un correo electrónico con instrucciones para restablecer su "
+"contraseña. Si no lo encuentras, revisa tu carpeta de spam."
+
+#: .\app\templates\registration\password_reset_done.html:33
+#: .\app\templates\registration\password_reset_form.html:68
+msgid "Voltar ao login"
+msgstr "Volver a iniciar sesión"
+
+#: .\app\templates\registration\password_reset_email.html:6
+#, fuzzy
+#| msgid "Redefinição de Senha"
+msgid "Redefinição de senha"
+msgstr "Restablecer contraseña"
+
+#: .\app\templates\registration\password_reset_email.html:165
+#: .\app\templates\registration\password_reset_email.txt:3
+msgid "Olá!"
+msgstr "¡Hola!"
+
+#: .\app\templates\registration\password_reset_email.html:166
+#: .\app\templates\registration\password_reset_email.txt:5
+msgid ""
+"Você está recebendo este e-mail porque foi solicitada a redefinição de senha "
+"para a sua conta."
+msgstr ""
+"Está recibiendo este correo electrónico porque se le ha solicitado que "
+"restablezca la contraseña de su cuenta."
+
+#: .\app\templates\registration\password_reset_email.html:167
+msgid ""
+"Clique no botão para criar uma nova senha. Por motivos de segurança, o link "
+"expira após algumas horas."
+msgstr ""
+
+#: .\app\templates\registration\password_reset_email.html:169
+#, fuzzy
+#| msgid "Redefinir Senha"
+msgid "Redefinir senha"
+msgstr "Restablecer contraseña"
+
+#: .\app\templates\registration\password_reset_email.html:171
+msgid "Se o botão não funcionar, copie o link direto abaixo."
+msgstr ""
+
+#: .\app\templates\registration\password_reset_email.html:176
+msgid "Lembretes rápidos:"
+msgstr ""
+
+#: .\app\templates\registration\password_reset_email.html:178
+msgid "Não compartilhe este link com outras pessoas."
+msgstr ""
+
+#: .\app\templates\registration\password_reset_email.html:179
+msgid "Após redefinir, escolha uma senha forte e única."
+msgstr ""
+
+#: .\app\templates\registration\password_reset_email.html:180
+msgid "Ignore esta mensagem se você não solicitou a alteração."
+msgstr ""
+
+#: .\app\templates\registration\password_reset_email.txt:7
+msgid "Acesse o link abaixo para definir uma nova senha:"
+msgstr "Acceda al siguiente enlace para establecer una nueva contraseña:"
+
+#: .\app\templates\registration\password_reset_email.txt:11
+#, fuzzy
+#| msgid "Caso não tenha solicitado, nenhuma ação é necessária."
+msgid ""
+"Caso não tenha solicitado esta alteração, nenhuma ação adicional é "
+"necessária."
+msgstr "Si no lo ha solicitado, no se requiere ninguna acción."
+
+#: .\app\templates\registration\password_reset_email.txt:14
+#, python-format
+msgid "Em caso de dúvidas, fale conosco em %(support_email)s."
+msgstr ""
+
+#: .\app\templates\registration\password_reset_form.html:9
+#: .\app\templates\registration\password_reset_form.html:28
+#: .\app\views\auth.py:172
+msgid "Redefinir Senha"
+msgstr "Restablecer contraseña"
+
+#: .\app\templates\registration\password_reset_form.html:53
+msgid "Digite seu e-mail"
+msgstr "Introduce tu correo electrónico"
+
+#: .\app\templates\registration\password_reset_form.html:63
+msgid "Enviar instruções"
+msgstr "Enviar instrucciones"
+
+#: .\app\templates\registration\password_reset_subject.txt:3
+msgid "Redefinição de Senha"
+msgstr "Restablecer contraseña"
+
+#: .\app\templates\settings\change_password.html:19
+msgid "Sua senha deve conter pelo menos 8 caracteres."
+msgstr "Su contraseña debe contener al menos 8 caracteres."
+
+#: .\app\templates\settings\change_password.html:23
+msgid "Senha Atual"
+msgstr "Contraseña actual"
+
+#: .\app\templates\settings\change_password.html:28
+msgid "Nova Senha"
+msgstr "Nueva contraseña"
+
+#: .\app\templates\settings\change_password.html:33
+msgid "Confirmar Nova Senha"
+msgstr "Confirmar nueva contraseña"
+
+#: .\app\templates\settings\company.html:55
+msgid "Informações de Cobrança"
+msgstr "Información de facturación"
+
+#: .\app\templates\settings\company.html:55
+msgid "Somente Leitura"
+msgstr "Solo lectura"
+
+#: .\app\templates\settings\company.html:69
+msgid "Valor por Membro:"
+msgstr "Valor por Socio:"
+
+#: .\app\templates\settings\company.html:75
+msgid ""
+"Para alterar configurações de cobrança, contate o administrador do sistema."
+msgstr ""
+"Para cambiar la configuración de facturación, comuníquese con el "
+"administrador del sistema."
+
+#: .\app\templates\settings\profile.html:60
+msgid "Salvar Alterações"
+msgstr "Guardar cambios"
+
+#: .\app\templates\settings\profile.html:70
+msgid "Informações da Conta"
+msgstr "Información de la cuenta"
+
+#: .\app\templates\settings\profile.html:73
+msgid "Usuário:"
+msgstr "Usuario:"
+
+#: .\app\templates\settings\profile.html:74
+#: .\app\templates\users\delete_confirm.html:18
+msgid "Papel:"
+msgstr "Papel:"
+
+#: .\app\templates\settings\profile.html:82
+msgid "Último Login:"
+msgstr "Último inicio de sesión:"
+
+#: .\app\templates\settings\profile.html:86
+msgid "Primeiro acesso"
+msgstr "Primer acceso"
+
+#: .\app\templates\settings\system.html:15
+msgid "Aparência"
+msgstr "Apariencia"
+
+#: .\app\templates\settings\system.html:42
+msgid "Use .png, .ico ou .svg para o favicon."
+msgstr "Utilice .png, .ico o .svg para el favicon."
+
+#: .\app\templates\settings\system.html:113
+msgid "Inclua o protocolo (ex.: https://app.suaempresa.com)."
+msgstr "Incluir el protocolo (ej.: https://app.suaempresa.com)."
+
+#: .\app\templates\settings\system.html:129
+msgid "Rodapé"
+msgstr "Pie de página"
+
+#: .\app\templates\settings\system.html:138
+msgid "Use este campo para exibir informações legais no rodapé."
+msgstr "Utiliza este campo para mostrar información legal en el pie de página."
+
+#: .\app\templates\settings\system.html:154
+msgid "Cores dos Botões"
+msgstr "Colores de botones"
+
+#: .\app\templates\settings\system.html:261
+msgid "Sidebar e Links"
+msgstr "Barra lateral y enlaces"
+
+#: .\app\templates\settings\system.html:289
+msgid "Tipografia"
+msgstr "Tipografía"
+
+#: .\app\templates\settings\system.html:295
+msgid "Ex.: 16px"
+msgstr "Por ejemplo: 16px"
+
+#: .\app\templates\settings\system.html:302
+msgid "Ex.: 1.75rem"
+msgstr "Por ejemplo: 1,75rem"
+
+#: .\app\templates\settings\system.html:309
+msgid "Ex.: 0.95rem"
+msgstr "Por ejemplo: 0,95rem"
+
+#: .\app\templates\settings\system.html:316
+msgid "Ex.: 1.25rem"
+msgstr "Por ejemplo: 1,25rem"
+
+#: .\app\templates\settings\system.html:333
+msgid "Ativações até este dia são cobradas integralmente"
+msgstr "Las activaciones hasta este día se cobran en su totalidad."
+
+#: .\app\templates\settings\system.html:350
+msgid "Contato e Suporte"
+msgstr "Contacto y Soporte"
+
+#: .\app\templates\settings\system.html:360
+msgid "Endereço exibido nos e-mails como canal de suporte."
+msgstr "Dirección mostrada en los correos electrónicos como canal de soporte."
+
+#: .\app\templates\settings\system.html:368
+msgid "Configurações SMTP"
+msgstr "Configuración SMTP"
+
+#: .\app\templates\settings\system.html:413
+msgid "Testar Envio"
+msgstr "Envío de prueba"
+
+#: .\app\templates\settings\system.html:421
+msgid "Restaurar aparência"
+msgstr "Restaurar apariencia"
+
+#: .\app\templates\users\delete_confirm.html:12
+msgid "Tem certeza que deseja deletar o usuário"
+msgstr "¿Estás seguro de que deseas eliminar al usuario?"
+
+#: .\app\templates\users\form.html:94
+msgid "Sincronização com Membros"
+msgstr "Sincronización con miembros"
+
+#: .\app\templates\users\form.html:96
+msgid ""
+"Defina se este administrador deve possuir um membro vinculado e se ele "
+"permanecerá ativo."
+msgstr ""
+"Defina si este administrador debe tener un miembro vinculado y si "
+"permanecerá activo."
+
+#: .\app\templates\users\list.html:7
+msgid "Usuários do Sistema"
+msgstr "Usuarios del sistema"
+
+# Users
+#: .\app\templates\users\list.html:10 .\app\views\users.py:275
+msgid "Novo Usuário"
+msgstr "Nuevo usuario"
+
+#: .\app\templates\users\list.html:20
+msgid "Buscar por nome, email ou usuário"
+msgstr "Buscar por nombre, correo electrónico o usuario"
+
+#: .\app\templates\users\list.html:34
+msgid "Todos os Papéis"
+msgstr "Todos los artículos"
+
+#: .\app\templates\users\list.html:99
+msgid "Nunca"
+msgstr "Nunca"
+
+#: .\app\templates\users\list.html:114
+msgid "Ativar/Inativar"
+msgstr "Activar/Desactivar"
+
+#: .\app\templates\users\list.html:126
+msgid "Nenhum usuário encontrado."
+msgstr "No se encontraron usuarios."
+
+#: .\app\utils\csv_handler.py:117
+msgid "Nome é obrigatório."
+msgstr "El nombre es obligatorio."
+
+#: .\app\utils\csv_handler.py:121
+msgid "Email é obrigatório."
+msgstr "El correo electrónico es obligatorio."
+
+#: .\app\utils\csv_handler.py:126
+msgid "Email inválido."
+msgstr "Correo electrónico inválido."
+
+#: .\app\utils\csv_handler.py:130
+msgid "Telefone é obrigatório. Informe DDI e apenas números."
+msgstr "El teléfono es obligatorio. Incluya código de país y solo números."
+
+#: .\app\utils\csv_handler.py:132
+msgid "Telefone deve conter apenas números. Ex: 5511999999999."
+msgstr "El teléfono debe contener solo números. Ej.: 5511999999999."
+
+#: .\app\utils\csv_handler.py:134
+msgid "Telefone deve incluir DDI (mínimo 11 dígitos)."
+msgstr "El teléfono debe incluir DDI (mínimo 11 dígitos)."
+
+#: .\app\utils\csv_handler.py:138
+msgid "Documento é obrigatório."
+msgstr "El documento es obligatorio."
+
+#: .\app\utils\csv_handler.py:141
+msgid "Documento duplicado no arquivo."
+msgstr "Documento duplicado en el archivo."
+
+#: .\app\utils\csv_handler.py:143
+msgid "Documento já cadastrado no sistema."
+msgstr "Documento ya registrado en el sistema."
+
+#: .\app\utils\csv_handler.py:150
+msgid ""
+"Sexo inválido. Valores aceitos: masculino, feminino, outro, prefere não "
+"informar."
+msgstr ""
+"Sexo inválido. Valores permitidos: masculino, femenino, otro, prefiere no "
+"informar."
+
+#: .\app\utils\csv_handler.py:155 .\app\utils\csv_handler.py:160
+msgid "Data inválida. Utilize DD/MM/YYYY."
+msgstr "Fecha inválida. Utilice DD/MM/AAAA."
+
+#: .\app\utils\csv_handler.py:164
+msgid "Status inválido. Use active, inactive ou pending."
+msgstr "Estado inválido. Use active, inactive o pending."
+
+#: .\app\utils\csv_handler.py:272
+msgid "Arquivo CSV vazio ou inválido"
+msgstr "Archivo CSV vacío o no válido"
+
+#: .\app\utils\csv_handler.py:276
+msgid "Colunas obrigatórias faltando: {}"
+msgstr "Faltan columnas obligatorias: {}"
+
+#: .\app\utils\decorators.py:19
+msgid "Acesso negado. Apenas Super Admins podem acessar esta página."
+msgstr ""
+"Acceso denegado. Solo los superadministradores pueden acceder a esta página."
+
+#: .\app\utils\decorators.py:35
+msgid "Acesso negado. Apenas Admins de Empresa podem acessar esta página."
+msgstr ""
+"Acceso denegado. Solo los administradores de la empresa pueden acceder a "
+"esta página."
+
+#: .\app\utils\decorators.py:51
+msgid "Você precisa estar associado a uma empresa."
+msgstr "Necesitas estar asociado a una empresa."
+
+#: .\app\utils\decorators.py:64
+msgid "Esta requisição deve ser feita via AJAX."
+msgstr "Esta solicitud debe realizarse vía AJAX."
+
+# Validation
+#: .\app\utils\validators.py:17
+msgid "CPF deve ter 11 dígitos"
+msgstr "CPF debe tener 11 dígitos"
+
+#: .\app\utils\validators.py:21 .\app\utils\validators.py:29
+#: .\app\utils\validators.py:37
+msgid "CPF inválido"
+msgstr "CPF no válido"
+
+# Messages
+#: .\app\views\auth.py:50
+msgid "Login realizado com sucesso!"
+msgstr "¡Inicia sesión exitosamente!"
+
+#: .\app\views\auth.py:56
+msgid "Usuário inativo. Contate o administrador."
+msgstr "Usuario inactivo. Póngase en contacto con el administrador."
+
+#: .\app\views\auth.py:66 .\app\views\auth.py:75
+msgid "Usuário ou senha incorretos."
+msgstr "Nombre de usuario o contraseña incorrectos."
+
+#: .\app\views\auth.py:90
+msgid "Logout realizado com sucesso!"
+msgstr "¡Cerrar sesión correctamente!"
+
+#: .\app\views\auth.py:145
+msgid "Enviamos instruções para redefinir sua senha. Verifique seu e-mail."
+msgstr ""
+"Enviamos instrucciones para restablecer su contraseña. Revisa tu correo "
+"electrónico."
+
+#: .\app\views\auth.py:155
+msgid ""
+"Não foi possível processar sua solicitação. Verifique o e-mail informado."
+msgstr ""
+"No pudimos procesar su solicitud. Consulta el correo electrónico "
+"proporcionado."
+
+#: .\app\views\billing.py:30 .\app\views\billing.py:146
+#: .\app\views\billing.py:177 .\app\views\billing.py:250
+#: .\app\views\agentes.py:293 .\app\views\members.py:56
+#: .\app\views\members.py:145 .\app\views\members.py:207
+#: .\app\views\members.py:297 .\app\views\members.py:329
+#: .\app\views\members.py:544 .\app\views\reports.py:24
+#: .\app\views\system_settings.py:96
+msgid "Acesso negado."
+msgstr "Acceso denegado."
+
+#: .\app\views\billing.py:124
+msgid "Geração concluída: {} sucesso, {} erros"
+msgstr "Generación completada: {} éxito, {} errores"
+
+#: .\app\views\billing.py:307
+#, python-brace-format
+msgid ""
+"Cobrança de {company} referente ao período {start} a {end} excluída com "
+"sucesso."
+msgstr ""
+
+#: .\app\views\billing.py:316
+#, fuzzy
+#| msgid "Ver Cobranças"
+msgid "Excluir Cobrança"
+msgstr "Ver cargos"
+
+#: .\app\views\agentes.py:60
+msgid "Chatbot criado com sucesso!"
+msgstr "¡Agente creado exitosamente!"
+
+#: .\app\views\agentes.py:83
+msgid "Chatbot atualizado com sucesso!"
+msgstr "¡Agente actualizado exitosamente!"
+
+#: .\app\views\agentes.py:89
+msgid "Editar Chatbot"
+msgstr "Editar agente"
+
+#: .\app\views\agentes.py:109
+msgid ""
+"Este chatbot está vinculado a {} empresa(s). Desvincule antes de deletar."
+msgstr ""
+"Este agente está vinculado a {} empresa(s). Desvincular antes de eliminar."
+
+#: .\app\views\agentes.py:116
+msgid "Chatbot \"{}\" deletado com sucesso!"
+msgstr "¡El agente \"{}\" se eliminó exitosamente!"
+
+#: .\app\views\agentes.py:120
+msgid "Deletar Chatbot"
+msgstr "Eliminar agente"
+
+#: .\app\views\agentes.py:223
+#, python-format
+msgid "Vínculos atualizados. %(count)d membro(s) perderam acesso ao chatbot."
+msgstr ""
+"Vínculos actualizados. %(count)d miembro(s) perdieron acceso al agente."
+
+#: .\app\views\agentes.py:228
+#, fuzzy
+#| msgid "Usuário atualizado com sucesso!"
+msgid "Vínculos atualizados com sucesso!"
+msgstr "¡Vínculos actualizados con éxito!"
+
+#: .\app\views\agentes.py:258
+msgid "Vincular Chatbot"
+msgstr "Agente de enlace"
+
+#: .\app\views\agentes.py:283
+msgid "Chatbot desvinculado com sucesso!"
+msgstr "¡Agente se desvinculó exitosamente!"
+
+#: .\app\views\companies.py:66
+msgid "Empresa criada com sucesso!"
+msgstr "¡Empresa creada con éxito!"
+
+#: .\app\views\companies.py:101
+msgid "Empresa atualizada com sucesso!"
+msgstr "¡Compañía actualizada exitosamente!"
+
+#: .\app\views\companies.py:125
+msgid "Editar Empresa"
+msgstr "Editar empresa"
+
+#: .\app\views\companies.py:168
+msgid "Empresa \"{}\" deletada com sucesso!"
+msgstr "¡La empresa \"{}\" se eliminó correctamente!"
+
+#: .\app\views\companies.py:181
+msgid "Deletar Empresa"
+msgstr "Eliminar empresa"
+
+#: .\app\views\companies.py:196
+msgid "Empresa inativada com sucesso!"
+msgstr "¡Empresa desactivada con éxito!"
+
+#: .\app\views\companies.py:199
+msgid "Empresa ativada com sucesso!"
+msgstr "¡Empresa activada exitosamente!"
+
+#: .\app\views\dashboard.py:233
+msgid "Sem nome"
+msgstr "Sin nombre"
+
+#: .\app\views\dashboard.py:239
+#, fuzzy
+#| msgid "Membros ativos"
+msgid "Admins ativos"
+msgstr "Miembros activos"
+
+#: .\app\views\dashboard.py:241
+#, fuzzy
+#| msgid "Membros Pendentes"
+msgid "Membros pendentes"
+msgstr "Miembros pendientes"
+
+#: .\app\views\dashboard.py:242
+#, fuzzy
+#| msgid "Membros ativos"
+msgid "Membros inativos"
+msgstr "Miembros activos"
+
+#: .\app\views\members.py:35
+#, fuzzy
+#| msgid "Data de nascimento"
+msgid "Data de Nascimento"
+msgstr "Fecha de nacimiento"
+
+#: .\app\views\members.py:139 .\app\views\members.py:325
+msgid "Selecione uma empresa."
+msgstr "Seleccione una empresa."
+
+#: .\app\views\members.py:179
+msgid "Membro criado com sucesso!"
+msgstr "¡Miembro creado exitosamente!"
+
+#: .\app\views\members.py:268
+msgid "Membro atualizado com sucesso!"
+msgstr "¡Miembro actualizado exitosamente!"
+
+# Import/Export
+#: .\app\views\members.py:280
+msgid "Editar Membro"
+msgstr "Editar miembro"
+
+#: .\app\views\members.py:304
+msgid "Membro \"{}\" deletado com sucesso!"
+msgstr "¡Miembro \"{}\" eliminado exitosamente!"
+
+#: .\app\views\members.py:308
+msgid "Deletar Membro"
+msgstr "Eliminar miembro"
+
+#: .\app\views\members.py:366
+msgid "Erro ao processar CSV: {}"
+msgstr "Error al procesar CSV: {}"
+
+# Empty states
+#: .\app\views\members.py:386
+msgid "Nenhum dado para importar."
+msgstr "No hay datos para importar."
+
+#: .\app\views\members.py:513
+msgid "Importação concluída: {} sucesso, {} erros"
+msgstr "Importación completada: {} éxito, {} errores"
+
+#: .\app\views\system_settings.py:23
+msgid "Cores e tipografia restauradas para o padrão."
+msgstr "Colores y tipografía restaurados a los valores predeterminados."
+
+#: .\app\views\system_settings.py:29
+msgid "Configurações atualizadas com sucesso!"
+msgstr "¡La configuración se actualizó correctamente!"
+
+#: .\app\views\system_settings.py:59
+msgid "Configure o SMTP antes de testar."
+msgstr "Configure SMTP antes de realizar la prueba."
+
+#: .\app\views\system_settings.py:76
+msgid "Teste SMTP - Sistema Multi-Empresas"
+msgstr "Prueba SMTP: sistema multiempresa"
+
+#: .\app\views\system_settings.py:83
+msgid "Email de teste enviado com sucesso!"
+msgstr "¡El correo electrónico de prueba se envió correctamente!"
+
+#: .\app\views\system_settings.py:85
+msgid "Erro ao enviar email: {}"
+msgstr "Error al enviar correo electrónico: {}"
+
+#: .\app\views\system_settings.py:105
+msgid "Configurações da empresa atualizadas com sucesso!"
+msgstr "¡La configuración de la empresa se actualizó correctamente!"
+
+#: .\app\views\system_settings.py:128
+msgid "Perfil atualizado com sucesso!"
+msgstr "¡Perfil actualizado exitosamente!"
+
+#: .\app\views\system_settings.py:152
+msgid "Senha alterada com sucesso!"
+msgstr "¡La contraseña se cambió correctamente!"
+
+#: .\app\views\system_settings.py:155
+msgid "Erro ao alterar senha. Verifique os dados."
+msgstr "Error al cambiar la contraseña. Comprueba los datos."
+
+#: .\app\views\users.py:167
+#, python-format
+msgid "%(system_name)s - Seus dados de acesso"
+msgstr "Tus datos de acceso - %(system_name)s"
+
+#: .\app\views\users.py:221
+msgid "Credenciais enviadas por e-mail para o usuário."
+msgstr "Credenciales enviadas por correo electrónico al usuario."
+
+#: .\app\views\users.py:229
+#, python-format
+msgid "Usuário criado, mas ocorreu um erro ao enviar o e-mail: %(error)s"
+msgstr ""
+"Usuario creado, pero ocurrió un error al enviar el correo electrónico: "
+"%(error)s"
+
+#: .\app\views\users.py:239
+msgid ""
+"Usuário criado, mas não foi possível enviar o e-mail porque o endereço não "
+"foi informado."
+msgstr ""
+"Usuario creado, pero el correo electrónico no se pudo enviar porque no se "
+"proporcionó la dirección."
+
+#: .\app\views\users.py:245
+msgid "Usuário criado com sucesso!"
+msgstr "¡Usuario creado exitosamente!"
+
+#: .\app\views\users.py:331
+msgid "Usuário atualizado com sucesso!"
+msgstr "Usuario actualizado exitosamente!"
+
+#: .\app\views\users.py:347
+msgid "Editar Usuário"
+msgstr "Editar usuario"
+
+#: .\app\views\users.py:374
+msgid "Você não pode deletar seu próprio usuário!"
+msgstr "¡No puedes eliminar tu propio usuario!"
+
+#: .\app\views\users.py:386
+msgid "Usuário \"{}\" deletado com sucesso!"
+msgstr "¡Usuario \"{}\" eliminado exitosamente!"
+
+#: .\app\views\users.py:392
+msgid "Deletar Usuário"
+msgstr "Eliminar usuario"
+
+#: .\app\views\users.py:417
+msgid "Você não pode inativar seu próprio usuário!"
+msgstr "¡No puedes desactivar tu propio usuario!"
+
+#: .\app\views\users.py:427
+msgid "Usuário inativado com sucesso!"
+msgstr "¡Usuario desactivado exitosamente!"
+
+#: .\app\views\users.py:430
+msgid "Usuário ativado com sucesso!"
+msgstr "Usuario activado exitosamente!"
+
+#: .\multi_empresas_agentes\urls.py:28
+msgid "Admin Multi-Empresas"
+msgstr "Administrador multiempresa"
+
+#: .\multi_empresas_agentes\urls.py:29
+msgid "Administração"
+msgstr "Administración"
+
+#~ msgid "(XX)XXXXX-XXXX"
+#~ msgstr "(XX)XXXXX-XXXX"
+
+#~ msgid "Buscar por nome, email ou documento"
+#~ msgstr "Buscar por nombre, correo electrónico o documento"
+
+#~ msgid "Agente vinculado com sucesso!"
+#~ msgstr "¡Agente vinculado exitosamente!"
+
+#~ msgid "XX.XXX.XXX/XXXX-XX"
+#~ msgstr "XX.XXX.XXX/XXXX-XX"
+
+#~ msgid "Documento de identificação Fiscal deve ter 14 dígitos"
+#~ msgstr "El documento de identificación fiscal debe tener 14 dígitos"
+
+#~ msgid "Documento de identificação Fiscal inválido"
+#~ msgstr "Documento de identificación fiscal no válido"
+
+#, fuzzy, python-brace-format
+#~ msgid ""
+#~ "Olá {name},\n"
+#~ "\n"
+#~ "Seu usuário foi criado no sistema {system_name}.\n"
+#~ "Acesse {login_url} com as seguintes credenciais:\n"
+#~ "\n"
+#~ "Usuário: {username}\n"
+#~ "Senha: {password}\n"
+#~ "\n"
+#~ "Recomendamos alterar a senha após o primeiro acesso.\n"
+#~ "\n"
+#~ "Atenciosamente,\n"
+#~ "{system_name}"
+#~ msgstr ""
+#~ "Hola {nombre},\n"
+#~ "\n"
+#~ "Su usuario fue creado en el sistema {system_name}.\n"
+#~ "Accede a {login_url} con las siguientes credenciales:\n"
+#~ "\n"
+#~ "Usuario: {nombre de usuario}\n"
+#~ "Contraseña: {contraseña}\n"
+#~ "\n"
+#~ "Le recomendamos cambiar su contraseña después de su primer inicio de "
+#~ "sesión.\n"
+#~ "\n"
+#~ "Sinceramente,\n"
+#~ "{nombre_sistema}"
+
+#~ msgid "XXX.XXX.XXX-XX"
+#~ msgstr "XXX.XXX.XXX-XX"
+
+#~ msgid "CPF"
+#~ msgstr "CPF"
+
+#~ msgid "Dashboard da Empresa"
+#~ msgstr "Panel de control de la empresa"
+
+#~ msgid "CPF:"
+#~ msgstr "FPC:"
+
+#~ msgid "Erro no formulário. Verifique os dados."
+#~ msgstr "Error en el formulario. Comprueba los datos."
+
+#~ msgid "Buscar"
+#~ msgstr "Buscar"
+
+#~ msgid "Este campo é obrigatório."
+#~ msgstr "Este campo es obligatorio."
+
+# Time references
+#~ msgid "Hoje"
+#~ msgstr "Hoy"
+
+#~ msgid "Ontem"
+#~ msgstr "Ayer"
+
+#~ msgid "Há"
+#~ msgstr "Hay"
+
+#~ msgid "hora"
+#~ msgstr "tiempo"
+
+#~ msgid "horas"
+#~ msgstr "horas"
+
+#~ msgid "dia"
+#~ msgstr "día"
+
+#~ msgid "meses"
+#~ msgstr "meses"
+
+#~ msgid "ano"
+#~ msgstr "año"
+
+#~ msgid "anos"
+#~ msgstr "años"
+
+#~ msgid "Desvincular"
+#~ msgstr "Desconectar"
+
+#~ msgid "Modo de Cobrança Atual"
+#~ msgstr "Modo de facturación actual"
+
+#~ msgid "Para alterar o modo de cobrança, contate o administrador"
+#~ msgstr "Para cambiar el modo de facturación, contacta a tu administrador"

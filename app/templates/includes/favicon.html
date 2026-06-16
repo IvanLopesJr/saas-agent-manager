@@ -1,0 +1,6 @@
+{% load static %}
+{% if system_settings and system_settings.custom_favicon %}
+    <link rel="icon" href="{{ system_settings.custom_favicon.url }}">
+{% else %}
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+{% endif %}

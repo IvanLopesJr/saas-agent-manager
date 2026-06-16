@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Importar Membros" %}</h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="form-section-title mb-0">{% trans "Upload de Arquivo CSV" %}</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <strong>{% trans "Empresa:" %}</strong> {{ company.name }}
+                        </label>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.csv_file.label_tag }}
+                        {{ form.csv_file }}
+                        {% if form.csv_file.errors %}
+                            <div class="text-danger small">{{ form.csv_file.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            {% trans "Tamanho máximo: 5MB" %}
+                        </small>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'member_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> {% trans "Cancelar" %}
+                        </a>
+                        <button type="submit" class="btn btn-import">
+                            <i class="bi bi-upload"></i> {% trans "Upload e Preview" %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="form-section-title mb-0">{% trans "Formato do CSV" %}</h5>
+            </div>
+            <div class="card-body">
+                <p class="small">{% trans "O arquivo CSV deve conter as seguintes colunas (separadas por ponto e vírgula):" %}</p>
+                
+                <ul class="small">
+                    <li><strong>nome</strong> *</li>
+                    <li><strong>email</strong> *</li>
+                    <li><strong>telefone</strong> {% trans "(usar DDI e apenas números, ex: 5511999999999)" %}</li>
+                    <li><strong>documento_identificacao</strong> * {% trans "(único)" %}</li>
+                    <li><strong>departamento</strong></li>
+                    <li><strong>regional</strong></li>
+                    <li><strong>tipo_cargo</strong> {% trans "(Gerencial, Operacional, Técnico, Suporte, etc.)" %}</li>
+                    <li><strong>cargo</strong></li>
+                    <li><strong>sexo</strong> {% trans "(masculino/feminino/outro/prefere não informar)" %}</li>
+                    <li><strong>data_nascimento</strong> (DD/MM/YYYY)</li>
+                    <li><strong>data_admissao</strong> (DD/MM/YYYY)</li>
+                    <li><strong>cidade</strong></li>
+                    <li><strong>estado</strong></li>
+                    <li><strong>pais</strong></li>
+                    <li><strong>dealership</strong></li>
+                    <li><strong>dealership_number</strong></li>
+                    <li><strong>status</strong> (active/inactive/pending)</li>
+                    <li><strong>{% trans "chatbots" %}</strong> ({% trans "nomes separados por vírgula" %})</li>
+                </ul>
+                
+                <p class="small text-muted">* {% trans "Campos obrigatórios" %}</p>
+                
+                <hr>
+                
+                <!-- <h6>{% trans "Exemplo:" %}</h6>
+                <pre class="csv-example small bg-light p-2" style="font-size: 10px;">nome;email;telefone;documento_identificacao;departamento;regional;tipo_cargo;cargo;sexo;data_nascimento;data_admissao;cidade;estado;pais;dealership;dealership_number;status;chatbots
+"João Silva";"joao@email.com";"(11)98765-4321";"BR123456";"Vendas";"Sudeste";"Gerencial";"Gerente Regional";"masculino";"15/01/1990";"10/02/2022";"São Paulo";"SP";"Brasil";"Concessionária ABC";"12345";"active";"Vendas,Suporte"</pre>
+                 -->
+                <div class="mt-3">
+                    <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary w-100" onclick="downloadTemplateCSV();">
+                        <i class="bi bi-download"></i> {% trans "Baixar Template" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/members_import.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>{{ page_title }}</h2>
+        <a href="{% url 'billing_generate' %}" class="btn btn-primary">
+            <i class="bi bi-arrow-left"></i> {% trans "Voltar" %}
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">{% trans "Início do Período" %}</label>
+                    {{ form.period_start }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">{% trans "Fim do Período" %}</label>
+                    {{ form.period_end }}
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">{% trans "Empresas" %}</label>
+                    {{ form.companies }}
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-calculator"></i> {% trans "Simular" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if preview_results %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5>{% trans "Resultado da Simulação" %}</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Empresa" %}</th>
+                            <th>{% trans "Membros Ativos" %}</th>
+                            <th>{% trans "Modo de Cobrança" %}</th>
+                            <th class="text-end">{% trans "Valor Estimado" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in preview_results %}
+                        <tr>
+                            <td>{{ item.company.name }}</td>
+                            <td>{{ item.active_members }}</td>
+                            <td>{{ item.company.get_billing_mode_display }}</td>
+                            <td class="text-end">{{ item.company.currency_symbol }} {{ item.estimated_total|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

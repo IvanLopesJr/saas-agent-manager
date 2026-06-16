@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Chatbots" %}</h1>
+    <div class="page-actions">
+        <a href="{% url 'chatbot_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> {% trans "Novo Chatbot" %}
+        </a>
+    </div>
+</div>
+
+<!-- Filtros -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 g-md-2 align-items-end">
+            <div class="col-12 col-md-6 col-lg">
+                <input type="text" name="search" class="form-control" placeholder="{% trans 'Buscar por nome ou descrição' %}" value="{{ search }}">
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <select name="status" class="form-select">
+                    <option value="">{% trans "Todos os Status" %}</option>
+                    <option value="active" {% if status == 'active' %}selected{% endif %}>{% trans "Ativo" %}</option>
+                    <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>{% trans "Inativo" %}</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-6 col-lg-auto">
+                <div class="d-flex gap-2 flex-column flex-sm-row">
+                    <a href="{% url 'chatbot_list' %}" class="btn btn-clear-filter">
+                        <i class="bi bi-x-circle"></i> {% trans "Limpar" %}
+                    </a>
+                    <button type="submit" class="btn btn-filter">
+                        <i class="bi bi-search"></i> {% trans "Filtrar" %}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Lista de Chatbots -->
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-stack">
+                <thead>
+                    <tr>
+                        <th>{% trans "Nome" %}</th>
+                        <th>{% trans "Descrição" %}</th>
+                        <th>{% trans "Empresas Vinculadas" %}</th>
+                        <th>{% trans "Preço Base" %}</th>
+                        <th>{% trans "Status" %}</th>
+                        <th class="text-end">{% trans "Ações" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for chatbot in chatbots %}
+                        <tr>
+                            <td data-label="{% trans 'Nome' %}">
+                                <strong>{{ chatbot.name }}</strong><br>
+                                <!-- <small class="text-muted">{{ chatbot.description|truncatewords:10 }}</small> -->
+                            </td>
+                            <td data-label="{% trans 'Nome' %}">
+                                {{ chatbot.description|truncatewords:10 }}
+                            </td>
+                            <td data-label="{% trans 'Empresas Vinculadas' %}">
+                                <span class="badge bg-info">
+                                    {{ chatbot.company_count }} {% trans "empresa" %}{{ chatbot.company_count|pluralize }}
+                                </span>
+                            </td>
+                            <td data-label="{% trans 'Preço Base' %}">R$ {{ chatbot.base_price|floatformat:2 }}</td>
+                            <td data-label="{% trans 'Status' %}">
+                                {% if chatbot.status == 'active' %}
+                                    <span class="badge bg-success">{{ chatbot.get_status_display }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{{ chatbot.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end" data-label="{% trans 'Ações' %}">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'chatbot_vincular' chatbot.pk %}" class="btn btn-outline-success btn-sm" title="{% trans 'Vincular' %}">
+                                        <i class="bi bi-link-45deg"></i>
+                                    </a>
+                                    <a href="{% url 'chatbot_edit' chatbot.pk %}" class="btn btn-outline-primary btn-sm" title="{% trans 'Editar' %}">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'chatbot_delete' chatbot.pk %}" class="btn btn-outline-danger btn-sm" title="{% trans 'Deletar' %}">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">
+                                {% trans "Nenhum chatbot encontrado." %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Paginação -->
+{% if chatbots.has_other_pages %}
+    <nav class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if chatbots.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ chatbots.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status %}&status={{ status }}{% endif %}">
+                        <i class="bi bi-chevron-left"></i> {% trans "Anterior" %}
+                    </a>
+                </li>
+            {% endif %}
+            
+            <li class="page-item disabled">
+                <span class="page-link">
+                    {% trans "Página" %} {{ chatbots.number }} {% trans "de" %} {{ chatbots.paginator.num_pages }}
+                </span>
+            </li>
+            
+            {% if chatbots.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ chatbots.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status %}&status={{ status }}{% endif %}">
+                        {% trans "Próximo" %} <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}
