@@ -22,6 +22,8 @@ from .views import (
     # Settings
     system_settings_view, reset_theme, test_smtp, company_settings_view,
     user_profile_view, change_password,
+    # Audit
+    audit_log_list,
 )
 
 urlpatterns = [
@@ -109,4 +111,7 @@ urlpatterns = [
     path('settings/company/', company_settings_view, name='company_settings'),
     path('settings/profile/', user_profile_view, name='user_profile'),
     path('settings/password/', change_password, name='change_password'),
+    
+    # Auditoria
+    path('audit-log/', audit_log_list, name='audit_log_list'),
 ]

@@ -7,7 +7,7 @@ from datetime import date, timedelta
 from django.db import transaction
 from django.db.models import Q
 from ..models import (
-    Billing, BillingDetail, Company, CompanyMember,
+    Billing, BillingDetail, Chatbot, Company, CompanyMember,
     User, SystemSettings, MemberChatbotAccess
 )
 
@@ -260,6 +260,66 @@ def _calculate_per_chatbot_billing(company, period_start, period_end, cutoff_day
             access_ids_to_close.add(access.id)
     
     return _money(total), details, access_ids_to_close
+
+
+def simulate_billing_for_company(company, period_start, period_end):
+    """
+    Simulate billing for a company for a specific period without persisting.
+
+    Returns a dict with total_value, details (list of resolved dicts),
+    full_count, proportional_count, full_total, proportional_total, and item_count.
+    """
+    settings = SystemSettings.get_settings()
+    cutoff_day = settings.billing_cutoff_day
+    total_days = (period_end - period_start).days + 1
+    total_value = Decimal('0.00')
+    details = []
+
+    if company.billing_mode == 'per_user':
+        total_value, details, _ = _calculate_per_user_billing(
+            company, period_start, period_end, cutoff_day, total_days
+        )
+    else:
+        total_value, details, _ = _calculate_per_chatbot_billing(
+            company, period_start, period_end, cutoff_day, total_days
+        )
+
+    member_ids = [d['member_id'] for d in details if d.get('member_id')]
+    user_ids = [d['user_id'] for d in details if d.get('user_id')]
+    chatbot_ids = [d['chatbot_id'] for d in details if d.get('chatbot_id')]
+
+    members = {m.id: m for m in CompanyMember.objects.filter(id__in=member_ids)}
+    users = {u.id: u for u in User.objects.filter(id__in=user_ids)}
+    chatbots = {c.id: c for c in Chatbot.objects.filter(id__in=chatbot_ids)}
+
+    resolved_details = []
+    for d in details:
+        resolved_details.append({
+            'member': members.get(d.get('member_id')),
+            'user': users.get(d.get('user_id')),
+            'chatbot': chatbots.get(d.get('chatbot_id')),
+            'unit_price': d['unit_price'],
+            'activation_date': d['activation_date'],
+            'days_active': d['days_active'],
+            'value': d['value'],
+            'billing_type': d['billing_type'],
+        })
+
+    full_count = sum(1 for d in details if d['billing_type'] == 'full')
+    prop_count = sum(1 for d in details if d['billing_type'] == 'proportional')
+    full_total = sum(d['value'] for d in details if d['billing_type'] == 'full')
+    prop_total = sum(d['value'] for d in details if d['billing_type'] == 'proportional')
+
+    return {
+        'total_value': total_value,
+        'details': resolved_details,
+        'full_count': full_count,
+        'proportional_count': prop_count,
+        'full_total': full_total,
+        'proportional_total': prop_total,
+        'item_count': len(details),
+    }
+
 
 def calculate_estimated_cost(company, include_admins=None):
     """

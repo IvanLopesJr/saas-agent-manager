@@ -23,8 +23,65 @@
     </div>
 </div>
 
+{% if not has_current_billing %}
+<div class="alert alert-warning d-flex align-items-center gap-2 mb-4">
+    <i class="bi bi-exclamation-triangle fs-4"></i>
+    <div>
+        <strong>{% trans "Atenção:" %}</strong>
+        {% trans "O período atual ainda não foi faturado." %}
+        <a href="{% url 'billing_generate' %}" class="alert-link">{% trans "Gerar cobrança" %}</a>
+    </div>
+</div>
+{% endif %}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0" style="height: 110px; background-color: #137ed0;">
+            <div class="card-body" style="padding: 0.85rem;">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                    <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Membros Ativos" %}</h6>
+                    <i class="bi bi-person-badge" style="font-size: 2rem; opacity: 0.5; color: white;"></i>
+                </div>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ total_members }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="height: 110px; background-color: #ffc107;">
+            <div class="card-body" style="padding: 0.85rem;">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                    <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Membros Pendentes" %}</h6>
+                    <i class="bi bi-hourglass-split" style="font-size: 2rem; opacity: 0.5; color: white;"></i>
+                </div>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ pending_members }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="height: 110px; background-color: #0dcaf0;">
+            <div class="card-body" style="padding: 0.85rem;">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                    <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Chatbots" %}</h6>
+                    <i class="bi bi-robot" style="font-size: 2rem; opacity: 0.5; color: white;"></i>
+                </div>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ total_chatbots }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="height: 110px; background-color: #0d6efd;">
+            <div class="card-body" style="padding: 0.85rem;">
+                <div class="d-flex justify-content-between align-items-start mb-1">
+                    <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Custo Mensal" %}</h6>
+                    <i class="bi bi-currency-dollar" style="font-size: 2rem; opacity: 0.5; color: white;"></i>
+                </div>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ company.currency_symbol }} {{ monthly_cost|floatformat:2 }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-3">
-    <!-- Informações da Empresa -->
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
@@ -58,8 +115,20 @@
                 </div>
             </div>
         </div>
+
+        {% if billing_trend_chart %}
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Tendência de Faturamento" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" style="position: relative; height: 200px;">
+                    <canvas id="companyBillingChart"></canvas>
+                </div>
+            </div>
+        </div>
+        {% endif %}
         
-        <!-- Últimas Cobranças -->
         <div class="card mt-3">
             <div class="card-header">
                 <h5 class="card-title mb-0">{% trans "Últimas Cobranças" %}</h5>
@@ -95,9 +164,44 @@
                 {% endif %}
             </div>
         </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Membros Recentes" %}</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_members %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Nome" %}</th>
+                                    <th>{% trans "Departamento" %}</th>
+                                    <th>{% trans "Status" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for member in recent_members %}
+                                    <tr>
+                                        <td>{{ member.name }}</td>
+                                        <td>{{ member.department|default:"-" }}</td>
+                                        <td>
+                                            <span class="badge {% if member.status == 'active' %}bg-success{% elif member.status == 'pending' %}bg-warning{% else %}bg-secondary{% endif %}">
+                                                {{ member.get_status_display }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">{% trans "Nenhum membro cadastrado" %}</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
     
-    <!-- Estatísticas -->
     <div class="col-lg-4">
         <div class="card company-stats-card">
             <div class="card-header">
@@ -113,10 +217,34 @@
                 </div>
                 
                 <div class="stat-item-detail">
+                    <i class="bi bi-people text-warning"></i>
+                    <div>
+                        <h3>{{ pending_members }}</h3>
+                        <p>{% trans "Membros Pendentes" %}</p>
+                    </div>
+                </div>
+                
+                <div class="stat-item-detail">
                     <i class="bi bi-robot text-info"></i>
                     <div>
                         <h3>{{ total_chatbots }}</h3>
                         <p>{% trans "Chatbots Vinculados" %}</p>
+                    </div>
+                </div>
+
+                <div class="stat-item-detail">
+                    <i class="bi bi-robot text-success"></i>
+                    <div>
+                        <h3>{{ chatbot_active }}</h3>
+                        <p>{% trans "Chatbots Ativos" %}</p>
+                    </div>
+                </div>
+
+                <div class="stat-item-detail">
+                    <i class="bi bi-robot text-secondary"></i>
+                    <div>
+                        <h3>{{ chatbot_inactive }}</h3>
+                        <p>{% trans "Chatbots Inativos" %}</p>
                     </div>
                 </div>
                 
@@ -130,7 +258,6 @@
             </div>
         </div>
         
-        <!-- Ações Rápidas -->
         <div class="card mt-3">
             <div class="card-header">
                 <h5 class="card-title mb-0">{% trans "Ações Rápidas" %}</h5>
@@ -138,6 +265,9 @@
             <div class="card-body">
                 <a href="{% url 'member_list' %}?company={{ company.pk }}" class="btn btn-outline-primary w-100 mb-2">
                     <i class="bi bi-person-badge"></i> {% trans "Ver Membros" %}
+                </a>
+                <a href="{% url 'member_list' %}?company={{ company.pk }}&status=pending" class="btn btn-outline-warning w-100 mb-2">
+                    <i class="bi bi-hourglass-split"></i> {% trans "Ver Pendentes" %}
                 </a>
                 <a href="{% url 'billing_list' %}?company={{ company.pk }}" class="btn btn-outline-primary w-100 mb-2">
                     <i class="bi bi-currency-dollar"></i> {% trans "Ver Cobranças" %}
@@ -149,4 +279,42 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{ billing_trend_chart|json_script:"company-billing-trend" }}
+<script>
+(function() {
+    var canvas = document.getElementById('companyBillingChart');
+    var payloadEl = document.getElementById('company-billing-trend');
+    if (!canvas || !payloadEl || typeof Chart === 'undefined') return;
+    var payload = JSON.parse(payloadEl.textContent || '{}');
+    if (!payload.labels || !payload.labels.length) return;
+    new Chart(canvas.getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: payload.labels,
+            datasets: [{
+                data: payload.values,
+                borderColor: '#137ed0',
+                backgroundColor: 'rgba(19, 126, 208, 0.15)',
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+})();
+</script>
 {% endblock %}

@@ -9,6 +9,12 @@
         <a href="{% url 'billing_export_csv' billing.pk %}" class="btn btn-export">
             <i class="bi bi-download"></i> {% trans "Exportar CSV" %}
         </a>
+        <a href="{% url 'billing_export_excel' billing.pk %}" class="btn btn-export">
+            <i class="bi bi-file-earmark-excel"></i> {% trans "Excel" %}
+        </a>
+        <a href="{% url 'billing_export_pdf' billing.pk %}" class="btn btn-export">
+            <i class="bi bi-file-earmark-pdf"></i> {% trans "PDF" %}
+        </a>
     </div>
 </div>
 
@@ -34,6 +40,93 @@
         </div>
     </div>
 </div>
+
+{% if summary_stats %}
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0" style="background-color: #137ed0;">
+            <div class="card-body py-3 px-4">
+                <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Total de Itens" %}</h6>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ summary_stats.total_items }}</h2>
+                <small style="color: rgba(0,0,0,0);">&nbsp;</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="background-color: #20c997;">
+            <div class="card-body py-3 px-4">
+                <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Integral" %}</h6>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ summary_stats.full_count }}</h2>
+                <small style="color: rgba(255,255,255,0.85);">{{ billing.company.currency_symbol }} {{ summary_stats.full_total|floatformat:2 }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="background-color: #ffc107;">
+            <div class="card-body py-3 px-4">
+                <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Proporcional" %}</h6>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ summary_stats.proportional_count }}</h2>
+                <small style="color: rgba(0,0,0,0.7);">{{ billing.company.currency_symbol }} {{ summary_stats.proportional_total|floatformat:2 }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="background-color: #0dcaf0;">
+            <div class="card-body py-3 px-4">
+                <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Média de Dias" %}</h6>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ summary_stats.avg_days }}</h2>
+                <small style="color: rgba(0,0,0,0.7);">{% trans "dias ativos" %}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if summary_stats.by_chatbot %}
+<div class="row g-3 mb-4 align-items-stretch">
+    <div class="col-12 col-lg-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Distribuição por Chatbot" %}</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container" style="position: relative; height: 200px;">
+                    <canvas id="chatbotDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-8">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% trans "Resumo por Chatbot" %}</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Chatbot" %}</th>
+                                <th class="text-end">{% trans "Acessos" %}</th>
+                                <th class="text-end">{% trans "Valor" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for group in summary_stats.by_chatbot %}
+                            <tr>
+                                <td><strong>{{ group.name }}</strong></td>
+                                <td class="text-end">{{ group.count }}</td>
+                                <td class="text-end">{{ billing.company.currency_symbol }} {{ group.total|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endif %}
 
 <div class="card">
     <div class="card-header">
@@ -91,4 +184,38 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% if summary_stats and summary_stats.by_chatbot %}
+{{ chatbot_chart_data|json_script:"chatbot-chart-data" }}
+<script>
+(function() {
+    var canvas = document.getElementById('chatbotDistributionChart');
+    var payloadEl = document.getElementById('chatbot-chart-data');
+    if (!canvas || !payloadEl || typeof Chart === 'undefined') return;
+    var payload = JSON.parse(payloadEl.textContent || '{}');
+    if (!payload.labels || !payload.labels.length) return;
+    var palette = ['#137ed0', '#20c997', '#0dcaf0', '#ffc107', '#6c757d', '#6610f2', '#d63384'];
+    new Chart(canvas.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: payload.labels,
+            datasets: [{
+                data: payload.values,
+                backgroundColor: palette.slice(0, payload.labels.length),
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+})();
+</script>
+{% endif %}
 {% endblock %}

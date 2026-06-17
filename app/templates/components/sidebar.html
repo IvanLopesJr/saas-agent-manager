@@ -77,6 +77,10 @@
                 <i class="bi bi-gear"></i>
                 <span>{% trans "Configurações" %}</span>
             </a>
+            <a href="{% url 'audit_log_list' %}" class="sidebar-item {% if 'audit-log' in request.path %}active{% endif %}">
+                <i class="bi bi-clock-history"></i>
+                <span>{% trans "Auditoria" %}</span>
+            </a>
         {% else %}
             <a href="{% url 'company_settings' %}" class="sidebar-item {% if 'company_settings' in request.path %}active{% endif %}">
                 <i class="bi bi-gear"></i>

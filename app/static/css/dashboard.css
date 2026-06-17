@@ -326,3 +326,28 @@ canvas {
         align-items: flex-start;
     }
 }
+
+/* Alert Cards */
+.alert-card {
+    border-left: 4px solid;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: var(--bg-card, #fff);
+    box-shadow: var(--shadow-sm);
+}
+
+.alert-card-danger { border-left-color: var(--btn-danger-bg, #dc3545); }
+.alert-card-warning { border-left-color: var(--btn-warning-bg, #ffc107); }
+.alert-card-info { border-left-color: var(--btn-info-bg, #17a2b8); }
+
+.alert-card .alert-icon { font-size: 1.5rem; flex-shrink: 0; }
+.alert-card-danger .alert-icon { color: var(--btn-danger-bg, #dc3545); }
+.alert-card-warning .alert-icon { color: var(--btn-warning-bg, #ffc107); }
+.alert-card-info .alert-icon { color: var(--btn-info-bg, #17a2b8); }
+
+.alert-card .alert-content { flex: 1; }
+.alert-card .alert-content h6 { margin-bottom: 0.25rem; font-weight: 600; }
+.alert-card .alert-content p { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); }

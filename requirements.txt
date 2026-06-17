@@ -33,3 +33,4 @@ openpyxl==3.1.2
 
 # PDF Export
 WeasyPrint==61.2
+pydyf==0.8.0  # Fix API compat with WeasyPrint 61.2

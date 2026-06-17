@@ -1,12 +1,13 @@
-from datetime import date
+from datetime import date, timedelta
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext_lazy as _
 from django.utils import formats
-from django.db.models import Count, Sum, Q
+from django.db.models import Count, Sum, Q, Max
 from django.db.models.functions import TruncMonth
 from django.utils import timezone
+from django.urls import reverse
 from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 
@@ -33,6 +34,121 @@ def _month_range(months=6):
 
 def _format_month_label(d: date) -> str:
     return formats.date_format(d, format='M Y', use_l10n=True)
+
+
+def get_dashboard_alerts(user):
+    """Return a list of alert dicts for the given user's dashboard."""
+    alerts = []
+    today = timezone.now().date()
+
+    if user.is_super_admin():
+        sixty_days_ago = today - timedelta(days=60)
+        companies_with_recent_billing = Company.objects.filter(
+            status='active',
+            billings__period_end__gte=sixty_days_ago
+        ).distinct().values_list('id', flat=True)
+        billed_ids = set(companies_with_recent_billing)
+        for company in Company.objects.filter(status='active').exclude(id__in=billed_ids):
+            last_billing = company.billings.aggregate(last=Max('period_end'))['last']
+            days = (today - last_billing).days if last_billing else None
+            msg = _('{} está sem cobrança há {} dias').format(
+                company.name, days if days else _('mais de 60'))
+            alerts.append({
+                'type': 'danger',
+                'icon': 'bi-building-exclamation',
+                'title': _('Empresa sem cobrança'),
+                'message': msg,
+                'url': reverse('company_detail', args=[company.pk]),
+            })
+
+        orphan_chatbots = Chatbot.objects.filter(
+            status='active'
+        ).annotate(
+            link_count=Count('company_chatbots')
+        ).filter(link_count=0)
+        for cb in orphan_chatbots:
+            alerts.append({
+                'type': 'warning',
+                'icon': 'bi-robot',
+                'title': _('Chatbot sem empresa'),
+                'message': _('{} não está vinculado a nenhuma empresa').format(cb.name),
+                'url': reverse('chatbot_list'),
+            })
+
+        thirty_days_ago = today - timedelta(days=30)
+        stale_pending = CompanyMember.objects.filter(
+            status='pending',
+            created_at__date__lt=thirty_days_ago
+        ).count()
+        if stale_pending:
+            alerts.append({
+                'type': 'warning',
+                'icon': 'bi-person-clock',
+                'title': _('Membros pendentes antigos'),
+                'message': _('{} membros estão pendentes há mais de 30 dias').format(stale_pending),
+                'url': reverse('member_list'),
+            })
+
+    elif user.is_admin_company():
+        company = user.company
+        if not company:
+            return alerts
+
+        last_month = today.replace(day=1) - timedelta(days=1)
+        last_month_start = last_month.replace(day=1)
+        has_last_billing = company.billings.filter(
+            period_start=last_month_start
+        ).exists()
+        if not has_last_billing:
+            alerts.append({
+                'type': 'warning',
+                'icon': 'bi-receipt',
+                'title': _('Cobrança pendente'),
+                'message': _('O período de {} ainda não foi faturado').format(
+                    last_month.strftime('%m/%Y')),
+                'url': reverse('billing_list'),
+            })
+
+        pending_count = company.members.filter(status='pending').count()
+        if pending_count:
+            alerts.append({
+                'type': 'info',
+                'icon': 'bi-person-clock',
+                'title': _('Membros pendentes'),
+                'message': _('{} membros aguardando aprovação').format(pending_count),
+                'url': reverse('member_list'),
+            })
+
+        chatbots_with_access = MemberChatbotAccess.objects.filter(
+            member__company=company,
+            status='active'
+        ).values_list('chatbot_id', flat=True).distinct()
+        chatbots_with_access_set = set(chatbots_with_access)
+        linked_chatbots = company.company_chatbots.filter(status='active')
+        unused = [cc for cc in linked_chatbots if cc.chatbot_id not in chatbots_with_access_set]
+        if unused:
+            names = ', '.join(cc.chatbot.name for cc in unused[:3])
+            if len(unused) > 3:
+                names += _(' ... (+{})').format(len(unused) - 3)
+            alerts.append({
+                'type': 'info',
+                'icon': 'bi-robot',
+                'title': _('Chatbots sem uso'),
+                'message': _('Chatbots vinculados sem membros com acesso: {}').format(names),
+                'url': reverse('chatbot_meus_chatbots'),
+            })
+
+        cutoff_near = today.day >= 25 and today.day <= 28
+        if cutoff_near:
+            alerts.append({
+                'type': 'info',
+                'icon': 'bi-calendar-exclamation',
+                'title': _('Dia de corte próximo'),
+                'message': _('O dia de corte de faturamento está próximo. Revise os membros ativos.'),
+                'url': reverse('company_settings'),
+            })
+
+    return alerts
 
 
 @login_required
@@ -122,8 +238,11 @@ def dashboard_super_admin(request):
         'values': [company.active_member_count for company in recent_companies],
     }
 
+    alerts = get_dashboard_alerts(request.user)
+
     context = {
         'page_title': _('Dashboard'),
+        'alerts': alerts,
         'total_companies': total_companies,
         'total_members': total_members,
         'total_chatbots': total_chatbots,
@@ -222,8 +341,11 @@ def dashboard_admin_empresa(request):
         'values': [item['count'] for item in chatbot_status_qs],
     }
 
+    alerts = get_dashboard_alerts(request.user)
+
     context = {
         'page_title': _('Dashboard'),
+        'alerts': alerts,
         'company': company,
         'total_members': total_members,
         'pending_members': pending_members,

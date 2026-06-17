@@ -15,6 +15,7 @@ A aplicação permite controlar vínculos entre empresas e agentes, gerenciar me
 - **Exportações:** CSV, Excel e PDF
 - **PDF:** WeasyPrint
 - **Segurança SMTP:** senha armazenada com Fernet
+- **Configuração:** python-decouple
 - **Testes:** pytest + pytest-django
 
 ## Requisitos
@@ -25,8 +26,9 @@ A aplicação permite controlar vínculos entre empresas e agentes, gerenciar me
 ## Execução com Docker
 
 ```bash
-cp .env.example .env
-docker-compose up --build
+cp .env.example .env    # Linux/Mac
+# ou copy .env.example .env   # Windows
+docker compose up --build
 ```
 
 Acesse:
@@ -57,43 +59,43 @@ Credenciais iniciais:
 Rodar aplicação:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Parar aplicação:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 Aplicar migrations:
 
 ```bash
-docker-compose exec -T web python manage.py migrate
+docker compose exec -T web python manage.py migrate
 ```
 
 Coletar arquivos estáticos:
 
 ```bash
-docker-compose exec -T web python manage.py collectstatic --noinput
+docker compose exec -T web python manage.py collectstatic --noinput
 ```
 
 Compilar traduções:
 
 ```bash
-docker-compose exec -T web python manage.py compilemessages_local
+docker compose exec -T web python manage.py compilemessages_local
 ```
 
 Rodar checagem do Django:
 
 ```bash
-docker-compose exec -T web python manage.py check
+docker compose exec -T web python manage.py check
 ```
 
 Rodar testes:
 
 ```bash
-docker-compose exec -T web pytest
+docker compose exec -T web pytest
 ```
 
 ## Estrutura do Projeto
@@ -129,20 +131,25 @@ saas-agent-manager/
 - Login com usuário ou e-mail
 - Redefinição de senha por e-mail
 - Perfis de acesso: Super Admin e Admin da Empresa
-- Cadastro e gestão de empresas
+- Cadastro e gestão de empresas (com idioma e moeda por empresa)
 - Cadastro e gestão de usuários administradores
 - Cadastro, edição, importação e exportação de membros
 - Vínculo de agentes/chatbots a empresas
 - Controle de acesso de membros a agentes/chatbots
 - Cobrança por usuário ou por usuário/agente
 - Cobrança proporcional por data de ativação
+- Cobrança de membros sem agente (charge_inactive_members)
 - Histórico de vigência para membros e acessos a agentes
 - Geração de cobranças por período
-- Exportação de cobranças em CSV, Excel e PDF
+- Simulação de cobrança (preview sem persistir)
+- Detalhamento visual de cobrança com gráficos e KPIs
+- Exportação de cobranças em CSV, Excel e PDF (fatura em PDF)
+- Página de detalhe da empresa com KPIs, gráfico de tendência e alertas
+- Painel do Super Admin com alertas operacionais
 - Configurações visuais do sistema
 - Configuração SMTP pela interface
 - Senha SMTP criptografada
-- Auditoria de ações importantes
+- Log de auditoria com filtros e exportação CSV
 - Interface responsiva para desktop e mobile
 - Internacionalização em português, inglês e espanhol
 
@@ -191,6 +198,8 @@ Copie `.env.example` para `.env` e ajuste os valores conforme o ambiente.
 | `SESSION_COOKIE_SECURE` | Envia cookie de sessão apenas em HTTPS |
 | `CSRF_COOKIE_SECURE` | Envia cookie CSRF apenas em HTTPS |
 | `SECURE_HSTS_SECONDS` | Duração do HSTS em segundos |
+| `SECURE_HSTS_INCLUDE_SUBDOMAINS` | Aplica HSTS a todos os subdomínios |
+| `SECURE_HSTS_PRELOAD` | Permite inclusão no pré-carregamento do HSTS |
 
 ## Segurança
 
@@ -204,13 +213,13 @@ Copie `.env.example` para `.env` e ajuste os valores conforme o ambiente.
 ## Testes
 
 ```bash
-docker-compose exec -T web pytest
+docker compose exec -T web pytest
 ```
 
 Resultado esperado:
 
 ```text
-16 passed
+37 passed
 ```
 
 ## Documentação

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
@@ -45,25 +46,109 @@
                     <thead>
                         <tr>
                             <th>{% trans "Empresa" %}</th>
-                            <th>{% trans "Membros Ativos" %}</th>
-                            <th>{% trans "Modo de Cobrança" %}</th>
+                            <th>{% trans "Itens" %}</th>
+                            <th>{% trans "Integral" %}</th>
+                            <th>{% trans "Proporcional" %}</th>
+                            <th>{% trans "Modo" %}</th>
                             <th class="text-end">{% trans "Valor Estimado" %}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in preview_results %}
                         <tr>
-                            <td>{{ item.company.name }}</td>
+                            <td><strong>{{ item.company.name }}</strong></td>
                             <td>{{ item.active_members }}</td>
+                            <td>{{ item.full_count }}</td>
+                            <td>{{ item.proportional_count }}</td>
                             <td>{{ item.company.get_billing_mode_display }}</td>
-                            <td class="text-end">{{ item.company.currency_symbol }} {{ item.estimated_total|floatformat:2 }}</td>
+                            <td class="text-end"><strong>{{ item.company.currency_symbol }} {{ item.estimated_total|floatformat:2 }}</strong></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#detail-{{ forloop.counter }}">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
+                    {% if totals %}
+                    <tfoot>
+                        <tr class="fw-bold">
+                            <td>{% trans "Total" %}</td>
+                            <td>{{ totals.active_members }}</td>
+                            <td>{{ totals.full_count }}</td>
+                            <td>{{ totals.proportional_count }}</td>
+                            <td></td>
+                            <td class="text-end">{{ preview_results.0.company.currency_symbol }} {{ totals.estimated_total|floatformat:2 }}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                    {% endif %}
                 </table>
             </div>
         </div>
     </div>
+
+    {% for item in preview_results %}
+    <div class="collapse mt-3" id="detail-{{ forloop.counter }}">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">{{ item.company.name }} - {% trans "Detalhamento" %}</h5>
+            </div>
+            <div class="card-body">
+                {% if item.details %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Membro/Usuário" %}</th>
+                                {% if item.company.billing_mode == 'per_user_chatbot' %}
+                                <th>{% trans "Chatbot" %}</th>
+                                {% endif %}
+                                <th class="text-end">{% trans "Preço Base" %}</th>
+                                <th>{% trans "Data Ativação" %}</th>
+                                <th>{% trans "Tipo" %}</th>
+                                <th class="text-end">{% trans "Valor" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detail in item.details %}
+                            <tr>
+                                <td>
+                                    {% if detail.user %}
+                                        {{ detail.user.get_full_name|default:detail.user.username }}
+                                    {% elif detail.member %}
+                                        {{ detail.member.name }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                {% if item.company.billing_mode == 'per_user_chatbot' %}
+                                <td>{{ detail.chatbot.name|default:"-" }}</td>
+                                {% endif %}
+                                <td class="text-end">{{ item.company.currency_symbol }} {{ detail.unit_price|floatformat:2 }}</td>
+                                <td>{{ detail.activation_date|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if detail.billing_type == 'full' %}
+                                        <span class="badge bg-success">{% trans "Integral" %}</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">{% trans "Proporcional" %}</span>
+                                        <small>({{ detail.days_active }} {% trans "dias" %})</small>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">{{ item.company.currency_symbol }} {{ detail.value|floatformat:2 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted mb-0">{% trans "Nenhum item a cobrar neste período." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
     {% endif %}
 </div>
 {% endblock %}

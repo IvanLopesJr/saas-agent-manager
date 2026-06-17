@@ -47,7 +47,7 @@ class CompanyForm(forms.ModelForm):
         fields = [
             'name', 'email', 'phone', 'identification_document', 'address', 'logo_url',
             'currency', 'billing_mode', 'member_price', 'bill_admin_users',
-            'charge_inactive_members', 'status'
+            'charge_inactive_members', 'language', 'status'
         ]
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -63,6 +63,7 @@ class CompanyForm(forms.ModelForm):
             'member_price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
             'bill_admin_users': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'charge_inactive_members': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'language': forms.Select(attrs={'class': 'form-select'}),
             'status': forms.Select(attrs={'class': 'form-select'}),
         }
     

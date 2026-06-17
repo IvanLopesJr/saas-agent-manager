@@ -66,6 +66,12 @@ class Company(models.Model):
         default=False,
         help_text=_('Quando ativo, membros sem acesso a chatbot também são cobrados (modo per_user)')
     )
+    language = models.CharField(
+        _('Idioma'),
+        max_length=10,
+        choices=django_settings.LANGUAGES,
+        default='pt-br',
+    )
     status = models.CharField(_('Status'), max_length=10, choices=STATUS_CHOICES, default='active')
     created_at = models.DateTimeField(_('Criado em'), auto_now_add=True)
     updated_at = models.DateTimeField(_('Atualizado em'), auto_now=True)

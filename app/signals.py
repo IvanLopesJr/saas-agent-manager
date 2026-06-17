@@ -5,8 +5,11 @@ Django signals for automatic actions
 from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
-
 from django.utils.translation import gettext as _
+
+from django.contrib.auth.signals import user_logged_in
+from django.utils import translation
+
 from .models import (
     CompanyMember, User, UserStatusHistory, AuditLog
 )
@@ -132,3 +135,10 @@ def clean_orphan_member_on_user_delete(sender, instance, **kwargs):
         member.first_cycle_price_snapshot = None
         member.first_cycle_completed = False
         member.save(update_fields=['user', 'first_cycle_price_snapshot', 'first_cycle_completed'])
+
+
+@receiver(user_logged_in)
+def set_company_language(sender, request, user, **kwargs):
+    """Set session language to the user's company preferred language on login."""
+    if user.is_admin_company() and user.company and user.company.language:
+        request.session[translation.LANGUAGE_SESSION_KEY] = user.company.language

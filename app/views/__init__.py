@@ -6,3 +6,4 @@ from .chatbots import *
 from .members import *
 from .billing import *
 from .system_settings import *
+from .audit import *

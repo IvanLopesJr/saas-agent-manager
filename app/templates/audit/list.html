@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{% trans "Histórico de Auditoria" %}</h1>
+    <div>
+        <a href="?{% if action %}action={{ action }}&{% endif %}{% if user_id %}user={{ user_id }}&{% endif %}{% if date_start %}date_start={{ date_start }}&{% endif %}{% if date_end %}date_end={{ date_end }}&{% endif %}{% if company %}company={{ company }}&{% endif %}export=csv" class="btn btn-export">
+            <i class="bi bi-download"></i> {% trans "Exportar CSV" %}
+        </a>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card border-0" style="background-color: #137ed0;">
+            <div class="card-body py-3 px-4">
+                <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Total de Registros" %}</h6>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ logs.paginator.count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card border-0" style="background-color: #20c997;">
+            <div class="card-body py-3 px-4">
+                <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Últimos 30 Dias" %}</h6>
+                <h2 class="mb-0 fw-bold" style="color: white;">{{ total_30d }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Ação" %}</label>
+                <select name="action" class="form-select">
+                    <option value="">{% trans "Todas" %}</option>
+                    {% for key, label in action_choices %}
+                        <option value="{{ key }}" {% if action == key %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Usuário" %}</label>
+                <select name="user" class="form-select">
+                    <option value="">{% trans "Todos" %}</option>
+                    {% for u in users %}
+                        <option value="{{ u.pk }}" {% if user_id == u.pk|stringformat:"s" %}selected{% endif %}>{{ u.get_full_name|default:u.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Empresa" %}</label>
+                <select name="company" class="form-select">
+                    <option value="">{% trans "Todas" %}</option>
+                    {% for c in companies %}
+                        <option value="{{ c.pk }}" {% if company == c.pk|stringformat:"s" %}selected{% endif %}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Data Início" %}</label>
+                <input type="date" name="date_start" class="form-control" value="{{ date_start }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">{% trans "Data Fim" %}</label>
+                <input type="date" name="date_end" class="form-control" value="{{ date_end }}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-filter w-100">
+                    <i class="bi bi-funnel"></i> {% trans "Filtrar" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>{% trans "Data/Hora" %}</th>
+                        <th>{% trans "Usuário" %}</th>
+                        <th>{% trans "Ação" %}</th>
+                        <th>{% trans "Descrição" %}</th>
+                        <th class="text-end">{% trans "IP" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td class="text-nowrap">{{ log.created_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if log.user %}
+                                <strong>{{ log.user.get_full_name|default:log.user.username }}</strong>
+                            {% else %}
+                                <span class="text-muted">{% trans "Sistema" %}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge 
+                                {% if 'created' in log.action or 'generated' in log.action %}bg-success
+                                {% elif 'deleted' in log.action or 'failed' in log.action %}bg-danger
+                                {% elif 'changed' in log.action or 'unlinked' in log.action %}bg-warning
+                                {% else %}bg-primary{% endif %}">
+                                {{ log.get_action_display }}
+                            </span>
+                        </td>
+                        <td>{{ log.description|truncatewords:20 }}</td>
+                        <td class="text-end"><code>{{ log.ip_address|default:"-" }}</code></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            <i class="bi bi-clock-history fs-1 d-block mb-3"></i>
+                            <p>{% trans "Nenhum registro de auditoria encontrado." %}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% if logs.paginator.num_pages > 1 %}
+<nav class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if logs.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ logs.previous_page_number }}{% if action %}&action={{ action }}{% endif %}{% if user_id %}&user={{ user_id }}{% endif %}{% if date_start %}&date_start={{ date_start }}{% endif %}{% if date_end %}&date_end={{ date_end }}{% endif %}{% if company %}&company={{ company }}{% endif %}">{% trans "Anterior" %}</a>
+            </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <span class="page-link">{% trans "Página" %} {{ logs.number }} {% trans "de" %} {{ logs.paginator.num_pages }}</span>
+        </li>
+        {% if logs.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ logs.next_page_number }}{% if action %}&action={{ action }}{% endif %}{% if user_id %}&user={{ user_id }}{% endif %}{% if date_start %}&date_start={{ date_start }}{% endif %}{% if date_end %}&date_end={{ date_end }}{% endif %}{% if company %}&company={{ company }}{% endif %}">{% trans "Próxima" %}</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

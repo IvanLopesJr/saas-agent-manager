@@ -134,24 +134,71 @@ def company_edit(request, pk):
 @login_required
 @super_admin_required
 def company_detail(request, pk):
-    """Detalhes da Empresa"""
+    """Detalhes da Empresa (hub central)"""
+    from datetime import date
+    from decimal import Decimal
+    from django.utils import timezone
+    from django.utils import formats
+    from django.db.models.functions import TruncMonth
+    from django.db.models import Sum
+    from dateutil.relativedelta import relativedelta
+    from ..utils.billing import calculate_estimated_cost
+
     company = get_object_or_404(Company, pk=pk)
     
-    # Estatísticas
     total_members = company.members.filter(status='active').count()
     total_chatbots = company.company_chatbots.filter(status='active').count()
     total_users = company.users.filter(status='active').count()
+    pending_members = company.members.filter(status='pending').count()
     
-    # Últimas cobranças
+    monthly_cost = calculate_estimated_cost(company)
+    
     recent_billings = company.billings.order_by('-period_start')[:5]
+    recent_members = company.members.order_by('-created_at')[:5]
+    
+    chatbot_active = company.company_chatbots.filter(status='active').count()
+    chatbot_inactive = company.company_chatbots.filter(status='inactive').count()
+    
+    today = timezone.now().date()
+    current_month_start = today.replace(day=1)
+    has_current_billing = company.billings.filter(period_end__gte=current_month_start).exists()
+    
+    month_sequence = []
+    for i in range(5, -1, -1):
+        month_sequence.append(current_month_start - relativedelta(months=i))
+    
+    billing_trend_raw = company.billings.filter(
+        period_start__gte=month_sequence[0]
+    ).annotate(
+        month=TruncMonth('period_start')
+    ).values('month').annotate(
+        total=Sum('total_value')
+    ).order_by('month')
+    
+    billing_trend_map = {}
+    for item in billing_trend_raw:
+        m = item['month'].date() if hasattr(item['month'], 'date') else item['month']
+        billing_trend_map[m] = float(item['total'])
+    
+    billing_trend_chart = {
+        'labels': [formats.date_format(m, format='M Y', use_l10n=True) for m in month_sequence],
+        'values': [billing_trend_map.get(m, 0.0) for m in month_sequence],
+    }
     
     context = {
         'page_title': company.name,
         'company': company,
         'total_members': total_members,
+        'pending_members': pending_members,
         'total_chatbots': total_chatbots,
         'total_users': total_users,
+        'monthly_cost': monthly_cost,
         'recent_billings': recent_billings,
+        'recent_members': recent_members,
+        'chatbot_active': chatbot_active,
+        'chatbot_inactive': chatbot_inactive,
+        'has_current_billing': has_current_billing,
+        'billing_trend_chart': billing_trend_chart,
     }
     
     return render(request, 'companies/detail.html', context)

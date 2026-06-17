@@ -74,7 +74,19 @@
                 </div>
                 
                 <div class="col-md-6">
-                    <h5 class="form-section-title">{% trans "Configurações de Cobrança" %}</h5>
+                    <h5 class="form-section-title">{% trans "Configurações" %}</h5>
+                    <div class="mb-3">
+                        {{ form.language.label_tag }}
+                        {{ form.language }}
+                        {% if form.language.errors %}
+                            <div class="text-danger small">{{ form.language.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            {% trans "Idioma padrão para os administradores desta empresa" %}
+                        </small>
+                    </div>
+
+                    <h6 class="form-section-title mt-3">{% trans "Cobrança" %}</h6>
                     <div class="mb-3">
                         {{ form.currency.label_tag }}
                         {{ form.currency }}
@@ -112,6 +124,17 @@
                             <div class="text-danger small">{{ form.bill_admin_users.errors }}</div>
                         {% endif %}
                     </div>
+
+                    <div class="mb-1 form-check">
+                        {{ form.charge_inactive_members }}
+                        {{ form.charge_inactive_members.label_tag }}
+                        {% if form.charge_inactive_members.errors %}
+                            <div class="text-danger small">{{ form.charge_inactive_members.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <small class="form-text text-muted mb-3" style="padding-left: 1.5em;">
+                        {% trans "Quando ativo, membros sem acesso a chatbot também são cobrados (modo per_user)" %}
+                    </small>
                 </div>
             </div>
             

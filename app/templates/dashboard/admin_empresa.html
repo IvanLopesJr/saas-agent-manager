@@ -4,6 +4,20 @@
 
 {% block content %}
 <div class="dashboard">
+    {% if alerts %}
+    <div class="mb-4">
+        {% for alert in alerts %}
+        <div class="alert-card alert-card-{{ alert.type }} mb-2">
+            <div class="alert-icon"><i class="bi {{ alert.icon }}"></i></div>
+            <div class="alert-content">
+                <h6>{{ alert.title }}</h6>
+                <p>{{ alert.message }}</p>
+                <a href="{{ alert.url }}" class="btn btn-sm btn-outline-primary mt-1">{% trans "Visualizar" %}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     <div class="row g-3 mb-3">
         <div class="col-12">
             <div class="card border-0 shadow-sm h-100">

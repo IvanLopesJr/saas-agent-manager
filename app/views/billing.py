@@ -8,13 +8,14 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.text import slugify
 from datetime import date
+from calendar import monthrange
 import csv
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 from ..models import Billing, BillingDetail, Company, AuditLog
 from ..forms import BillingFilterForm, BillingGenerateForm
 from django.template.loader import render_to_string
-from ..utils.billing import generate_billing_for_company, calculate_estimated_cost
+from ..utils.billing import generate_billing_for_company, calculate_estimated_cost, simulate_billing_for_company
 from ..utils.system_settings import get_system_settings
 from ..utils.decorators import super_admin_required
 
@@ -143,8 +144,14 @@ def billing_generate(request):
 @super_admin_required
 def billing_preview(request):
     """Preview de Cobrança (simula sem persistir)"""
-    form = BillingGenerateForm(request.GET or None)
+    today = date.today()
+    initial = {
+        'period_start': date(today.year, today.month, 1),
+        'period_end': date(today.year, today.month, monthrange(today.year, today.month)[1]),
+    }
+    form = BillingGenerateForm(request.GET or None, initial=initial)
     preview_results = None
+    totals = None
     
     if form.is_valid():
         period_start = form.cleaned_data['period_start']
@@ -156,18 +163,29 @@ def billing_preview(request):
         
         preview_results = []
         for company in companies:
-            total = calculate_estimated_cost(company)
-            active_count = company.members.filter(status='active').count()
+            sim = simulate_billing_for_company(company, period_start, period_end)
             preview_results.append({
                 'company': company,
-                'estimated_total': total,
-                'active_members': active_count,
+                'estimated_total': sim['total_value'],
+                'active_members': sim['item_count'],
+                'full_count': sim['full_count'],
+                'proportional_count': sim['proportional_count'],
+                'details': sim['details'],
             })
+        
+        from decimal import Decimal
+        totals = {
+            'active_members': sum(r['active_members'] for r in preview_results),
+            'full_count': sum(r['full_count'] for r in preview_results),
+            'proportional_count': sum(r['proportional_count'] for r in preview_results),
+            'estimated_total': sum(r['estimated_total'] for r in preview_results),
+        }
     
     context = {
         'page_title': _('Preview de Cobrança'),
         'form': form,
         'preview_results': preview_results,
+        'totals': totals,
     }
     return render(request, 'billing/preview.html', context)
 
@@ -175,29 +193,79 @@ def billing_preview(request):
 @login_required
 def billing_detail(request, pk):
     """Detalhes da Cobrança"""
+    from decimal import Decimal
+
     user = request.user
     billing = get_object_or_404(Billing, pk=pk)
     
-    # Verificar permissão
     if user.is_admin_company() and user.company != billing.company:
         messages.error(request, _('Acesso negado.'))
         return redirect('billing_list')
     
-    # Detalhes da cobrança
     details = billing.details.select_related(
         'user', 'member', 'chatbot'
     ).order_by('member__name')
     
-    # Determinar template baseado no billing_mode
+    full_details = [d for d in details if d.billing_type == 'full']
+    prop_details = [d for d in details if d.billing_type == 'proportional']
+    full_count = len(full_details)
+    prop_count = len(prop_details)
+    full_total = sum((d.value for d in full_details), Decimal('0.00'))
+    prop_total = sum((d.value for d in prop_details), Decimal('0.00'))
+    avg_days = round(sum(d.days_active for d in details) / max(len(details), 1), 1)
+    
     if billing.company.billing_mode == 'per_user':
+        admin_d = [d for d in details if d.user_id is not None]
+        member_d = [d for d in details if d.user_id is None]
+        by_type = {
+            'admin': {'count': len(admin_d), 'total': sum((d.value for d in admin_d), Decimal('0.00'))},
+            'member': {'count': len(member_d), 'total': sum((d.value for d in member_d), Decimal('0.00'))},
+        }
+        by_chatbot = []
         template = 'billing/detail_per_user.html'
     else:
+        chatbot_groups = {}
+        for d in details:
+            name = d.chatbot.name if d.chatbot else 'Sem chatbot'
+            if name not in chatbot_groups:
+                chatbot_groups[name] = {'count': 0, 'total': Decimal('0.00')}
+            chatbot_groups[name]['count'] += 1
+            chatbot_groups[name]['total'] += d.value
+        by_chatbot = [{'name': k, 'count': v['count'], 'total': v['total']} for k, v in chatbot_groups.items()]
+        by_type = {}
         template = 'billing/detail_per_chatbot.html'
+    
+    summary_stats = {
+        'total_items': len(details),
+        'full_count': full_count,
+        'proportional_count': prop_count,
+        'full_total': full_total,
+        'proportional_total': prop_total,
+        'by_type': by_type,
+        'by_chatbot': by_chatbot,
+        'avg_days': avg_days,
+    }
+    
+    type_chart_data = None
+    chatbot_chart_data = None
+    if by_type:
+        type_chart_data = {
+            'labels': [str(_('Admin')) if k == 'admin' else str(_('Membro')) for k in by_type.keys()],
+            'values': [float(v['total']) for v in by_type.values()],
+        }
+    if by_chatbot:
+        chatbot_chart_data = {
+            'labels': [g['name'] for g in by_chatbot],
+            'values': [float(g['total']) for g in by_chatbot],
+        }
     
     context = {
         'page_title': _('Detalhes da Cobrança'),
         'billing': billing,
         'details': details,
+        'summary_stats': summary_stats,
+        'type_chart_data': type_chart_data,
+        'chatbot_chart_data': chatbot_chart_data,
     }
     
     return render(request, template, context)
@@ -289,7 +357,7 @@ def billing_export_excel(request, pk):
 
     workbook = Workbook()
     sheet = workbook.active
-    sheet.title = _('Cobrança')
+    sheet.title = str(_('Cobrança'))
 
     if billing.company.billing_mode == 'per_user':
         header = ['Usuário/Membro', 'Tipo', 'Preço Base', 'Data de Ativação', 'Tipo de Cobrança', 'Valor']

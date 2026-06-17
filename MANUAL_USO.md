@@ -125,7 +125,7 @@ Você poderá visualizar as cobranças da sua empresa e usar filtros por períod
 
 Na lista de cobranças, os principais atalhos são:
 
-- **ícone de olho:** ver detalhes da cobrança;
+- **ícone de olho:** ver detalhes da cobrança (cards com KPIs, gráfico de pizza por tipo/chatbot, tabela de itens);
 - **CSV:** exportar cobrança em planilha CSV;
 - **Excel:** exportar cobrança em arquivo `.xlsx`;
 - **PDF:** exportar fatura em PDF.
@@ -140,6 +140,8 @@ Você pode atualizar dados básicos da empresa, como:
 - endereço;
 - telefone;
 - logotipo.
+
+Na seção **"Configurações"** você também pode selecionar o **idioma padrão** da empresa. Ao fazer login, os administradores da empresa verão o sistema nesse idioma. O usuário ainda pode mudar manualmente pelo seletor no cabeçalho.
 
 > Configurações de cobrança, moeda e agentes vinculados são controladas pelo Super Admin.
 
@@ -246,7 +248,19 @@ Use os filtros para buscar por:
 
 Para criar um membro como Super Admin, selecione antes a empresa desejada.
 
-### 5.7. Gerenciar Cobranças
+### 5.7. Simular Cobrança (Preview)
+
+Antes de gerar uma cobrança, você pode simular o cálculo sem persistir nada no banco.
+
+1. Acesse **"Cobranças"** e clique em **"Simular"**
+2. O formulário já carrega com o período do mês atual
+3. Selecione empresas específicas ou deixe em branco para simular todas
+4. Clique em **"Simular"** para ver o resultado
+5. Expanda cada empresa para ver o detalhamento por membro/chatbot
+
+A simulação usa a mesma lógica da geração real, incluindo regras de corte, proporcional e primeiro ciclo.
+
+### 5.8. Gerenciar Cobranças
 
 Acesse **"Cobranças"** no menu.
 
@@ -255,11 +269,11 @@ Você pode:
 - visualizar todas as cobranças;
 - filtrar por empresa;
 - filtrar por período;
-- abrir detalhes;
+- abrir detalhes (cards com KPIs, gráfico de pizza, tabela de itens);
 - exportar em CSV, Excel ou PDF;
 - excluir cobranças, quando necessário.
 
-### 5.8. Gerar Cobranças
+### 5.9. Gerar Cobranças
 
 Acesse **"Cobranças"** e clique em **"Gerar Cobrança"**.
 
@@ -280,7 +294,22 @@ O sistema calcula valores conforme:
 
 > Se já existir cobrança para a mesma empresa e período, o sistema informa erro e não duplica a cobrança.
 
-### 5.9. Configurações do Sistema
+### 5.10. Log de Auditoria
+
+Acesse **"Auditoria"** no menu (apenas Super Admin).
+
+A tela exibe um registro cronológico de ações importantes no sistema:
+- criação/alteração de empresas, usuários, membros e chatbots;
+- alterações de status;
+- geração e exclusão de cobranças;
+- alterações em configurações.
+
+Você pode:
+- **filtrar** por ação, usuário, empresa e período;
+- **exportar** o log atual como CSV;
+- visualizar o total de ações nos últimos 30 dias.
+
+### 5.11. Configurações do Sistema
 
 Acesse **"Configurações"** no menu.
 
@@ -356,7 +385,20 @@ Se a ativação ocorrer até o dia de corte, a cobrança é integral.
 
 Se a ativação ocorrer depois do dia de corte, a cobrança é proporcional aos dias restantes do período.
 
-### 6.4. Primeiro Ciclo
+### 6.4. Cobrança de Membros sem Agente
+
+No modo **Por Usuário**, é possível configurar se membros sem acesso a chatbot devem ser cobrados.
+
+- Quando desabilitado (padrão), apenas membros com pelo menos um acesso ativo a chatbot entram na cobrança.
+- Quando habilitado, todos os membros ativos são cobrados independentemente do vínculo com chatbot.
+
+Essa opção é configurada por empresa na tela de cadastro/edição.
+
+### 6.5. Idioma por Empresa
+
+Cada empresa pode ter um idioma padrão (Português, Inglês ou Espanhol). Ao fazer login, o administrador da empresa vê o sistema automaticamente no idioma configurado. A preferência pode ser alterada manualmente a qualquer momento pelo seletor no cabeçalho.
+
+### 6.6. Primeiro Ciclo
 
 No primeiro ciclo de cobrança, o sistema usa um snapshot de preço para evitar que mudanças posteriores alterem retroativamente a primeira cobrança.
 
@@ -385,6 +427,7 @@ Antes de importar membros:
 | Lixeira | Excluir |
 | Toggle | Ativar / Inativar |
 | Download | Exportar / Baixar arquivo |
+| Calculadora | Simular cobrança (preview) |
 | Robô | Agente / Chatbot |
 | Envelope | Testar ou enviar e-mail |
 | Engrenagem | Configurações |

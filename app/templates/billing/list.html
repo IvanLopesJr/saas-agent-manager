@@ -7,6 +7,9 @@
     <h1>{% trans "Cobranças" %}</h1>
     {% if user.is_super_admin %}
         <div class="page-actions">
+            <a href="{% url 'billing_preview' %}" class="btn btn-info">
+                <i class="bi bi-calculator"></i> {% trans "Simular" %}
+            </a>
             <a href="{% url 'billing_generate' %}" class="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> {% trans "Gerar Cobrança" %}
             </a>
