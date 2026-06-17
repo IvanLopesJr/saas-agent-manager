@@ -22,6 +22,10 @@ class SecurityHeadersMiddleware:
                 ('font-src', getattr(settings, 'CSP_FONT_SRC', None)),
                 ('connect-src', getattr(settings, 'CSP_CONNECT_SRC', None)),
                 ('frame-src', getattr(settings, 'CSP_FRAME_SRC', None)),
+                ('object-src', getattr(settings, 'CSP_OBJECT_SRC', None)),
+                ('base-uri', getattr(settings, 'CSP_BASE_URI', None)),
+                ('form-action', getattr(settings, 'CSP_FORM_ACTION', None)),
+                ('frame-ancestors', getattr(settings, 'CSP_FRAME_ANCESTORS', None)),
             ]:
                 if sources:
                     csp_parts.append(f"{directive} {' '.join(sources)}")

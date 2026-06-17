@@ -118,7 +118,6 @@ def _calculate_per_user_billing(company, period_start, period_end, cutoff_day, t
     # when company.bill_admin_users is enabled.
     members = CompanyMember.objects.filter(
         company=company,
-        created_at__date__lte=period_end,
     ).filter(
         _active_status_during_period_q('', period_start, period_end)
     ).select_related('user').distinct()
@@ -126,20 +125,14 @@ def _calculate_per_user_billing(company, period_start, period_end, cutoff_day, t
         members = members.filter(user__isnull=True)
     
     # Calculate for each member
-    for member in members:
-        # Check if member has any chatbot access;
-        # charge_inactive_members overrides this filter
-        has_access = member.chatbot_accesses.filter(
-            _access_active_during_period_q(period_start, period_end)
-        ).exists()
-        
-        if not has_access and not company.charge_inactive_members:
-            continue  # Skip members without chatbot access
-        
-        # Get activation date (earliest chatbot access or member creation)
+    for member in members.iterator():
+        # Get earliest active chatbot access during period (single query)
         earliest_access = member.chatbot_accesses.filter(
             _access_active_during_period_q(period_start, period_end)
         ).order_by('activation_date').first()
+        
+        if not earliest_access and not company.charge_inactive_members:
+            continue  # Skip members without chatbot access
         
         if not earliest_access:
             if not company.charge_inactive_members:
@@ -212,7 +205,7 @@ def _calculate_per_chatbot_billing(company, period_start, period_end, cutoff_day
         accesses = accesses.filter(member__user__isnull=True)
     
     # Calculate for each access
-    for access in accesses:
+    for access in accesses.iterator():
         # Get price for this chatbot
         company_chatbot = company.company_chatbots.filter(
             chatbot=access.chatbot,

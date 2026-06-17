@@ -57,7 +57,7 @@ def audit_log_list(request):
         response['Content-Disposition'] = 'attachment; filename="auditoria.csv"'
         writer = csv.writer(response)
         writer.writerow(['Data/Hora', 'Usuário', 'Ação', 'Descrição', 'IP'])
-        for log in page_obj.object_list:
+        for log in logs.iterator():
             writer.writerow([
                 log.created_at.strftime('%d/%m/%Y %H:%M'),
                 log.user.get_full_name() or log.user.username if log.user else '-',

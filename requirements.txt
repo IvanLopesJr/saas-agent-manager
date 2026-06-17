@@ -7,7 +7,7 @@ python-decouple==3.8
 
 # Forms and Validation
 django-crispy-forms==2.1
-crispy-bootstrap5
+crispy-bootstrap5==0.7
 
 # Utils
 Pillow==10.1.0

@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.conf import settings
 from django.core.cache import cache
 from django.views.decorators.http import require_POST
+from django.views.decorators.cache import never_cache
 from ..forms import LoginForm
 from ..models import AuditLog
 from ..utils.system_settings import get_system_settings, build_system_absolute_uri
@@ -74,7 +75,7 @@ def login_view(request):
                         next_url = 'dashboard'
                     return redirect(next_url)
                 else:
-                    messages.error(request, _('Usuário ou empresa inativa. Contate o administrador.'))
+                    messages.error(request, _('Usuário ou senha incorretos.'))
                     
                     # Registrar tentativa de login com usuário inativo
                     AuditLog.objects.create(
@@ -120,9 +121,27 @@ def logout_view(request):
     return redirect('login')
 
 
-def password_reset_request(request):
+PASSWORD_RESET_PREFIX = 'password_reset_'
+PASSWORD_RESET_MAX_ATTEMPTS = 5
+PASSWORD_RESET_BLOCK_MINUTES = 15
 
-    """View de Requisição de Reset de Senha"""
+
+@never_cache
+def password_reset_request(request):
+    """View de Requisição de Reset de Senha com rate limiting"""
+    ip = get_client_ip(request)
+    cache_key = f'{PASSWORD_RESET_PREFIX}{ip}'
+    attempts = cache.get(cache_key, 0)
+
+    if attempts >= PASSWORD_RESET_MAX_ATTEMPTS:
+        messages.error(
+            request,
+            _('Muitas tentativas de redefinição de senha. Tente novamente em {} minutos.').format(PASSWORD_RESET_BLOCK_MINUTES)
+        )
+        return render(request, 'registration/password_reset_form.html', {
+            'form': PasswordResetForm(),
+            'page_title': _('Redefinir Senha'),
+        })
 
     if request.method == 'POST':
 
@@ -167,22 +186,17 @@ def password_reset_request(request):
 
             )
 
+            cache.delete(cache_key)
             messages.success(
-
                 request,
-
                 _('Enviamos instruções para redefinir sua senha. Verifique seu e-mail.')
-
             )
-
             return redirect('password_reset_done')
 
+        cache.set(cache_key, attempts + 1, PASSWORD_RESET_BLOCK_MINUTES * 60)
         messages.error(
-
             request,
-
             _('Não foi possível processar sua solicitação. Verifique o e-mail informado.')
-
         )
 
     else:

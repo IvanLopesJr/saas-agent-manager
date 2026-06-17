@@ -131,10 +131,11 @@ def clean_orphan_member_on_user_delete(sender, instance, **kwargs):
     except CompanyMember.DoesNotExist:
         return
     if member:
-        member.user = None
-        member.first_cycle_price_snapshot = None
-        member.first_cycle_completed = False
-        member.save(update_fields=['user', 'first_cycle_price_snapshot', 'first_cycle_completed'])
+        CompanyMember.objects.filter(pk=member.pk).update(
+            user=None,
+            first_cycle_price_snapshot=None,
+            first_cycle_completed=False,
+        )
 
 
 @receiver(user_logged_in)

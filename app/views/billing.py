@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.paginator import Paginator
-from django.db.models import Q
 from django.http import HttpResponse
 from django.utils.text import slugify
 from datetime import date
@@ -12,7 +11,9 @@ from calendar import monthrange
 import csv
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
-from ..models import Billing, BillingDetail, Company, AuditLog
+from django.db import IntegrityError
+from django.core.exceptions import ValidationError
+from ..models import Billing, BillingDetail, Company, AuditLog, CompanyMember, MemberChatbotAccess
 from ..forms import BillingFilterForm, BillingGenerateForm
 from django.template.loader import render_to_string
 from ..utils.billing import generate_billing_for_company, calculate_estimated_cost, simulate_billing_for_company
@@ -119,7 +120,7 @@ def billing_generate(request):
                         error_count += 1
                         error_details.append(f'{company.name}: sem valores a cobrar neste período')
                 
-                except Exception as e:
+                except (IntegrityError, ValidationError) as e:
                     error_count += 1
                     error_details.append(f'{company.name}: {str(e)}')
                     continue
@@ -159,7 +160,7 @@ def billing_preview(request):
         companies = form.cleaned_data.get('companies')
         
         if not companies:
-            companies = Company.objects.filter(status='active').order_by('name')
+            companies = Company.objects.filter(status='active').order_by('name')[:50]
         
         preview_results = []
         for company in companies:
@@ -172,6 +173,8 @@ def billing_preview(request):
                 'proportional_count': sim['proportional_count'],
                 'details': sim['details'],
             })
+            if len(preview_results) >= 50:
+                break
         
         from decimal import Decimal
         totals = {
@@ -432,6 +435,18 @@ def billing_delete(request, pk):
         company_name = billing.company.name
         period_start = billing.period_start.strftime('%d/%m/%Y')
         period_end = billing.period_end.strftime('%d/%m/%Y')
+
+        # Restaurar first_cycle_completed nos membros e acessos
+        member_ids = list(billing.details.values_list('member_id', flat=True).distinct())
+        if member_ids:
+            CompanyMember.objects.filter(id__in=member_ids).update(first_cycle_completed=False)
+            if billing.company.billing_mode == 'per_user_chatbot':
+                MemberChatbotAccess.objects.filter(
+                    member_id__in=member_ids,
+                    activation_date__lte=billing.period_end,
+                ).filter(
+                    Q(status='active') | Q(deactivation_date__gte=billing.period_start)
+                ).update(first_cycle_completed=False)
 
         billing.delete()
 

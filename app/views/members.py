@@ -4,11 +4,11 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.core.paginator import Paginator
 from django.db.models import Q, Count
-from django.db import IntegrityError
+from django.db import IntegrityError, transaction
 from django.http import HttpResponse
 from django.utils import timezone
 from django.db.models import Prefetch
-from datetime import datetime
+from datetime import date, datetime
 import csv
 import io
 from ..models import (
@@ -149,15 +149,20 @@ def member_create(request):
     if request.method == 'POST':
         form = CompanyMemberForm(request.POST, company=company)
         if form.is_valid():
-            member = form.save(commit=False)
-            member.company = company
-            try:
-                member.save()
-            except IntegrityError:
-                error_message = _('Já existe um membro com este e-mail nesta empresa.')
-                form.add_error('email', error_message)
-                messages.error(request, error_message)
-            else:
+            with transaction.atomic():
+                member = form.save(commit=False)
+                member.company = company
+                try:
+                    member.save()
+                except IntegrityError:
+                    error_message = _('Já existe um membro com este e-mail nesta empresa.')
+                    form.add_error('email', error_message)
+                    messages.error(request, error_message)
+                    return render(request, template, {
+                        'page_title': _('Novo Membro'),
+                        'form': form,
+                        'company': company,
+                    })
                 # Salvar chatbots selecionados
                 link_member_to_admin_user(member)
                 selected_chatbots = form.cleaned_data.get('chatbots', [])
@@ -168,9 +173,9 @@ def member_create(request):
                         activation_date=timezone.now().date(),
                         status='active'
                     )
-                
-                messages.success(request, _('Membro criado com sucesso!'))
-                return redirect('member_list')
+            
+            messages.success(request, _('Membro criado com sucesso!'))
+            return redirect('member_list')
     else:
         form = CompanyMemberForm(company=company)
     
@@ -412,68 +417,65 @@ def member_import_preview(request):
         error_count = 0
         
         for data in members_data:
-            try:
-                if data.get('errors'):
-                    error_count += 1
-                    continue
-                # Verificar se documento já existe
-                document_value = data.get('identification_document', '')
-                if not document_value:
-                    error_count += 1
-                    continue
-                if CompanyMember.objects.filter(identification_document=document_value).exists():
-                    error_count += 1
-                    continue
-                
-                # Criar membro
-                member = CompanyMember.objects.create(
-                    company=company,
-                    name=data['name'],
-                    email=data['email'],
-                    phone=data.get('phone', ''),
-                    identification_document=document_value,
-                    department=data.get('department', ''),
-                    regional=data.get('regional', ''),
-                    role_type=data.get('role_type') or '',
-                    position=data.get('position', ''),
-                    sex=data.get('sex') or '',
-                    birth_date=data.get('birth_date'),
-                    hire_date=data.get('hire_date'),
-                    city=data.get('city', ''),
-                    state=data.get('state', ''),
-                    country=data.get('country', ''),
-                    dealership=data.get('dealership', ''),
-                    dealership_number=data.get('dealership_number', ''),
-                    status=data.get('status', 'active')
-                )
-                link_member_to_admin_user(member)
-                
-                # Adicionar chatbots
-                chatbot_names = data.get('chatbots', '').split(',')
-                for chatbot_name in chatbot_names:
-                    chatbot_name = chatbot_name.strip()
-                    if chatbot_name:
-                        try:
-                            chatbot = Chatbot.objects.get(
-                                name=chatbot_name,
-                                status='active'
-                            )
-                            # Verificar se está vinculado à empresa
-                            if company.company_chatbots.filter(chatbot=chatbot, status='active').exists():
-                                MemberChatbotAccess.objects.create(
-                                    member=member,
-                                    chatbot=chatbot,
-                                    activation_date=timezone.now().date(),
+            with transaction.atomic():
+                try:
+                    if data.get('errors'):
+                        error_count += 1
+                        continue
+                    document_value = data.get('identification_document', '')
+                    if not document_value:
+                        error_count += 1
+                        continue
+                    if CompanyMember.objects.filter(identification_document=document_value).exists():
+                        error_count += 1
+                        continue
+
+                    member = CompanyMember.objects.create(
+                        company=company,
+                        name=data['name'],
+                        email=data['email'],
+                        phone=data.get('phone', ''),
+                        identification_document=document_value,
+                        department=data.get('department', ''),
+                        regional=data.get('regional', ''),
+                        role_type=data.get('role_type') or '',
+                        position=data.get('position', ''),
+                        sex=data.get('sex') or '',
+                        birth_date=data.get('birth_date'),
+                        hire_date=data.get('hire_date'),
+                        city=data.get('city', ''),
+                        state=data.get('state', ''),
+                        country=data.get('country', ''),
+                        dealership=data.get('dealership', ''),
+                        dealership_number=data.get('dealership_number', ''),
+                        status=data.get('status', 'active')
+                    )
+                    link_member_to_admin_user(member)
+
+                    chatbot_names = data.get('chatbots', '').split(',')
+                    for chatbot_name in chatbot_names:
+                        chatbot_name = chatbot_name.strip()
+                        if chatbot_name:
+                            try:
+                                chatbot = Chatbot.objects.get(
+                                    name=chatbot_name,
                                     status='active'
                                 )
-                        except Chatbot.DoesNotExist:
-                            pass
-                
-                success_count += 1
-                
-            except Exception as e:
-                error_count += 1
-                continue
+                                if company.company_chatbots.filter(chatbot=chatbot, status='active').exists():
+                                    MemberChatbotAccess.objects.create(
+                                        member=member,
+                                        chatbot=chatbot,
+                                        activation_date=timezone.now().date(),
+                                        status='active'
+                                    )
+                            except Chatbot.DoesNotExist:
+                                pass
+
+                    success_count += 1
+
+                except Exception as e:
+                    error_count += 1
+                    continue
         
         # Limpar sessão
         del request.session['import_preview']

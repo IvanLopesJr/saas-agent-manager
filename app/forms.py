@@ -432,12 +432,13 @@ class CompanySettingsForm(forms.ModelForm):
     
     class Meta:
         model = Company
-        fields = ['name', 'address', 'phone', 'logo_url']
+        fields = ['name', 'address', 'phone', 'logo_url', 'language']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'logo_url': forms.FileInput(attrs={'class': 'form-control'}),
+            'language': forms.Select(attrs={'class': 'form-select'}),
         }
 
 

@@ -32,6 +32,10 @@ RUN python manage.py collectstatic --noinput
 # Compile messages
 RUN python manage.py compilemessages_local
 
+RUN groupadd -r appuser && useradd -r -g appuser -d /app -s /sbin/nologin appuser && chown -R appuser:appuser /app
+
 EXPOSE 8000
+
+USER appuser
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "multi_empresas_chatbots.wsgi:application"]

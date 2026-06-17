@@ -70,7 +70,7 @@
                                     {{ chatbot.company_count }} {% trans "empresa" %}{{ chatbot.company_count|pluralize }}
                                 </span>
                             </td>
-                            <td data-label="{% trans 'Preço Base' %}">R$ {{ chatbot.base_price|floatformat:2 }}</td>
+                            <td data-label="{% trans 'Preço Base' %}">$ {{ chatbot.base_price|floatformat:2 }}</td>
                             <td data-label="{% trans 'Status' %}">
                                 {% if chatbot.status == 'active' %}
                                     <span class="badge bg-success">{{ chatbot.get_status_display }}</span>

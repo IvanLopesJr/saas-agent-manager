@@ -103,8 +103,8 @@ class BillingConsistencyTest(TestCase):
 
         billing = generate_billing_for_company(
             company,
-            date.today().replace(day=1),
-            date.today().replace(day=28),
+            date(2026, 6, 1),
+            date(2026, 6, 28),
             self.admin,
         )
 
@@ -217,8 +217,8 @@ class BillingConsistencyTest(TestCase):
 
         billing = generate_billing_for_company(
             company,
-            date.today().replace(day=1),
-            date.today().replace(day=28),
+            date(2026, 6, 1),
+            date(2026, 6, 28),
             self.admin,
         )
 
@@ -250,7 +250,7 @@ class BillingConsistencyTest(TestCase):
         access = MemberChatbotAccess.objects.create(
             member=member,
             chatbot=chatbot,
-            activation_date=date.today().replace(day=1),
+            activation_date=date(2026, 6, 1),
             status='active',
         )
         access.status = 'inactive'
@@ -258,8 +258,8 @@ class BillingConsistencyTest(TestCase):
 
         billing = generate_billing_for_company(
             company,
-            date.today().replace(day=1),
-            date.today().replace(day=28),
+            date(2026, 6, 1),
+            date(2026, 6, 28),
             self.admin,
         )
 

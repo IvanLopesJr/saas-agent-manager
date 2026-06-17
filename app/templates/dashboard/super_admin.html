@@ -20,7 +20,7 @@
     {% endif %}
     <div class="row g-3 mb-4">
         <div class="col-md-3">
-            <div class="card border-0" style="height: 120px; background-color: #137ed0;">
+            <div class="card border-0" style="min-height: 120px; background-color: #137ed0;">
                 <div class="card-body" style="padding: 0.85rem;">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Empresas Ativas" %}</h6>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card border-0" style="height: 120px; background-color: #20c997;">
+            <div class="card border-0" style="min-height: 120px; background-color: #20c997;">
                 <div class="card-body" style="padding: 0.85rem;">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Membros Ativos" %}</h6>
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card border-0" style="height: 120px; background-color: #0dcaf0;">
+            <div class="card border-0" style="min-height: 120px; background-color: #0dcaf0;">
                 <div class="card-body" style="padding: 0.85rem;">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Chatbots Ativos" %}</h6>
@@ -56,13 +56,13 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card border-0" style="height: 120px; background-color: #ffc107;">
+            <div class="card border-0" style="min-height: 120px; background-color: #ffc107;">
                 <div class="card-body" style="padding: 0.85rem;">
                     <div class="d-flex justify-content-between align-items-start mb-1">
                         <h6 class="text-uppercase mb-0 fw-bold" style="font-size: 0.80rem; color: white;">{% trans "Custo Mensal Estimado" %}</h6>
                         <i class="bi bi-currency-dollar" style="font-size: 2.25rem; opacity: 0.5; color: white; line-height: 1;"></i>
                     </div>
-                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">R$ {{ total_monthly_cost|floatformat:2 }}</h2>
+                    <h2 class="mb-0 fw-bold" style="color: white; line-height: 1.2;">$ {{ total_monthly_cost|floatformat:2 }}</h2>
                     <small style="opacity: 0.85; color: white; font-size: 0.85rem;">{% trans "Estimado" %}</small>
                 </div>
             </div>
@@ -252,7 +252,7 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% trans "Custo Mensal Estimado" %}
-                            <span class="fw-bold">R$ {{ total_monthly_cost|floatformat:2 }}</span>
+                            <span class="fw-bold">$ {{ total_monthly_cost|floatformat:2 }}</span>
                         </li>
                     </ul>
                 </div>
